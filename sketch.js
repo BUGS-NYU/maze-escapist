@@ -4,11 +4,11 @@ const blockSize = mapSize / 5
 
 // create a map 2d grid
 const map = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 1],
+    [0, 0, 1, 0, 0],
+    [0, 1, 1, 1, 0],
 ]
 
 function setup() {
@@ -23,9 +23,14 @@ function draw() {
     strokeWeight(2)
 
     // draw map using our 2-dimensional grid. each item in the grid represents one block on map
-    for (let i = 0; i < 5; i++) {
-        for (let i1 = 0; i1 < 5; i1++) {
-            rect(i * blockSize, i1 * blockSize, blockSize, blockSize)
+    for (let y = 0; y < 5; y++) {
+        for (let x = 0; x < 5; x++) {
+            if (map[y][x] === 1) {
+                fill(100)
+            } else {
+                noFill()
+            }
+            rect(x * blockSize, y * blockSize, blockSize, blockSize)
         }
     }
 
