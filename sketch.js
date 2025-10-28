@@ -35,6 +35,22 @@ function setup() {
 function draw() {
   background(255);
 
+  // if playing: render map & character
+  if (gameState === "play") {
+    render();
+  }
+  // if dead: show losing screen
+  else if (gameState === "lose") {
+    background(255);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(32);
+    text("You Died!", width / 2, height / 2);
+  }
+}
+
+// render map and character
+function render() {
   noFill();
   stroke(0);
   strokeWeight(1);
@@ -72,22 +88,33 @@ function draw() {
     30,
     30
   );
+
+  // if standing in laser, death
+  if (map[character[1]][character[0]] === 2 && lasersOn) {
+    gameState = "lose";
+  }
 }
 
 // respond to WASD input, adjusting the character's x & y coordinates
 function keyPressed() {
   if (key === "w" && character[1] > 0) {
-    character[1] -= 1;
+    moveTo(character[0], character[1] - 1);
   }
   if (key === "a" && character[0] > 0) {
-    character[0] -= 1;
+    moveTo(character[0] - 1, character[1]);
   }
   if (key === "s" && character[1] < 4) {
-    character[1] += 1;
+    moveTo(character[0], character[1] + 1);
   }
   if (key === "d" && character[0] < 4) {
-    character[0] += 1;
+    moveTo(character[0] + 1, character[1]);
   }
+}
+
+// move character to given coordinate, handles other behaviors
+function moveTo(x, y) {
+  // move character
+  character = [x, y];
 }
 
 // flicker laser on/off every 1000 ms

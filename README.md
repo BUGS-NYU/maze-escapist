@@ -12,6 +12,4 @@
     - could make a new wall of id 2 (0 = empty space, 1 = wall) to indicate the game end
 - Alex: Intro screen for game
     - Minimally, we could have an simple instruction and a (start) button for this.
-- Sewon: create responsive design such that size of p5 canvas will adjust based on browser width
-- Sewon: create laser obstacle for maps, will flicker on/off
 - Change levels: create html UI to change levels, such that we can have multiple levels
