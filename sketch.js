@@ -1,36 +1,65 @@
 const mapSize = 300;
+
+let laserImg;
+
+// character x, y coordinates on map grid
 let character = [2, 2];
+
+// width & height of each block on map (in pixels)
 const blockSize = mapSize / 5;
+
+// indicates current game state, could be "play", "win", "lose"
+let gameState = "play";
+
+// whether all lasers are on/off
+let lasersOn = true;
 
 // create a map 2d grid
 const map = [
-  [0, 0, 0, 0, 1],
+  [0, 0, 0, 2, 1],
   [0, 0, 0, 0, 1],
   [0, 0, 0, 0, 1],
   [0, 0, 1, 0, 0],
-  [0, 1, 1, 1, 0],
+  [0, 1, 1, 1, 2],
 ];
+
+function preload() {
+  // load imgs here
+  laserImg = loadImage("images/laser.png");
+}
 
 function setup() {
   createCanvas(mapSize, mapSize);
 }
 
 function draw() {
-  background(200);
+  background(255);
 
   noFill();
-  stroke(150);
-  strokeWeight(2);
+  stroke(0);
+  strokeWeight(1);
 
   // draw map using our 2-dimensional grid. each item in the grid represents one block on map
   for (let y = 0; y < 5; y++) {
     for (let x = 0; x < 5; x++) {
-      if (map[y][x] === 1) {
-        fill(100);
-      } else {
+      // if empty space
+      if (map[y][x] === 0) {
         noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
       }
-      rect(x * blockSize, y * blockSize, blockSize, blockSize);
+      // if wall
+      else if (map[y][x] === 1) {
+        fill(100);
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+      }
+      // if laser
+      else if (map[y][x] === 2) {
+        fill(0, 0, 255, 50);
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        if (lasersOn) {
+          image(laserImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        }
+      }
     }
   }
 
@@ -60,3 +89,8 @@ function keyPressed() {
     character[0] += 1;
   }
 }
+
+// flicker laser on/off every 1000 ms
+setInterval(() => {
+  lasersOn = !lasersOn;
+}, 1000);
