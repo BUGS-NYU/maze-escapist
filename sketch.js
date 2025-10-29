@@ -95,18 +95,18 @@ function render() {
   }
 }
 
-// respond to WASD input, adjusting the character's x & y coordinates
+// respond to WASD input, adjusting the character's x & y coordinates, checks if input is also going to a filled block or edge of the map
 function keyPressed() {
-  if (key === "w" && character[1] > 0) {
+  if (key === "w" && character[1] > 0 && map[character[1]-1][character[0]] !== 1) {
     moveTo(character[0], character[1] - 1);
   }
-  if (key === "a" && character[0] > 0) {
+  if (key === "a" && character[0] > 0 && map[character[1]][character[0]-1] !== 1) {
     moveTo(character[0] - 1, character[1]);
   }
-  if (key === "s" && character[1] < 4) {
+  if (key === "s" && character[1] < 4 && map[character[1]+1][character[0]] !== 1) {
     moveTo(character[0], character[1] + 1);
   }
-  if (key === "d" && character[0] < 4) {
+  if (key === "d" && character[0] < 4 && map[character[1]][character[0]+1] !== 1) {
     moveTo(character[0] + 1, character[1]);
   }
 }
