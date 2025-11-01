@@ -20,7 +20,7 @@ const map = [
   [0, 0, 0, 0, 1],
   [0, 0, 0, 0, 1],
   [0, 0, 1, 0, 0],
-  [0, 1, 1, 1, 2],
+  [3, 1, 1, 1, 2],
 ];
 
 function preload() {
@@ -46,6 +46,14 @@ function draw() {
     textAlign(CENTER, CENTER);
     textSize(32);
     text("You Died!", width / 2, height / 2);
+  }
+  // if reached end: show ending screen
+  else if (gameState === "win") {
+    background(255);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(32);
+    text("You Won!", width / 2, height / 2);
   }
 }
 
@@ -76,6 +84,12 @@ function render() {
           image(laserImg, x * blockSize, y * blockSize, blockSize, blockSize);
         }
       }
+      // if end block
+      else if (map[y][x] === 3) {
+        // fill(112, 43, 157);
+        fill("#663399");
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+      }
     }
   }
 
@@ -92,6 +106,9 @@ function render() {
   // if standing in laser, death
   if (map[character[1]][character[0]] === 2 && lasersOn) {
     gameState = "lose";
+  }
+  if (map[character[1]][character[0]] === 3) {
+    gameState = "win";
   }
 }
 
