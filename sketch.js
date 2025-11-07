@@ -1,6 +1,7 @@
 const mapSize = 300;
 
 let laserImg;
+let charImg;
 
 // character x, y coordinates on map grid
 let character = [2, 2];
@@ -26,6 +27,7 @@ const map = [
 function preload() {
   // load imgs here
   laserImg = loadImage("images/laser.png");
+  charImg = loadImage("images/character.png");
 }
 
 function setup() {
@@ -93,15 +95,8 @@ function render() {
     }
   }
 
-  // draw character, its coordinates determine where it stands on the map
-  fill(0);
-  noStroke();
-  ellipse(
-    character[0] * blockSize + blockSize / 2,
-    character[1] * blockSize + blockSize / 2,
-    30,
-    30
-  );
+  
+  image(charImg, character[0] * blockSize, character[1] * blockSize, blockSize, blockSize);
 
   // if standing in laser, death
   if (map[character[1]][character[0]] === 2 && lasersOn) {
