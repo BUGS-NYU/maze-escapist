@@ -8,7 +8,7 @@ let charDir;
 let character;
 
 // width & height of each block on map (in pixels)
-const blockSize = mapSize / 5;
+let blockSize = mapSize / 7;
 
 // indicates current game state, could be "play", "win", "lose"
 let gameState;
@@ -17,12 +17,18 @@ let gameState;
 let lasersOn = true;
 
 // create a map 2d grid
+  // 0 = empty space
+  // 1 = wall
+  // 2 = laser
+  // 3 = end block
 const map = [
-  [0, 0, 0, 2, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 1, 0, 0],
-  [3, 1, 1, 1, 2],
+  [0, 0, 0, 2, 1, 0, 0],
+  [0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 1, 0, 0, 0, 0],
+  [3, 1, 1, 1, 2, 0, 0],
+  [0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 2, 1, 0, 0],
 ];
 
 function preload() {
@@ -73,8 +79,8 @@ function render() {
   strokeWeight(1);
 
   // draw map using our 2-dimensional grid. each item in the grid represents one block on map
-  for (let y = 0; y < 5; y++) {
-    for (let x = 0; x < 5; x++) {
+  for (let y = 0; y < map.length; y++) {
+    for (let x = 0; x < map[y].length; x++) {
       // if empty space
       if (map[y][x] === 0) {
         noFill();
@@ -124,6 +130,7 @@ function render() {
   if (map[character[1]][character[0]] === 2 && lasersOn) {
     gameState = "lose";
   }
+  // if standing in end block, win
   if (map[character[1]][character[0]] === 3) {
     gameState = "win";
   }
@@ -132,22 +139,22 @@ function render() {
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
 function keyPressed() {
   // Up movement (W or UP_ARROW)
-  if ((key === "w" || keyCode === UP_ARROW) && character[1] > 0 && map[character[1]-1][character[0]] !== 1) {
+  if ((key === "w" || keyCode === UP_ARROW) && character[1] > 0) {
     moveTo(character[0], character[1] - 1);
     charDir = 1;
   }
   // Left movement (A or LEFT_ARROW)
-  if ((key === "a" || keyCode === LEFT_ARROW) && character[0] > 0 && map[character[1]][character[0]-1] !== 1) {
+  if ((key === "a" || keyCode === LEFT_ARROW) && character[0] > 0) {
     moveTo(character[0] - 1, character[1]);
     charDir = 0;
   }
   // Down movement (S or DOWN_ARROW)
-  if ((key === "s" || keyCode === DOWN_ARROW) && character[1] < 4 && map[character[1]+1][character[0]] !== 1) {
+  if ((key === "s" || keyCode === DOWN_ARROW) && character[1] < map.length - 1) {
     moveTo(character[0], character[1] + 1);
     charDir = 3;
   }
   // Right movement (D or RIGHT_ARROW)
-  if ((key === "d" || keyCode === RIGHT_ARROW) && character[0] < 4 && map[character[1]][character[0]+1] !== 1) {
+  if ((key === "d" || keyCode === RIGHT_ARROW) && character[0] < map[0].length - 1) {
     moveTo(character[0] + 1, character[1]);
     charDir = 2;
   }
@@ -160,6 +167,11 @@ function keyPressed() {
 
 // move character to given coordinate, handles other behaviors
 function moveTo(x, y) {
+  // if wall, do not move
+  if (map[y][x] === 1) {
+    return;
+  }
+
   // move character
   character = [x, y];
 }
