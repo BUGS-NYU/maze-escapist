@@ -63,6 +63,8 @@ function preload() {
   charImg = loadImage("images/character.png");
   charDir = 0;
 
+  // load sounds here
+
   character = [0, 0];
   gameState = "play";
 }

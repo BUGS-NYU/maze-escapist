@@ -1,9 +1,19 @@
 # Maze Escapists
 
 ### Task List
+- Sound effect to play every time the character moves
+    - Pick the audio on your own discretion
+    - Load the audio in preload(), use audio.play()
+    - Everytime the user presses WASD..., play this audio
+- Timer: have a timer countdown be displayed on the top-left corner of the game
+    - Use text() function to display text on the p5 canvas
+    - If the timer runs out before the player reaches the end, redirect to losing screen
+- Sound effect to play every time the character dies from laser
+    - Pick the audio on your own discretion
+    - Load the audio in preload(), use audio.play()
+    - Everytime character hits laser, play this audio
 - Alex: Intro screen for game
     - Minimally, we could have an simple instruction and a (start) button for this.
-- Sewon: create dynamic level sizing such that levels can have different numbers of cells (5x5, 6x6, 7x7, etc.)
-- Sewon: Change levels, create html UI to change levels, such that we can have multiple levels
-- Sewon: create level progression such that upon level completion, next level is displayed
+- Sewon: deploy current game to web
 - Sewon: create new knight obstacle standing (2, 1) blocks away from knight leads to death
+- Sewon: change the design of the empty / wall blocks, such that they are rendered with images
