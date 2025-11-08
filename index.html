@@ -67,6 +67,15 @@
         height: auto !important;
       }
 
+      .game-ui {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+        width: 100%;
+      }
+
       @media screen and (max-width: 480px) {
         h1 {
           font-size: 48px;
@@ -94,9 +103,16 @@
         Navigate through the empty spaces and find your way to victory!
       </p>
     </div>
-    <p>
-      Press 'r' to reset.
-    </p>
+    <div class="game-ui">
+      <select id="level-selector">
+        <option value="0">Level 1</option>
+        <option value="1">Level 2</option>
+        <option value="2">Level 3</option>
+      </select>
+      <p>
+        Press 'r' to reset.
+      </p>
+    </div>
   </body>
 </html>
 

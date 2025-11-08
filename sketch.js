@@ -21,15 +21,41 @@ let lasersOn = true;
   // 1 = wall
   // 2 = laser
   // 3 = end block
-const map = [
-  [0, 0, 0, 2, 1, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 1, 0, 0, 0, 0],
-  [3, 1, 1, 1, 2, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 2, 1, 0, 0],
+const maps = [
+  [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 0],
+    [0, 1, 0, 0, 0, 1, 1],
+    [0, 0, 0, 1, 1, 0, 1],
+    [0, 1, 1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0, 1, 0],
+    [0, 1, 0, 0, 0, 1, 3],
+  ],
+  [
+    [0, 1, 0, 0, 0, 0, 0, 2],
+    [0, 1, 0, 1, 1, 1, 1, 0],
+    [0, 0, 2, 0, 0, 0, 1, 0],
+    [0, 1, 1, 1, 1, 0, 0, 1],
+    [0, 1, 2, 0, 0, 1, 0, 0],
+    [0, 1, 0, 1, 1, 0, 1, 2],
+    [0, 1, 0, 1, 1, 0, 1, 2],
+    [2, 0, 0, 0, 0, 0, 1, 3],
+  ],
+  [
+    [0, 2, 0, 0, 0, 0, 1, 0, 0, 0],
+    [2, 1, 0, 1, 1, 0, 2, 0, 1, 0],
+    [0, 1, 0, 0, 1, 0, 1, 1, 0, 2],
+    [0, 1, 1, 2, 0, 1, 0, 0, 1, 0],
+    [0, 0, 1, 0, 1, 3, 1, 0, 0, 0],
+    [1, 2, 1, 0, 1, 2, 2, 1, 1, 1],
+    [0, 0, 1, 1, 2, 1, 2, 0, 0, 0],
+    [0, 1, 0, 0, 0, 2, 1, 1, 1, 0],
+    [0, 1, 2, 1, 1, 1, 2, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
+  ]
 ];
+let mapIndex = 0;
+let map = maps[mapIndex];
 
 function preload() {
   // load imgs here
@@ -37,7 +63,7 @@ function preload() {
   charImg = loadImage("images/character.png");
   charDir = 0;
 
-  character = [2, 2];
+  character = [0, 0];
   gameState = "play";
 }
 
@@ -69,6 +95,8 @@ function draw() {
     textAlign(CENTER, CENTER);
     textSize(32);
     text("You Won!", width / 2, height / 2);
+    textSize(20);
+    text("Press 'c' to continue", width / 2, height / 2 + 40);
   }
 }
 
@@ -163,6 +191,10 @@ function keyPressed() {
   if (key === "r") {
     preload()
   }
+  // continue to next level
+  if (key === "c" && gameState === "win") {
+    changeLevel(mapIndex + 1);
+  }
 }
 
 // move character to given coordinate, handles other behaviors
@@ -180,3 +212,30 @@ function moveTo(x, y) {
 setInterval(() => {
   lasersOn = !lasersOn;
 }, 1000);
+
+// change level to given index
+function changeLevel(levelIndex) {
+  // if map does not exist, return
+  if (levelIndex < 0 || levelIndex >= maps.length) {
+    console.log("Error: level does not exist");
+    return;
+  }
+
+  // update mapIndex, map, blockSize
+  mapIndex = levelIndex;
+  map = maps[mapIndex];
+  blockSize = mapSize / map.length;
+
+  // reset character position and game state
+  character = [0, 0];
+  gameState = "play";
+}
+
+// level selector ui: on change, set new level
+window.addEventListener("DOMContentLoaded", () => {
+  const levelSelector = document.getElementById("level-selector");
+  levelSelector.addEventListener("change", (event) => {
+    const selectedLevel = event.target.value;
+    changeLevel(selectedLevel);
+  });
+});
