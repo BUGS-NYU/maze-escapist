@@ -2,6 +2,7 @@ const mapSize = 300;
 
 let laserImg;
 let charImg;
+let charDir;
 
 // character x, y coordinates on map grid
 let character = [2, 2];
@@ -28,6 +29,7 @@ function preload() {
   // load imgs here
   laserImg = loadImage("images/laser.png");
   charImg = loadImage("images/character.png");
+  charDir = 0;
 }
 
 function setup() {
@@ -95,8 +97,24 @@ function render() {
     }
   }
 
+  // draw char
   
-  image(charImg, character[0] * blockSize, character[1] * blockSize, blockSize, blockSize);
+  // draw character rotated based on charDir:
+  push();
+  imageMode(CENTER);
+  // translate to center of the character cell
+  translate(character[0] * blockSize + blockSize / 2, character[1] * blockSize + blockSize / 2);
+  // map charDir to rotation angle (radians): 0=left, 1=up, 2=right, 3=down
+  let angle = 0;
+  if (charDir === 0) angle = 0;            // left
+  else if (charDir === 1) angle = HALF_PI; // up
+  else if (charDir === 2) angle = scale(-1, 1);        // right
+  else if (charDir === 3) angle = -HALF_PI;  // down
+  rotate(angle);
+  image(charImg, 0, 0, blockSize, blockSize);
+  pop();
+  imageMode(CORNER); // restore default (optional)
+
 
   // if standing in laser, death
   if (map[character[1]][character[0]] === 2 && lasersOn) {
@@ -107,19 +125,27 @@ function render() {
   }
 }
 
-// respond to WASD input, adjusting the character's x & y coordinates, checks if input is also going to a filled block or edge of the map
+// respond to WASD and arrow key input, adjusting the character's x & y coordinates
 function keyPressed() {
-  if (key === "w" && character[1] > 0 && map[character[1]-1][character[0]] !== 1) {
+  // Up movement (W or UP_ARROW)
+  if ((key === "w" || keyCode === UP_ARROW) && character[1] > 0 && map[character[1]-1][character[0]] !== 1) {
     moveTo(character[0], character[1] - 1);
+    charDir = 1;
   }
-  if (key === "a" && character[0] > 0 && map[character[1]][character[0]-1] !== 1) {
+  // Left movement (A or LEFT_ARROW)
+  if ((key === "a" || keyCode === LEFT_ARROW) && character[0] > 0 && map[character[1]][character[0]-1] !== 1) {
     moveTo(character[0] - 1, character[1]);
+    charDir = 0;
   }
-  if (key === "s" && character[1] < 4 && map[character[1]+1][character[0]] !== 1) {
+  // Down movement (S or DOWN_ARROW)
+  if ((key === "s" || keyCode === DOWN_ARROW) && character[1] < 4 && map[character[1]+1][character[0]] !== 1) {
     moveTo(character[0], character[1] + 1);
+    charDir = 3;
   }
-  if (key === "d" && character[0] < 4 && map[character[1]][character[0]+1] !== 1) {
+  // Right movement (D or RIGHT_ARROW)
+  if ((key === "d" || keyCode === RIGHT_ARROW) && character[0] < 4 && map[character[1]][character[0]+1] !== 1) {
     moveTo(character[0] + 1, character[1]);
+    charDir = 2;
   }
 }
 
