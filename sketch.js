@@ -5,13 +5,13 @@ let charImg;
 let charDir;
 
 // character x, y coordinates on map grid
-let character = [2, 2];
+let character;
 
 // width & height of each block on map (in pixels)
 const blockSize = mapSize / 5;
 
 // indicates current game state, could be "play", "win", "lose"
-let gameState = "play";
+let gameState;
 
 // whether all lasers are on/off
 let lasersOn = true;
@@ -30,6 +30,9 @@ function preload() {
   laserImg = loadImage("images/laser.png");
   charImg = loadImage("images/character.png");
   charDir = 0;
+
+  character = [2, 2];
+  gameState = "play";
 }
 
 function setup() {
@@ -50,6 +53,8 @@ function draw() {
     textAlign(CENTER, CENTER);
     textSize(32);
     text("You Died!", width / 2, height / 2);
+    textSize(20);
+    text("Press 'r' to restart", width / 2, height / 2 + 40);
   }
   // if reached end: show ending screen
   else if (gameState === "win") {
@@ -97,7 +102,6 @@ function render() {
     }
   }
 
-  // draw char
   
   // draw character rotated based on charDir:
   push();
@@ -146,6 +150,11 @@ function keyPressed() {
   if ((key === "d" || keyCode === RIGHT_ARROW) && character[0] < 4 && map[character[1]][character[0]+1] !== 1) {
     moveTo(character[0] + 1, character[1]);
     charDir = 2;
+  }
+
+  // reset
+  if (key === "r") {
+    preload()
   }
 }
 
