@@ -12,6 +12,9 @@
     - Pick the audio on your own discretion
     - Load the audio in preload(), use audio.play()
     - Everytime character hits laser, play this audio
+- Mobile Accessibility: for mobile players, we could add Up/Down/Left/Right buttons somehow for character control?
+    - we could make these buttons in the HTML UI
+    - create event listeners for buttons click within window.addEventListener("DOMContentLoaded") { ... }
 - Alex: Intro screen for game
     - Minimally, we could have an simple instruction and a (start) button for this.
 - Sewon: deploy current game to web
