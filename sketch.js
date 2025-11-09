@@ -64,6 +64,7 @@ function preload() {
   charDir = 0;
 
   // load sounds here
+  move = loadSound("sounds/move.mp3");
 
   character = [0, 0];
   gameState = "play";
@@ -189,9 +190,9 @@ function keyPressed() {
     charDir = 2;
   }
 
-  // reset
+  // what david wrote
   if (key === "r") {
-    preload()
+    preload();
   }
   // continue to next level
   if (key === "c" && gameState === "win") {
@@ -208,6 +209,7 @@ function moveTo(x, y) {
 
   // move character
   character = [x, y];
+  move.play();
 }
 
 // flicker laser on/off every 1000 ms
