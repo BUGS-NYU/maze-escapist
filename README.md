@@ -14,8 +14,8 @@
 
 - Alex: Intro screen for game
     - Minimally, we could have an simple instruction and a (start) button for this.
-- Sewon: change the design of the empty / wall blocks, such that they are rendered with images
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character
 - Sewon: levels must be unlocked by completion of its previous (store persistent data in localstorage)
-- Sewon: create new levels w new obstacles included
 - Sewon: create new knight in wall obstacle which cannot be killed by character, regular knight can be killed by character
+    - Revise level4 to display this concept
+- Sewon: create level 5 to reflect knight blocking correct path, different path needed to eliminate the knight

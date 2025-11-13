@@ -6,6 +6,8 @@ let charDir;
 let knightImg;
 let move;
 let knightSound;
+let dirtImg;
+let stoneImg;
 
 // character x, y coordinates on map grid
 let character;
@@ -79,8 +81,10 @@ function preload() {
   // load imgs here
   laserImg = loadImage("images/laser.png");
   charImg = loadImage("images/character.png");
-  knightImg = loadImage("images/knight.webp");
+  knightImg = loadImage("images/knight.png");
   charDir = 0;
+  dirtImg = loadImage("images/dirt.jpg");
+  stoneImg = loadImage("images/stone.png");
 
   // load sounds here
   move = loadSound("sounds/move.mp3");
@@ -136,16 +140,19 @@ function render() {
       if (map[y][x] === 0) {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if wall
       else if (map[y][x] === 1) {
         fill(100);
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(stoneImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if laser
       else if (map[y][x] === 2) {
         fill(0, 0, 255, 50);
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
         if (lasersOn) {
           image(laserImg, x * blockSize, y * blockSize, blockSize, blockSize);
         }
@@ -160,6 +167,7 @@ function render() {
       else if (map[y][x] === 4) {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
         image(knightImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
     }
@@ -303,7 +311,7 @@ setInterval(() => {
 function changeLevel(levelIndex) {
   // if map does not exist, return
   if (levelIndex < 0 || levelIndex >= maps.length) {
-    console.log("Error: level does not exist");
+    console.log("Error: level does not exist at index " + levelIndex);
     return;
   }
 
@@ -322,6 +330,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const levelSelector = document.getElementById("level-selector");
   levelSelector.addEventListener("change", (event) => {
     const selectedLevel = event.target.value;
-    changeLevel(selectedLevel);
+    changeLevel(parseInt(selectedLevel));
   });
 });
