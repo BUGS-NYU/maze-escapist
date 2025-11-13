@@ -3,9 +3,14 @@ const mapSize = 300;
 let laserImg;
 let charImg;
 let charDir;
+let knightImg;
+let move;
+let knightSound;
 
 // character x, y coordinates on map grid
 let character;
+let characterCanMove = true;
+let characterVisible = true;
 
 // width & height of each block on map (in pixels)
 let blockSize = mapSize / 7;
@@ -21,6 +26,7 @@ let lasersOn = true;
   // 1 = wall
   // 2 = laser
   // 3 = end block
+  // 4 = knight block
 const maps = [
   [
     [0, 0, 0, 0, 0, 0, 0],
@@ -52,6 +58,18 @@ const maps = [
     [0, 1, 0, 0, 0, 2, 1, 1, 1, 0],
     [0, 1, 2, 1, 1, 1, 2, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
+  ],
+  [
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+    [0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 4, 0, 0, 1, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 0, 0, 0, 0, 4],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
   ]
 ];
 let mapIndex = 0;
@@ -61,10 +79,12 @@ function preload() {
   // load imgs here
   laserImg = loadImage("images/laser.png");
   charImg = loadImage("images/character.png");
+  knightImg = loadImage("images/knight.webp");
   charDir = 0;
 
   // load sounds here
   move = loadSound("sounds/move.mp3");
+  knightSound = loadSound("sounds/knight-sound.mp3");
 
   character = [0, 0];
   gameState = "play";
@@ -136,6 +156,12 @@ function render() {
         fill("#663399");
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
       }
+      // if knight block
+      else if (map[y][x] === 4) {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(knightImg, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
     }
   }
 
@@ -152,7 +178,9 @@ function render() {
   else if (charDir === 2) angle = scale(-1, 1);        // right
   else if (charDir === 3) angle = -HALF_PI;  // down
   rotate(angle);
-  image(charImg, 0, 0, blockSize, blockSize);
+  if (characterVisible) {
+    image(charImg, 0, 0, blockSize, blockSize);
+  }
   pop();
   imageMode(CORNER); // restore default (optional)
 
@@ -165,6 +193,14 @@ function render() {
   if (map[character[1]][character[0]] === 3) {
     gameState = "win";
   }
+}
+
+// function to reset game at current level
+function reset() {
+  character = [0, 0];
+  gameState = "play";
+  characterCanMove = true;
+  characterVisible = true;
 }
 
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
@@ -190,9 +226,9 @@ function keyPressed() {
     charDir = 2;
   }
 
-  // what david wrote
+  // reset game
   if (key === "r") {
-    preload();
+    reset();
   }
   // continue to next level
   if (key === "c" && gameState === "win") {
@@ -202,9 +238,55 @@ function keyPressed() {
 
 // move character to given coordinate, handles other behaviors
 function moveTo(x, y) {
+  // if cannot move
+  if (!characterCanMove) {
+    return;
+  }
+
   // if wall, do not move
   if (map[y][x] === 1) {
     return;
+  }
+
+  // if knight attacked block, lose
+  const knights = [];
+  for (let y = 0; y < map.length; y++) {
+    for (let x = 0; x < map[y].length; x++) {
+      if (map[y][x] === 4) {
+        knights.push([x, y]);
+      }
+    }
+  }
+  for (const knight of knights) {
+    const attackPositions = [
+      [knight[0] + 2, knight[1] + 1],
+      [knight[0] + 2, knight[1] - 1],
+      [knight[0] - 2, knight[1] + 1],
+      [knight[0] - 2, knight[1] - 1],
+      [knight[0] + 1, knight[1] + 2],
+      [knight[0] + 1, knight[1] - 2],
+      [knight[0] - 1, knight[1] + 2],
+      [knight[0] - 1, knight[1] - 2],
+    ];
+    for (const pos of attackPositions) {
+      if (pos[0] === x && pos[1] === y) {
+        character = [x, y];
+        knightSound.play();
+
+        // knight moves to player
+        characterCanMove = false;
+        characterVisible = false;
+        map[knight[1]][knight[0]] = 0;
+        map[y][x] = 4;
+
+        setTimeout(() => {
+          map[y][x] = 0;
+          map[knight[1]][knight[0]] = 4;
+          gameState = "lose";
+        }, 500);
+        return;
+      }
+    }
   }
 
   // move character
