@@ -381,4 +381,6 @@ window.addEventListener("DOMContentLoaded", () => {
     const selectedLevel = event.target.value;
     changeLevel(parseInt(selectedLevel));
   });
+
+  // TODO: coco's task
 });

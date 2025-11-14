@@ -4,20 +4,27 @@
 - David - Timer: have a timer countdown be displayed on the top-left corner of the game
     - Use text() function to display text on the p5 canvas
     - If the timer runs out before the player reaches the end, redirect to losing screen
-- Sound effect to play every time the character dies from laser
+- Pope - Sound effect to play every time the character dies from laser
     - Pick the audio on your own discretion
     - Load the audio in preload(), use audio.play()
     - Everytime character hits laser, play this audio
-- Mobile Accessibility: for mobile players, we could add Up/Down/Left/Right buttons somehow for character control?
+- Coco - Mobile Accessibility: for mobile players, we could add Up/Down/Left/Right buttons somehow for character control?
     - we could make these buttons in the HTML UI
     - create event listeners for buttons click within window.addEventListener("DOMContentLoaded") { ... }
-- Create level8
+- Knight Movement Indicator
+    - when character dies from knight, indicate the squares in which the knight is able to attack
+    - with red shade
+- Sewon - Wrong Level Rendering error
+    - Replicate by selecting level4, then lvl5 shows up, die to get to lvl4
+- Sewon - Wrong level on Select element error
+    - Replicate by going to one level, progressing to next
+- Sewon - Create level8
     - use a combination of knight & laser to create dynamic gameplay
     - play test it, ensure it is playable
-- Fix knight-related bug
+- Sewon - Fix knight-related bug
     - eating a knight in lvl4, then switching to a diff level and going back to lvl4 causes this bug
     - the knight will no longer exist as a result
-- Improve appearance of end block
+- Ele - Improve appearance of end block
     - right now end block is a purple square
     - rendering a door/gate image onto the end block should make it more intuitive for players
 - Level Selection improvement
