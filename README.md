@@ -15,7 +15,7 @@
 - Alex: Intro screen for game
     - Minimally, we could have an simple instruction and a (start) button for this.
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character
+- Sewon: new nonmoving explosive obstacle, moving into it leads to death
+- Sewon: move all knight-related code/logic to diff js file
+- Sewon: add lighting system in proximity distance w character
 - Sewon: levels must be unlocked by completion of its previous (store persistent data in localstorage)
-- Sewon: create new knight in wall obstacle which cannot be killed by character, regular knight can be killed by character
-    - Revise level4 to display this concept
-- Sewon: create level 5 to reflect knight blocking correct path, different path needed to eliminate the knight

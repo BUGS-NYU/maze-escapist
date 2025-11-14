@@ -8,6 +8,7 @@ let move;
 let knightSound;
 let dirtImg;
 let stoneImg;
+let chompSound;
 
 // character x, y coordinates on map grid
 let character;
@@ -28,7 +29,8 @@ let lasersOn = true;
   // 1 = wall
   // 2 = laser
   // 3 = end block
-  // 4 = knight block
+  // 4 = knight
+  // 5 = dead knight
 const maps = [
   [
     [0, 0, 0, 0, 0, 0, 0],
@@ -69,9 +71,22 @@ const maps = [
     [0, 0, 0, 0, 4, 0, 0, 1, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 0, 0, 0, 0, 0, 0, 4],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 4, 0, 0, 3],
+  ],
+  [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0],
+    [0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0],
+    [0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0],
+    [0, 0, 1, 4, 0, 0, 2, 2, 2, 1, 0],
+    [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [1, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0],
+    [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0],
+    [0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0],
+    [0, 0, 0, 0, 2, 0, 0, 0, 4, 1, 3],
   ]
 ];
 let mapIndex = 0;
@@ -89,6 +104,7 @@ function preload() {
   // load sounds here
   move = loadSound("sounds/move.mp3");
   knightSound = loadSound("sounds/knight-sound.mp3");
+  chompSound = loadSound("sounds/chomp.mp3");
 
   character = [0, 0];
   gameState = "play";
@@ -144,13 +160,13 @@ function render() {
       }
       // if wall
       else if (map[y][x] === 1) {
-        fill(100);
+        noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         image(stoneImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if laser
       else if (map[y][x] === 2) {
-        fill(0, 0, 255, 50);
+        noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
         if (lasersOn) {
@@ -159,7 +175,6 @@ function render() {
       }
       // if end block
       else if (map[y][x] === 3) {
-        // fill(112, 43, 157);
         fill("#663399");
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
       }
@@ -169,6 +184,12 @@ function render() {
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
         image(knightImg, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
+      // if dead knight
+      else if (map[y][x] === 5) {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
     }
   }
@@ -209,6 +230,15 @@ function reset() {
   gameState = "play";
   characterCanMove = true;
   characterVisible = true;
+
+  // restore all knights
+  for (let y = 0; y < map.length; y++) {
+    for (let x = 0; x < map[y].length; x++) {
+      if (map[y][x] === 5) {
+        map[y][x] = 4;
+      }
+    }
+  }
 }
 
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
@@ -281,20 +311,39 @@ function moveTo(x, y) {
         character = [x, y];
         knightSound.play();
 
-        // knight moves to player
-        characterCanMove = false;
-        characterVisible = false;
-        map[knight[1]][knight[0]] = 0;
-        map[y][x] = 4;
+        // if player is standing on knight
+        if (map[y][x] === 4) {
+          characterCanMove = false;
+          characterVisible = false;
+          setTimeout(() => {
+            gameState = "lose";
+          }, 500);
+        }
+        // if player is standing on other
+        else {
+          characterCanMove = false;
+          characterVisible = false;
+          const playerCell = map[y][x];
+          map[knight[1]][knight[0]] = 0;
+          map[y][x] = 4;
 
-        setTimeout(() => {
-          map[y][x] = 0;
-          map[knight[1]][knight[0]] = 4;
-          gameState = "lose";
-        }, 500);
+          setTimeout(() => {
+            map[y][x] = playerCell;
+            map[knight[1]][knight[0]] = 4;
+            gameState = "lose";
+          }, 500);
+        }
         return;
       }
     }
+  }
+
+  // if knight block, eat knight
+  if (map[y][x] === 4) {
+    character = [x, y];
+    chompSound.play();
+    map[y][x] = 5;
+    return;
   }
 
   // move character
