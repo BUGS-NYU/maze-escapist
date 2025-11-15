@@ -25,13 +25,13 @@
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
 
-- Sewon - Create level8
+- Sewon - add lvl8
     - use a combination of knight & laser to create dynamic gameplay
-    - play test it, ensure it is playable
-- Sewon - Fix knight-related bug
-    - eating a knight in lvl4, then switching to a diff level and going back to lvl4 causes this bug
-    - the knight will no longer exist as a result
-- Sewon: add lvl6 w new knight ideas, add small lvl7 with mass laser idea
+    - 
+- Sewon: add lvl9
+    - larger map size
+    - cannon enemy
+
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character
 - Sewon: move all knight-related code/logic to diff js file
 - Sewon: add lighting system in proximity distance w character
@@ -40,3 +40,5 @@
 - Sewon: add cannon obstacle
 - Sewon: add mortar obstacle
 - Sewon: indicate laser block even when off
+- Sewon: move maps data to json file
+- Sewon: add more levels (2 adjacent knights, 2 protected knights interfered run)
