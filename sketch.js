@@ -10,10 +10,12 @@ let dirtImg;
 let stoneImg;
 let chompSound;
 
-// character x, y coordinates on map grid
+// character
+  // x (int): position on map grid
+  // y (int): position on map grid
+  // canMove (bool): whether character can move
+  // visible (bool): whether character is visible
 let character;
-let characterCanMove = true;
-let characterVisible = true;
 
 // width & height of each block on map (in pixels)
 let blockSize = mapSize / 7;
@@ -150,7 +152,12 @@ function preload() {
   knightSound = loadSound("sounds/knight-sound.mp3");
   chompSound = loadSound("sounds/chomp.mp3");
 
-  character = [0, 0];
+  character = {
+    x: 0,
+    y: 0,
+    canMove: true,
+    visible: true,
+  };
   gameState = "play";
 }
 
@@ -247,7 +254,7 @@ function render() {
   push();
   imageMode(CENTER);
   // translate to center of the character cell
-  translate(character[0] * blockSize + blockSize / 2, character[1] * blockSize + blockSize / 2);
+  translate(character.x * blockSize + blockSize / 2, character.y * blockSize + blockSize / 2);
   // map charDir to rotation angle (radians): 0=left, 1=up, 2=right, 3=down
   let angle = 0;
   if (charDir === 0) angle = 0;            // left
@@ -255,7 +262,7 @@ function render() {
   else if (charDir === 2) angle = scale(-1, 1);        // right
   else if (charDir === 3) angle = -HALF_PI;  // down
   rotate(angle);
-  if (characterVisible) {
+  if (character.visible) {
     image(charImg, 0, 0, blockSize, blockSize);
   }
   pop();
@@ -263,21 +270,24 @@ function render() {
 
 
   // if standing in laser, death
-  if (map[character[1]][character[0]] === 2 && lasersOn) {
+  if (map[character.y][character.x] === 2 && lasersOn) {
     gameState = "lose";
   }
   // if standing in end block, win
-  if (map[character[1]][character[0]] === 3) {
+  if (map[character.y][character.x] === 3) {
     gameState = "win";
   }
 }
 
 // function to reset game at current level
 function reset() {
-  character = [0, 0];
+  character = {
+    x: 0,
+    y: 0,
+    canMove: true,
+    visible: true
+  };
   gameState = "play";
-  characterCanMove = true;
-  characterVisible = true;
 
   // restore all knights
   for (let y = 0; y < map.length; y++) {
@@ -292,23 +302,23 @@ function reset() {
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
 function keyPressed() {
   // Up movement (W or UP_ARROW)
-  if ((key === "w" || keyCode === UP_ARROW) && character[1] > 0) {
-    moveTo(character[0], character[1] - 1);
+  if ((key === "w" || keyCode === UP_ARROW) && character.y > 0) {
+    moveTo(character.x, character.y - 1);
     charDir = 1;
   }
   // Left movement (A or LEFT_ARROW)
-  if ((key === "a" || keyCode === LEFT_ARROW) && character[0] > 0) {
-    moveTo(character[0] - 1, character[1]);
+  if ((key === "a" || keyCode === LEFT_ARROW) && character.x > 0) {
+    moveTo(character.x - 1, character.y);
     charDir = 0;
   }
   // Down movement (S or DOWN_ARROW)
-  if ((key === "s" || keyCode === DOWN_ARROW) && character[1] < map.length - 1) {
-    moveTo(character[0], character[1] + 1);
+  if ((key === "s" || keyCode === DOWN_ARROW) && character.y < map.length - 1) {
+    moveTo(character.x, character.y + 1);
     charDir = 3;
   }
   // Right movement (D or RIGHT_ARROW)
-  if ((key === "d" || keyCode === RIGHT_ARROW) && character[0] < map[0].length - 1) {
-    moveTo(character[0] + 1, character[1]);
+  if ((key === "d" || keyCode === RIGHT_ARROW) && character.x < map[0].length - 1) {
+    moveTo(character.x + 1, character.y);
     charDir = 2;
   }
 
@@ -325,7 +335,7 @@ function keyPressed() {
 // move character to given coordinate, handles other behaviors
 function moveTo(x, y) {
   // if cannot move
-  if (!characterCanMove) {
+  if (!character.canMove) {
     return;
   }
 
@@ -356,21 +366,22 @@ function moveTo(x, y) {
     ];
     for (const pos of attackPositions) {
       if (pos[0] === x && pos[1] === y) {
-        character = [x, y];
+        character.x = x;
+        character.y = y;
         knightSound.play();
 
         // if player is standing on knight
         if (map[y][x] === 4) {
-          characterCanMove = false;
-          characterVisible = false;
+          character.canMove = false;
+          character.visible = false;
           setTimeout(() => {
             gameState = "lose";
           }, 500);
         }
         // if player is standing on other
         else {
-          characterCanMove = false;
-          characterVisible = false;
+          character.canMove = false;
+          character.visible = false;
           const playerCell = map[y][x];
           map[knight[1]][knight[0]] = 0;
           map[y][x] = 4;
@@ -388,14 +399,16 @@ function moveTo(x, y) {
 
   // if knight block, eat knight
   if (map[y][x] === 4) {
-    character = [x, y];
+    character.x = x;
+    character.y = y;
     chompSound.play();
     map[y][x] = 5;
     return;
   }
 
-  // move character
-  character = [x, y];
+  // if empty space, move character
+  character.x = x;
+  character.y = y;
   move.play();
 }
 

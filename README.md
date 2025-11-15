@@ -25,6 +25,8 @@
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
 
+- Sewon: add cannon obstacle
+- Sewon: create new world's design
 - Sewon: add lvl9
     - larger map size
     - cannon enemy
@@ -32,8 +34,6 @@
 - Sewon: add lighting system in proximity distance w character
 - Sewon: levels must be unlocked by completion of its previous (store persistent data in localstorage)
 - Sewon: add item to increase time when collected
-- Sewon: add cannon obstacle
 - Sewon: add mortar obstacle
 - Sewon: move maps data to json file
-- Sewon: move all knight-related code/logic to diff js file
 - Sewon: add more levels (2 protected knights interfered run)
