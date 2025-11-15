@@ -11,9 +11,21 @@
 - Coco - Mobile Accessibility: for mobile players, we could add Up/Down/Left/Right buttons somehow for character control?
     - we could make these buttons in the HTML UI
     - create event listeners for buttons click within window.addEventListener("DOMContentLoaded") { ... }
+- Ele - Improve appearance of end block
+    - right now end block is a purple square
+    - rendering a door/gate image onto the end block should make it more intuitive for players
+- Alex: Intro screen for game
+    - Minimally, we could have an simple instruction and a (start) button for this.
+
+- Level Selection improvement
+    - right now, all we have is a select input to go to a new level
+    - we can consider grouping levels into "Worlds" and develop a level selection UI in accordance
+    - further details can be planned later
 - Knight Movement Indicator
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
+
+- Sewon: dead knights not restored on changelevel error
 - Sewon - Wrong Level Rendering error
     - Replicate by selecting level4, then lvl5 shows up, die to get to lvl4
 - Sewon - Wrong level on Select element error
@@ -24,16 +36,6 @@
 - Sewon - Fix knight-related bug
     - eating a knight in lvl4, then switching to a diff level and going back to lvl4 causes this bug
     - the knight will no longer exist as a result
-- Ele - Improve appearance of end block
-    - right now end block is a purple square
-    - rendering a door/gate image onto the end block should make it more intuitive for players
-- Level Selection improvement
-    - right now, all we have is a select input to go to a new level
-    - we can consider grouping levels into "Worlds" and develop a level selection UI in accordance
-    - further details can be planned later
-
-- Alex: Intro screen for game
-    - Minimally, we could have an simple instruction and a (start) button for this.
 - Sewon: add lvl6 w new knight ideas, add small lvl7 with mass laser idea
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character
 - Sewon: move all knight-related code/logic to diff js file
@@ -41,3 +43,5 @@
 - Sewon: levels must be unlocked by completion of its previous (store persistent data in localstorage)
 - Sewon: add item to increase time when collected
 - Sewon: add cannon obstacle
+- Sewon: add mortar obstacle
+- Sewon: indicate laser block even when off

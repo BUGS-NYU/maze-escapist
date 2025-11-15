@@ -239,6 +239,9 @@ function reset() {
       }
     }
   }
+
+  // TEST
+  console.log(map);
 }
 
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
@@ -270,6 +273,7 @@ function keyPressed() {
   }
   // continue to next level
   if (key === "c" && gameState === "win") {
+    console.log("Changing to level " + (mapIndex + 1)); // TEST
     changeLevel(mapIndex + 1);
   }
 }
@@ -369,9 +373,7 @@ function changeLevel(levelIndex) {
   map = maps[mapIndex];
   blockSize = mapSize / map.length;
 
-  // reset character position and game state
-  character = [0, 0];
-  gameState = "play";
+  reset();
 }
 
 // level selector ui: on change, set new level
