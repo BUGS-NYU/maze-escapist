@@ -25,7 +25,7 @@
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
 
-- Sewon: add cannon obstacle
+- Sewon: implement cannon obstacle & death animation
 - Sewon: create new world's design
 - Sewon: add lvl9
     - larger map size

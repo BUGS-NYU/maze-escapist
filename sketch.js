@@ -9,6 +9,7 @@ let knightSound;
 let dirtImg;
 let stoneImg;
 let chompSound;
+let cannonImg;
 
 // character
   // x (int): position on map grid
@@ -27,112 +28,127 @@ let gameState;
 let lasersOn = true;
 
 // create a map 2d grid
-  // 0 = empty space
-  // 1 = wall
-  // 2 = laser
-  // 3 = end block
-  // 4 = knight
-  // 5 = dead knight
+  // ' ' = empty space
+  // W = wall
+  // L = laser
+  // E = end block
+  // K = knight
+  // D = dead knight
+  // 1 = cannon up
+  // 2 = cannon down
+  // 3 = cannon right
+  // 4 = cannon left
 const maps = [
   [
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 1, 1, 0],
-    [0, 1, 0, 0, 0, 1, 1],
-    [0, 0, 0, 1, 1, 0, 1],
-    [0, 1, 1, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 1, 0],
-    [0, 1, 0, 0, 0, 1, 3],
+    [' ',' ',' ',' ',' ',' ',' '],
+    [' ','W','W','W','W','W',' '],
+    [' ','W',' ',' ',' ','W','W'],
+    [' ',' ',' ','W','W',' ','W'],
+    [' ','W','W','W',' ',' ',' '],
+    [' ',' ',' ','W',' ','W',' '],
+    [' ','W',' ',' ',' ','W','E'],
   ],
   [
-    [0, 1, 0, 0, 0, 0, 0, 2],
-    [0, 1, 0, 1, 1, 1, 1, 0],
-    [0, 0, 2, 0, 0, 0, 1, 0],
-    [0, 1, 1, 1, 1, 0, 0, 1],
-    [0, 1, 2, 0, 0, 1, 0, 0],
-    [0, 1, 0, 1, 1, 0, 1, 2],
-    [0, 1, 0, 1, 1, 0, 1, 2],
-    [2, 0, 0, 0, 0, 0, 1, 3],
+    [' ','W',' ',' ',' ',' ',' ','L'],
+    [' ','W',' ','W','W','W','W',' '],
+    [' ',' ','L',' ',' ',' ','W',' '],
+    [' ','W','W','W','W',' ',' ','W'],
+    [' ','W','L',' ',' ','W',' ',' '],
+    [' ','W',' ','W','W',' ','W','L'],
+    [' ','W',' ','W','W',' ','W','L'],
+    ['L',' ',' ',' ',' ',' ','W','E'],
   ],
   [
-    [0, 2, 0, 0, 0, 0, 1, 0, 0, 0],
-    [2, 1, 0, 1, 1, 0, 2, 0, 1, 0],
-    [0, 1, 0, 0, 1, 0, 1, 1, 0, 2],
-    [0, 1, 1, 2, 0, 1, 0, 0, 1, 0],
-    [0, 0, 1, 0, 1, 3, 1, 0, 0, 0],
-    [1, 2, 1, 0, 1, 2, 2, 1, 1, 1],
-    [0, 0, 1, 1, 2, 1, 2, 0, 0, 0],
-    [0, 1, 0, 0, 0, 2, 1, 1, 1, 0],
-    [0, 1, 2, 1, 1, 1, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
+    [' ','L',' ',' ',' ',' ','W',' ',' ',' '],
+    ['L','W',' ','W','W',' ','L',' ','W',' '],
+    [' ','W',' ',' ','W',' ','W','W',' ','L'],
+    [' ','W','W','L',' ','W',' ',' ','W',' '],
+    [' ',' ','W',' ','W','E','W',' ',' ',' '],
+    ['W','L','W',' ','W','L','L','W','W','W'],
+    [' ',' ','W','W','L','W','L',' ',' ',' '],
+    [' ','W',' ',' ',' ','L','W','W','W',' '],
+    [' ','W','L','W','W','W','L',' ',' ',' '],
+    [' ',' ',' ',' ',' ',' ','L','W','W','W'],
   ],
   [
-    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-    [0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 4, 0, 0, 1, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 4, 0, 0, 3],
+    [' ', ' ', ' ', ' ', 'W', ' ', ' ', 'W', ' ', ' '],
+    [' ', ' ', ' ', 'W', ' ', ' ', 'W', ' ', ' ', ' '],
+    [' ', 'W', ' ', ' ', ' ', ' ', ' ', 'W', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', 'K', ' ', ' ', 'W', ' ', ' '],
+    ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    ['W', 'W', 'W', ' ', ' ', ' ', 'W', 'W', 'W', 'W'],
+    [' ', ' ', ' ', ' ', ' ', 'W', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', 'K', ' ', ' ', 'E'],
   ],
   [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0],
-    [0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0],
-    [0, 0, 1, 4, 0, 0, 2, 2, 2, 1, 0],
-    [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [1, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0],
-    [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0],
-    [0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 0],
-    [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0],
-    [0, 0, 0, 0, 2, 0, 0, 0, 4, 1, 3],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'L'],
+    [' ', 'W', 'W', 'W', 'W', 'W', 'W', 'W', ' ', 'W', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', 'L', 'L', 'L', 'W', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', 'L', 'L', 'L', 'W', ' '],
+    [' ', ' ', 'W', 'K', ' ', ' ', 'L', 'L', 'L', 'W', ' '],
+    ['W', ' ', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', ' '],
+    ['W', ' ', ' ', ' ', 'L', ' ', ' ', ' ', ' ', 'W', ' '],
+    ['W', ' ', 'W', 'W', 'W', 'W', 'W', 'W', ' ', 'W', ' '],
+    [' ', ' ', ' ', ' ', 'K', ' ', ' ', ' ', ' ', 'W', ' '],
+    [' ', 'W', 'W', 'W', 'W', 'W', 'W', ' ', 'W', 'W', ' '],
+    [' ', ' ', ' ', ' ', 'L', ' ', ' ', ' ', 'K', 'W', 'E'],
   ],
   [
-    [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
-    [0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0],
-    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-    [4, 1, 0, 0, 0, 0, 1, 1, 1, 1, 4, 0],
-    [1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0],
-    [0, 0, 0, 1, 2, 2, 4, 2, 2, 0, 0, 0],
-    [0, 1, 1, 1, 0, 2, 2, 2, 0, 0, 0, 0],
-    [3, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+    [' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'W', 'W'],
+    [' ', ' ', ' ', ' ', ' ', 'K', ' ', ' ', ' ', ' ', ' ', 'W'],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'K', ' ', ' ', ' ', ' '],
+    ['W', 'W', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    ['W', 'W', 'W', 'W', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', ' ', ' ', ' '],
+    ['K', 'W', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'K', ' '],
+    ['W', ' ', ' ', ' ', ' ', ' ', 'L', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', 'L', 'L', 'L', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', 'W', 'L', 'L', 'K', 'L', 'L', ' ', ' ', ' '],
+    [' ', 'W', 'W', 'W', ' ', 'L', 'L', 'L', ' ', ' ', ' ', ' '],
+    ['E', 'W', ' ', ' ', ' ', ' ', 'L', ' ', ' ', ' ', ' ', ' '],
   ],
   [
-    [0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1],
-    [1, 1, 1, 1, 1, 1, 1, 0, 2, 2, 2, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1],
-    [2, 2, 1, 1, 1, 1, 1, 1, 0, 2, 2, 1],
-    [2, 3, 2, 2, 2, 2, 1, 1, 1, 1, 2, 1],
-    [2, 2, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0],
-    [2, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0, 0],
-    [1, 1, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1, 2, 2, 0, 2, 0, 0, 0],
+    [' ', ' ', ' ', ' ', 'L', 'L', 'L', 'L', 'L', 'L', ' ', 'W'],
+    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L', 'W'],
+    ['W', 'W', 'W', 'W', 'W', 'W', 'W', ' ', 'L', 'L', 'L', 'W'],
+    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L', 'W', 'W', 'W'],
+    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L', 'L', ' ', 'W'],
+    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L', 'W', 'W'],
+    ['L', 'L', 'W', 'W', 'W', 'W', 'W', 'W', ' ', 'L', 'L', 'W'],
+    ['L', 'E', 'L', 'L', 'L', 'L', 'W', 'W', 'W', 'W', 'L', 'W'],
+    ['L', 'L', 'L', 'L', 'L', 'L', ' ', 'L', ' ', ' ', ' ', ' '],
+    ['L', 'L', 'L', 'L', 'L', ' ', 'L', ' ', ' ', ' ', ' ', ' '],
+    ['W', 'W', 'L', 'L', 'L', 'L', ' ', 'L', ' ', ' ', ' ', ' '],
+    ['W', 'W', 'W', 'W', 'W', 'L', 'L', ' ', 'L', ' ', ' ', ' '],
   ],
   [
-    [0, 0, 0, 0, 0, 0, 1, 2, 1, 2, 0, 2, 0, 2],
-    [0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0],
-    [0, 1, 0, 1, 0, 0, 0, 2, 1, 2, 1, 2, 1, 2],
-    [0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0],
-    [0, 1, 0, 1, 0, 1, 0, 2, 0, 2, 1, 2, 1, 2],
-    [0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
-    [0, 1, 0, 1, 0, 1, 1, 1, 0, 2, 1, 2, 0, 2],
-    [2, 1, 2, 0, 2, 0, 2, 1, 4, 0, 0, 0, 1, 0],
-    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0],
-    [2, 0, 2, 0, 2, 0, 2, 0, 1, 0, 1, 1, 1, 0],
-    [0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0],
-    [2, 1, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0],
-    [2, 0, 2, 0, 2, 0, 1, 0, 0, 0, 4, 4, 4, 3],
+    [' ', ' ', ' ', ' ', ' ', ' ', 'W', 'L', 'W', 'L', ' ', 'L', ' ', 'L'],
+    [' ', 'W', ' ', 'W', 'W', ' ', 'W', ' ', 'W', ' ', 'W', 'W', 'W', ' '],
+    [' ', 'W', ' ', 'W', ' ', ' ', ' ', 'L', 'W', 'L', 'W', 'L', 'W', 'L'],
+    [' ', 'W', ' ', 'W', ' ', 'W', 'W', ' ', 'W', ' ', 'W', ' ', 'W', ' '],
+    [' ', 'W', ' ', 'W', ' ', 'W', ' ', 'L', ' ', 'L', 'W', 'L', 'W', 'L'],
+    [' ', 'W', ' ', 'W', ' ', 'W', ' ', 'W', 'W', ' ', 'W', ' ', 'W', ' '],
+    [' ', 'W', ' ', 'W', ' ', 'W', 'W', 'W', ' ', 'L', 'W', 'L', ' ', 'L'],
+    ['L', 'W', 'L', ' ', 'L', ' ', 'L', 'W', 'K', ' ', ' ', ' ', 'W', ' '],
+    [' ', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', ' ', 'W', ' ', 'W', ' '],
+    ['L', ' ', 'L', ' ', 'L', ' ', 'L', ' ', 'W', ' ', 'W', 'W', 'W', ' '],
+    [' ', 'W', ' ', 'W', 'W', 'W', 'W', ' ', 'W', ' ', ' ', ' ', ' ', ' '],
+    ['L', 'W', 'L', ' ', 'W', ' ', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', 'W', 'W', 'W', 'W', 'L', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    ['L', ' ', 'L', ' ', 'L', ' ', 'W', ' ', ' ', ' ', 'K', 'K', 'K', 'E'],
+  ],
+  [
+    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    [' ',' ',' ',' ',' ','1','2','3','4'],
+    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
   ]
 ];
 let mapIndex = 0;
@@ -146,6 +162,7 @@ function preload() {
   charDir = 0;
   dirtImg = loadImage("images/dirt.jpg");
   stoneImg = loadImage("images/stone.png");
+  cannonImg = loadImage("images/cannon.webp");
 
   // load sounds here
   move = loadSound("sounds/move.mp3");
@@ -204,19 +221,19 @@ function render() {
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
       // if empty space
-      if (map[y][x] === 0) {
+      if (map[y][x] === ' ') {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if wall
-      else if (map[y][x] === 1) {
+      else if (map[y][x] === 'W') {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         image(stoneImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if laser
-      else if (map[y][x] === 2) {
+      else if (map[y][x] === 'L') {
         push();
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
@@ -229,22 +246,70 @@ function render() {
         pop();
       }
       // if end block
-      else if (map[y][x] === 3) {
+      else if (map[y][x] === 'E') {
         fill("#663399");
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if knight block
-      else if (map[y][x] === 4) {
+      else if (map[y][x] === 'K') {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
         image(knightImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if dead knight
-      else if (map[y][x] === 5) {
+      else if (map[y][x] === 'D') {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
+      // if cannon up
+      else if (map[y][x] === '1') {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        push();
+        imageMode(CENTER);
+        translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
+        rotate((PI) + (PI / 4));
+        image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
+        pop();
+      }
+      // if cannon down
+      else if (map[y][x] === '2') {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        push();
+        imageMode(CENTER);
+        translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
+        rotate((PI / 4));
+        image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
+        pop();
+      }
+      // if cannon right
+      else if (map[y][x] === '3') {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        push();
+        imageMode(CENTER);
+        translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
+        rotate((PI / 2) + (PI / 4));
+        image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
+        pop();
+      }
+      // if cannon left
+      else if (map[y][x] === '4') {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        push();
+        imageMode(CENTER);
+        translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
+        rotate((3 * PI / 2) + (PI / 4));
+        image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
+        pop();
       }
     }
   }
@@ -270,11 +335,11 @@ function render() {
 
 
   // if standing in laser, death
-  if (map[character.y][character.x] === 2 && lasersOn) {
+  if (map[character.y][character.x] === 'L' && lasersOn) {
     gameState = "lose";
   }
   // if standing in end block, win
-  if (map[character.y][character.x] === 3) {
+  if (map[character.y][character.x] === 'E') {
     gameState = "win";
   }
 }
@@ -292,8 +357,8 @@ function reset() {
   // restore all knights
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
-      if (map[y][x] === 5) {
-        map[y][x] = 4;
+      if (map[y][x] === 'D') {
+        map[y][x] = 'K';
       }
     }
   }
@@ -340,7 +405,7 @@ function moveTo(x, y) {
   }
 
   // if wall, do not move
-  if (map[y][x] === 1) {
+  if (map[y][x] === 'W') {
     return;
   }
 
@@ -348,7 +413,7 @@ function moveTo(x, y) {
   const knights = [];
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
-      if (map[y][x] === 4) {
+      if (map[y][x] === 'K') {
         knights.push([x, y]);
       }
     }
@@ -371,7 +436,7 @@ function moveTo(x, y) {
         knightSound.play();
 
         // if player is standing on knight
-        if (map[y][x] === 4) {
+        if (map[y][x] === 'K') {
           character.canMove = false;
           character.visible = false;
           setTimeout(() => {
@@ -383,12 +448,12 @@ function moveTo(x, y) {
           character.canMove = false;
           character.visible = false;
           const playerCell = map[y][x];
-          map[knight[1]][knight[0]] = 0;
-          map[y][x] = 4;
+          map[knight[1]][knight[0]] = ' ';
+          map[y][x] = 'K';
 
           setTimeout(() => {
             map[y][x] = playerCell;
-            map[knight[1]][knight[0]] = 4;
+            map[knight[1]][knight[0]] = 'K';
             gameState = "lose";
           }, 500);
         }
@@ -398,11 +463,11 @@ function moveTo(x, y) {
   }
 
   // if knight block, eat knight
-  if (map[y][x] === 4) {
+  if (map[y][x] === 'K') {
     character.x = x;
     character.y = y;
     chompSound.play();
-    map[y][x] = 5;
+    map[y][x] = 'D';
     return;
   }
 
