@@ -239,9 +239,6 @@ function reset() {
       }
     }
   }
-
-  // TEST
-  console.log(map);
 }
 
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
@@ -273,7 +270,6 @@ function keyPressed() {
   }
   // continue to next level
   if (key === "c" && gameState === "win") {
-    console.log("Changing to level " + (mapIndex + 1)); // TEST
     changeLevel(mapIndex + 1);
   }
 }
@@ -379,9 +375,18 @@ function changeLevel(levelIndex) {
 // level selector ui: on change, set new level
 window.addEventListener("DOMContentLoaded", () => {
   const levelSelector = document.getElementById("level-selector");
+
+  // if user changes level from level selector, change level
   levelSelector.addEventListener("change", (event) => {
     const selectedLevel = event.target.value;
     changeLevel(parseInt(selectedLevel));
+  });
+  // "change" event wont fire if user selects a level already selected
+  // this resets the selector's value to ""
+  levelSelector.addEventListener("click", (event) => {
+    if (event.target.value === mapIndex.toString()) {
+      event.target.value = "";
+    }
   });
 
   // TODO: coco's task

@@ -25,11 +25,6 @@
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
 
-- Sewon: dead knights not restored on changelevel error
-- Sewon - Wrong Level Rendering error
-    - Replicate by selecting level4, then lvl5 shows up, die to get to lvl4
-- Sewon - Wrong level on Select element error
-    - Replicate by going to one level, progressing to next
 - Sewon - Create level8
     - use a combination of knight & laser to create dynamic gameplay
     - play test it, ensure it is playable
