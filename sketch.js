@@ -194,12 +194,16 @@ function render() {
       }
       // if laser
       else if (map[y][x] === 2) {
+        push();
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        tint(100, 100, 255, 200);
         image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
         if (lasersOn) {
+          noTint();
           image(laserImg, x * blockSize, y * blockSize, blockSize, blockSize);
         }
+        pop();
       }
       // if end block
       else if (map[y][x] === 3) {

@@ -26,19 +26,17 @@
     - with red shade
 
 - Sewon - add lvl8
-    - use a combination of knight & laser to create dynamic gameplay
-    - 
+    - traditional large map size maze, laser checkers pattern
+    - knight line at end
 - Sewon: add lvl9
     - larger map size
     - cannon enemy
-
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character
-- Sewon: move all knight-related code/logic to diff js file
 - Sewon: add lighting system in proximity distance w character
 - Sewon: levels must be unlocked by completion of its previous (store persistent data in localstorage)
 - Sewon: add item to increase time when collected
 - Sewon: add cannon obstacle
 - Sewon: add mortar obstacle
-- Sewon: indicate laser block even when off
 - Sewon: move maps data to json file
+- Sewon: move all knight-related code/logic to diff js file
 - Sewon: add more levels (2 adjacent knights, 2 protected knights interfered run)
