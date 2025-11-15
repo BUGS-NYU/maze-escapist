@@ -25,9 +25,6 @@
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
 
-- Sewon - add lvl8
-    - traditional large map size maze, laser checkers pattern
-    - knight line at end
 - Sewon: add lvl9
     - larger map size
     - cannon enemy
@@ -39,4 +36,4 @@
 - Sewon: add mortar obstacle
 - Sewon: move maps data to json file
 - Sewon: move all knight-related code/logic to diff js file
-- Sewon: add more levels (2 adjacent knights, 2 protected knights interfered run)
+- Sewon: add more levels (2 protected knights interfered run)
