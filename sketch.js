@@ -9,6 +9,7 @@ let knightSound;
 let dirtImg;
 let stoneImg;
 let chompSound;
+let cannonSound;
 let cannonImg;
 
 // character
@@ -36,8 +37,12 @@ let lasersOn = true;
   // D = dead knight
   // 1 = cannon up
   // 2 = cannon down
-  // 3 = cannon right
-  // 4 = cannon left
+  // 3 = cannon left
+  // 4 = cannon right
+  // 5 = dead cannon up
+  // 6 = dead cannon down
+  // 7 = dead cannon right
+  // 8 = dead cannon left
 const maps = [
   [
     [' ',' ',' ',' ',' ',' ',' '],
@@ -141,12 +146,12 @@ const maps = [
   ],
   [
     [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    [' ',' ',' ',' ','4',' ',' ',' ',' '],
+    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    [' ',' ',' ','3',' ',' ',' ',' ',' '],
     [' ',' ',' ',' ',' ',' ',' ',' ',' '],
     [' ',' ',' ',' ',' ',' ',' ',' ',' '],
-    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
-    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
-    [' ',' ',' ',' ',' ',' ',' ',' ',' '],
-    [' ',' ',' ',' ',' ','1','2','3','4'],
+    [' ',' ',' ',' ',' ','1','2',' ',' '],
     [' ',' ',' ',' ',' ',' ',' ',' ',' '],
     [' ',' ',' ',' ',' ',' ',' ',' ',' '],
   ]
@@ -168,6 +173,8 @@ function preload() {
   move = loadSound("sounds/move.mp3");
   knightSound = loadSound("sounds/knight-sound.mp3");
   chompSound = loadSound("sounds/chomp.mp3");
+  cannonSound = loadSound("sounds/cannon.mp3");
+  deathSound = loadSound("sounds/villager.mp3");
 
   character = {
     x: 0,
@@ -460,6 +467,16 @@ function moveTo(x, y) {
         return;
       }
     }
+  }
+
+  // if cannon attacked block, lose
+  const hit = handleCannonShoot(map, { x: x, y: y }, cannonSound, deathSound);
+  if (hit) {
+    character.canMove = false;
+    setTimeout(() => {
+      deathSound.play();
+      gameState = "lose";
+    }, 2000);
   }
 
   // if knight block, eat knight
