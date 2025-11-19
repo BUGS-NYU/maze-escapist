@@ -1,3 +1,17 @@
+// returns whether given cell character is an open cell
+// (used to determine whether cannon can shoot through it)
+function isOpenCell(cell) {
+    return cell === " " || cell === "D" 
+    || cell === "5" || cell === "6" || cell === "7" || cell === "8";
+}
+
+// returns whether given cell character is knight/cannon
+// (used when character tries to eat an obstacle protected by cannon)
+function isObstacle(cell) {
+    return cell === "K"
+    || cell === "1" || cell === "2" || cell === "3" || cell === "4";
+}
+
 // if player is in any cannon's firing range, handle character death and animation
 // returns whether player was hit by cannon
 function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize) {
@@ -12,9 +26,14 @@ function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize
                 // get attacked cells
                 const cells = [];
                 let y1 = y - 1;
-                while (y1 >= 0 && map[y1][x] === " ") {
+                while (y1 >= 0 && isOpenCell(map[y1][x])) {
                     cells.push({ x: x, y: y1 });
                     y1 -= 1;
+                }
+
+                // cannon attacks obstacle edge case
+                if (y1 >= 0 && isObstacle(map[y1][x])) {
+                    cells.push({ x: x, y: y1 });
                 }
 
                 // if player attacked, store attack coordinate
@@ -30,9 +49,14 @@ function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize
                 // get attacked cells
                 const cells = [];
                 let y1 = y + 1;
-                while (y1 < map.length && map[y1][x] === " ") {
+                while (y1 < map.length && isOpenCell(map[y1][x])) {
                     cells.push({ x: x, y: y1 });
                     y1 += 1;
+                }
+
+                // cannon attacks obstacle edge case
+                if (y1 < map.length && isObstacle(map[y1][x])) {
+                    cells.push({ x: x, y: y1 });
                 }
 
                 // if player attacked, store attack coordinate
@@ -48,9 +72,14 @@ function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize
                 // get attacked cells
                 const cells = [];
                 let x1 = x - 1;
-                while (x1 >= 0 && map[y][x1] === " ") {
+                while (x1 >= 0 && isOpenCell(map[y][x1])) {
                     cells.push({ x: x1, y: y });
                     x1 -= 1;
+                }
+
+                // cannon attacks obstacle edge case
+                if (x1 >= 0 && isObstacle(map[y][x1])) {
+                    cells.push({ x: x1, y: y });
                 }
 
                 // if player attacked, store attack coordinate
@@ -66,9 +95,14 @@ function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize
                 // get attacked cells
                 const cells = [];
                 let x1 = x + 1;
-                while (x1 < map[0].length && map[y][x1] === " ") {
+                while (x1 < map[0].length && isOpenCell(map[y][x1])) {
                     cells.push({ x: x1, y: y });
                     x1 += 1;
+                }
+
+                // cannon attacks obstacle edge case
+                if (x1 < map[0].length && isObstacle(map[y][x1])) {
+                    cells.push({ x: x1, y: y });
                 }
 
                 // if player attacked, store attack coordinate

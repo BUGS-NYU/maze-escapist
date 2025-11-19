@@ -25,7 +25,6 @@
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
 
-- Sewon: implement cannon protects obstacle edge case
 - Sewon: cannon intro level
 - Sewon: create new world's design
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps
@@ -34,6 +33,6 @@
 - Sewon: add item (bubble) to increase time when collected
 - Sewon: add item (roundshot) to increase character's ammunition
 - Sewon: move maps data to json file
-- Sewon: add more levels (2 protected knights interfered run, 2 cannons intro level, cannon/knight chain of protection & exit is at start, submerged lvl w knight/cannon, laser walls idea, constant + pattern level, cannon/other items, facing cannon walls, knight wall pattern & secret opening)
+- Sewon: add more levels (2 protected knights interfered run, 2 cannons intro level, cannon/knight chain of protection & exit is at start, submerged lvl w knight/cannon, laser walls idea, constant + pattern level, cannon/other items, facing cannon walls, knight wall pattern & secret opening, enemy piece blockading cannon)
 - team made world 2
 - Sewon: add mortar obstacle
