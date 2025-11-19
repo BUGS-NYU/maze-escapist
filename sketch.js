@@ -11,6 +11,7 @@ let stoneImg;
 let chompSound;
 let cannonSound;
 let cannonImg;
+let roundshotImg;
 
 // character
   // x (int): position on map grid
@@ -27,6 +28,10 @@ let gameState;
 
 // whether all lasers are on/off
 let lasersOn = true;
+
+// array of all roundshots (cannon balls) currently visible on map
+  // roundshot object: { startX, startY, endX, endY, currX, currY }
+let roundshots = [];
 
 // create a map 2d grid
   // ' ' = empty space
@@ -168,6 +173,7 @@ function preload() {
   dirtImg = loadImage("images/dirt.jpg");
   stoneImg = loadImage("images/stone.png");
   cannonImg = loadImage("images/cannon.webp");
+  roundshotImg = loadImage("images/roundshot.png");
 
   // load sounds here
   move = loadSound("sounds/move.mp3");
@@ -340,6 +346,8 @@ function render() {
   pop();
   imageMode(CORNER); // restore default (optional)
 
+  // draw all roundshots
+  roundshots = renderRoundshots(roundshots, roundshotImg, blockSize, mapSize);
 
   // if standing in laser, death
   if (map[character.y][character.x] === 'L' && lasersOn) {
@@ -470,7 +478,7 @@ function moveTo(x, y) {
   }
 
   // if cannon attacked block, lose
-  const hit = handleCannonShoot(map, { x: x, y: y }, cannonSound, deathSound);
+  const hit = handleCannonShoot(map, { x: x, y: y }, cannonSound, roundshots, blockSize);
   if (hit) {
     character.canMove = false;
     setTimeout(() => {

@@ -1,10 +1,11 @@
 // if player is in any cannon's firing range, handle character death and animation
 // returns whether player was hit by cannon
-function handleCannonShoot(map, characterPos, cannonSound) {
+function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize) {
     // for each cell, check if its cannon
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map.length; x++) {
             let attackPos = null;
+            let cannonPos = null;
 
             // up cannon
             if (map[y][x] === "1") {
@@ -20,6 +21,7 @@ function handleCannonShoot(map, characterPos, cannonSound) {
                 for (const cell of cells) {
                     if (cell.x === characterPos.x && cell.y === characterPos.y) {
                         attackPos = { x: characterPos.x, y: characterPos.y };
+                        cannonPos = { x: x, y: y };
                     }
                 }
             }
@@ -37,6 +39,7 @@ function handleCannonShoot(map, characterPos, cannonSound) {
                 for (const cell of cells) {
                     if (cell.x === characterPos.x && cell.y === characterPos.y) {
                         attackPos = { x: characterPos.x, y: characterPos.y };
+                        cannonPos = { x: x, y: y };
                     }
                 }
             }
@@ -54,6 +57,7 @@ function handleCannonShoot(map, characterPos, cannonSound) {
                 for (const cell of cells) {
                     if (cell.x === characterPos.x && cell.y === characterPos.y) {
                         attackPos = { x: characterPos.x, y: characterPos.y };
+                        cannonPos = { x: x, y: y };
                     }
                 }
             }
@@ -71,12 +75,23 @@ function handleCannonShoot(map, characterPos, cannonSound) {
                 for (const cell of cells) {
                     if (cell.x === characterPos.x && cell.y === characterPos.y) {
                         attackPos = { x: characterPos.x, y: characterPos.y };
+                        cannonPos = { x: x, y: y };
                     }
                 }
             }
 
             // return whether player was attacked
             if (attackPos !== null) {
+                // update roundshots to animate cannon's shot
+                roundshots.push({
+                    startX: cannonPos.x * blockSize + (blockSize / 2),
+                    startY: cannonPos.y * blockSize + (blockSize / 2),
+                    endX: attackPos.x * blockSize + (blockSize / 2),
+                    endY: attackPos.y * blockSize + (blockSize / 2),
+                    currX: cannonPos.x * blockSize + (blockSize / 2),
+                    currY: cannonPos.y * blockSize + (blockSize / 2)
+                });
+
                 cannonSound.play();
 
                 return true;
@@ -88,4 +103,41 @@ function handleCannonShoot(map, characterPos, cannonSound) {
 
 function handleCannonEaten(map) {
     //
+}
+
+function renderRoundshots(roundshots, roundshotImg, blockSize, mapSize) {
+    for (const roundshot of roundshots) {
+        // draw roundshot img
+        push();
+        imageMode(CENTER);
+        image(roundshotImg, roundshot.currX, roundshot.currY, blockSize / 1.7, blockSize / 1.7);
+        pop();
+
+        // update roundshot position
+        const dx = roundshot.endX - roundshot.startX;
+        const dy = roundshot.endY - roundshot.startY;
+        if (dx === 0) {
+            if (dy >= 0) {
+                roundshot.currY += 12
+            } else {
+                roundshot.currY -= 12
+            }
+        } else if (dy === 0) {
+            if (dx >= 0) {
+                roundshot.currX += 12
+            } else {
+                roundshot.currX -= 12
+            }
+        }
+    }
+
+    // filter any out of bounds roundshots
+    return roundshots.filter((roundshot) => {
+        if (roundshot.currX < 0 || roundshot.currX > mapSize
+            || roundshot.currY < 0 || roundshot.currY > mapSize
+        ) {
+            return false;
+        }
+        return true;
+    });
 }
