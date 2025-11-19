@@ -25,7 +25,6 @@
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
 
-- Sewon: implement cannon eating
 - Sewon: implement cannon protects obstacle edge case
 - Sewon: cannon intro level
 - Sewon: create new world's design

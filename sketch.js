@@ -46,8 +46,8 @@ let roundshots = [];
   // 4 = cannon right
   // 5 = dead cannon up
   // 6 = dead cannon down
-  // 7 = dead cannon right
-  // 8 = dead cannon left
+  // 7 = dead cannon left
+  // 8 = dead cannon right
 const maps = [
   [
     [' ',' ',' ',' ',' ',' ',' '],
@@ -324,6 +324,12 @@ function render() {
         image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
         pop();
       }
+      // if dead cannon
+      else if (map[y][x] === '5' || map[y][x] === '6' || map[y][x] === '7' || map[y][x] === '8') {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
     }
   }
 
@@ -377,6 +383,9 @@ function reset() {
       }
     }
   }
+  
+  // restore all cannons
+  restoreCannons(map);
 }
 
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
@@ -486,6 +495,9 @@ function moveTo(x, y) {
       gameState = "lose";
     }, 2000);
   }
+
+  // if cannon block, eat cannon
+  handleCannonEaten(map, { x: x, y: y }, chompSound);
 
   // if knight block, eat knight
   if (map[y][x] === 'K') {

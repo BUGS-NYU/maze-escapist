@@ -101,10 +101,31 @@ function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize
     return false;
 }
 
-function handleCannonEaten(map) {
-    //
+// if character is on cannon, handle cannon eating functionality
+function handleCannonEaten(map, characterPos, chompSound) {
+    // cannon up case
+    if (map[characterPos.y][characterPos.x] === "1") {
+        chompSound.play();
+        map[characterPos.y][characterPos.x] = "5";
+    }
+    // cannon down case
+    if (map[characterPos.y][characterPos.x] === "2") {
+        chompSound.play();
+        map[characterPos.y][characterPos.x] = "6";
+    }
+    // cannon left case
+    if (map[characterPos.y][characterPos.x] === "3") {
+        chompSound.play();
+        map[characterPos.y][characterPos.x] = "7";
+    }
+    // cannon right case
+    if (map[characterPos.y][characterPos.x] === "4") {
+        chompSound.play();
+        map[characterPos.y][characterPos.x] = "8";
+    }
 }
 
+// animate all moving roundshots on the map, represented in the roundshots array
 function renderRoundshots(roundshots, roundshotImg, blockSize, mapSize) {
     for (const roundshot of roundshots) {
         // draw roundshot img
@@ -140,4 +161,24 @@ function renderRoundshots(roundshots, roundshotImg, blockSize, mapSize) {
         }
         return true;
     });
+}
+
+// restore all dead cannons to living ones (called when map is reset)
+function restoreCannons(map) {
+    for (let y = 0; y < map.length; y++) {
+        for (let x = 0; x < map[y].length; x++) {
+            if (map[y][x] === "5") {
+                map[y][x] = "1";
+            }
+            if (map[y][x] === "6") {
+                map[y][x] = "2";
+            }
+            if (map[y][x] === "7") {
+                map[y][x] = "3";
+            }
+            if (map[y][x] === "8") {
+                map[y][x] = "4";
+            }
+        }
+    }
 }
