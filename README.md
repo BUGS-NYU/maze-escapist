@@ -24,10 +24,10 @@
 - Knight Movement Indicator
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
-
-- Sewon: setup favico
+    
 - Sewon: add cannon explosion effect
 - Sewon: implement cannon eating
+- Sewon: implement cannon protects obstacle edge case
 - Sewon: cannon intro level
 - Sewon: create new world's design
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps
