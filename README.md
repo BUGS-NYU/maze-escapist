@@ -28,6 +28,7 @@
 - Sewon: cannon intro level
 - Sewon: create new world's design
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps
+- Sewon: colored gates & key system
 - Sewon: add lighting system in proximity distance w character, improve graphics quality & refinement
 - Sewon: levels must be unlocked by completion of its previous (store persistent data in localstorage)
 - Sewon: add item (bubble) to increase time when collected

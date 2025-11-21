@@ -160,6 +160,7 @@ function handleCannonEaten(map, characterPos, chompSound) {
 }
 
 // animate all moving roundshots on the map, represented in the roundshots array
+    // Assumption: all roundshots either travel horizontal or vertical (either dx or dy is 0)
 function renderRoundshots(roundshots, roundshotImg, blockSize, mapSize) {
     for (const roundshot of roundshots) {
         // draw roundshot img
@@ -173,27 +174,30 @@ function renderRoundshots(roundshots, roundshotImg, blockSize, mapSize) {
         const dy = roundshot.endY - roundshot.startY;
         if (dx === 0) {
             if (dy >= 0) {
-                roundshot.currY += 12
+                roundshot.currY += 20
             } else {
-                roundshot.currY -= 12
+                roundshot.currY -= 20
             }
         } else if (dy === 0) {
             if (dx >= 0) {
-                roundshot.currX += 12
+                roundshot.currX += 20
             } else {
-                roundshot.currX -= 12
+                roundshot.currX -= 20
             }
         }
     }
 
-    // filter any out of bounds roundshots
-    return roundshots.filter((roundshot) => {
-        if (roundshot.currX < 0 || roundshot.currX > mapSize
-            || roundshot.currY < 0 || roundshot.currY > mapSize
-        ) {
-            return false;
+    // filter any roundshots that reached destination
+    return roundshots.filter((rs) => {
+        const dx = rs.endX - rs.startX;
+        const dy = rs.endY - rs.startY;
+        if (dy === 0) {
+            return rs.currX === constrain(rs.currX, min(rs.startX, rs.endX), max(rs.startX, rs.endX));
         }
-        return true;
+        if (dx === 0) {
+            return rs.currY === constrain(rs.currY, min(rs.startY, rs.endY), max(rs.startY, rs.endY));
+        }
+        return false;
     });
 }
 
