@@ -24,16 +24,20 @@
 - Knight Movement Indicator
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
+- levels must be unlocked by completion of its previous (store persistent data in localstorage)
 
-- Sewon: cannon intro level
-- Sewon: create new world's design
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps
-- Sewon: colored gates & key system
 - Sewon: add lighting system in proximity distance w character, improve graphics quality & refinement
-- Sewon: levels must be unlocked by completion of its previous (store persistent data in localstorage)
 - Sewon: add item (bubble) to increase time when collected
 - Sewon: add item (roundshot) to increase character's ammunition
 - Sewon: move maps data to json file
-- Sewon: add more levels (2 protected knights interfered run, 2 cannons intro level, cannon/knight chain of protection & exit is at start, submerged lvl w knight/cannon, laser walls idea, constant + pattern level, cannon/other items, facing cannon walls, knight wall pattern & secret opening, enemy piece blockading cannon)
-- team made world 2
+- Sewon: add more levels
+    facing cannon walls
+    submerged lvl w knight/cannon
+    constant + pattern level
+    cannon/knight chain of protection & exit is at start
+    knight wall pattern & secret opening, diversions
+    lvl11
+- team made world 2 w new graphics
+- Sewon: colored gates & key system
 - Sewon: add mortar obstacle
