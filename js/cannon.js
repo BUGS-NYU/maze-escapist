@@ -161,7 +161,7 @@ function handleCannonEaten(map, characterPos, chompSound) {
 
 // animate all moving roundshots on the map, represented in the roundshots array
     // Assumption: all roundshots either travel horizontal or vertical (either dx or dy is 0)
-function renderRoundshots(roundshots, roundshotImg, blockSize, mapSize) {
+function renderRoundshots(roundshots, roundshotImg, blockSize) {
     for (const roundshot of roundshots) {
         // draw roundshot img
         push();

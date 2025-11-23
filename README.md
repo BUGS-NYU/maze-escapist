@@ -26,13 +26,10 @@
     - with red shade
 - levels must be unlocked by completion of its previous (store persistent data in localstorage)
 
-- Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps
-- Sewon: add lighting system in proximity distance w character, improve graphics quality & refinement
 - Sewon: add item (bubble) to increase time when collected
 - Sewon: add item (roundshot) to increase character's ammunition
 - Sewon: move maps data to json file
 - Sewon: add more levels
-    facing cannon walls
     submerged lvl w knight/cannon
     constant + pattern level
     cannon/knight chain of protection & exit is at start
@@ -41,3 +38,4 @@
 - team made world 2 w new graphics
 - Sewon: colored gates & key system
 - Sewon: add mortar obstacle
+- Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps
