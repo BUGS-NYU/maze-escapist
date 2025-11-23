@@ -25,16 +25,18 @@
     - when character dies from knight, indicate the squares in which the knight is able to attack
     - with red shade
 - levels must be unlocked by completion of its previous (store persistent data in localstorage)
+- Arrow Keys: left/right keys causing level change error
+    - replicate by selecting the level selection element first?
 
+- fix accumulating lag / audio cutout error
 - Sewon: add item (bubble) to increase time when collected
 - Sewon: add item (roundshot) to increase character's ammunition
 - Sewon: move maps data to json file
 - Sewon: add more levels
+    castle w rooms leading to exit, very large map
     submerged lvl w knight/cannon
-    constant + pattern level
-    cannon/knight chain of protection & exit is at start
-    knight wall pattern & secret opening, diversions
-    lvl11
+    cannon/knight chain of protection, multi exits
+    cannon only map, multi ends
 - team made world 2 w new graphics
 - Sewon: colored gates & key system
 - Sewon: add mortar obstacle

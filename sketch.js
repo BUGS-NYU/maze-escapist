@@ -120,14 +120,14 @@ const maps = [
     ['E', 'W', ' ', ' ', ' ', ' ', 'L', ' ', ' ', ' ', ' ', ' '],
   ],
   [
-    [' ', ' ', ' ', ' ', 'L', 'L', 'L', 'L', 'L', 'L', ' ', 'W'],
+    [' ', ' ', ' ', ' ', ' ', 'L', 'L', 'L', 'L', 'L', ' ', 'W'],
     ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L', 'W'],
-    ['W', 'W', 'W', 'W', 'W', 'W', 'W', ' ', 'L', 'L', 'L', 'W'],
-    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L', 'W', 'W', 'W'],
-    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L', 'L', ' ', 'W'],
+    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', ' ', 'L', 'L', 'W'],
     ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L', 'W', 'W'],
-    ['L', 'L', 'W', 'W', 'W', 'W', 'W', 'W', ' ', 'L', 'L', 'W'],
-    ['L', 'E', 'L', 'L', 'L', 'L', 'W', 'W', 'W', 'W', 'L', 'W'],
+    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L', ' ', 'L'],
+    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L'],
+    ['L', 'L', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'L'],
+    ['L', 'L', 'E', 'L', 'L', 'L', 'W', 'W', 'W', 'W', 'W', 'L'],
     ['L', 'L', 'L', 'L', 'L', 'L', ' ', 'L', ' ', ' ', ' ', ' '],
     ['L', 'L', 'L', 'L', 'L', ' ', 'L', ' ', ' ', ' ', ' ', ' '],
     ['W', 'W', 'L', 'L', 'L', 'L', ' ', 'L', ' ', ' ', ' ', ' '],
@@ -156,8 +156,8 @@ const maps = [
     [' ',' ',' ',' ',' ',' ',' ',' ',' '],
     [' ',' ',' ',' ',' ',' ',' ',' ',' '],
     [' ',' ',' ',' ',' ',' ','1',' ',' '],
-    ['W','L','W','L','W','W','W','W',' '],
-    ['W','L','L','L','W','W','W','W',' '],
+    ['W',' ','W',' ','W','W','W','W',' '],
+    ['W',' ',' ',' ','W','W','W','W',' '],
     ['W','W','W','W','W','W','W','W','E'],
   ],
   [
@@ -189,6 +189,20 @@ const maps = [
     [' ',' ',' ',' ',' ',' ','1',' ',' ',' ',' ',' ',' '],
     [' ','4',' ',' ',' ',' ',' ',' ','3','2',' ',' ',' '],
     [' ',' ',' ',' ',' ',' ',' ',' ',' ','4',' ',' ','1'],
+  ],
+  [
+    [' ', ' ', ' ', ' ', 'K', ' ', ' ', ' ', ' ', ' ', ' ', '2'],
+    [' ', 'L', 'L', 'L', 'L', 'L', 'K', 'L', 'L', 'L', 'L', ' '],
+    [' ', 'L', ' ', ' ', 'L', ' ', ' ', 'L', ' ', ' ', 'L', ' '],
+    [' ', 'L', ' ', ' ', 'L', ' ', ' ', 'L', 'K', ' ', 'L', ' '],
+    [' ', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', ' '],
+    ['K', 'L', ' ', ' ', 'L', ' ', ' ', 'L', ' ', ' ', 'K', ' '],
+    [' ', 'L', 'K', ' ', 'L', ' ', ' ', 'L', ' ', ' ', 'L', ' '],
+    [' ', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', ' '],
+    [' ', 'L', ' ', ' ', 'K', ' ', ' ', 'L', ' ', ' ', 'L', ' '],
+    [' ', 'L', ' ', ' ', 'L', ' ', ' ', 'L', ' ', ' ', 'L', ' '],
+    [' ', 'L', 'L', 'L', 'K', 'L', 'L', 'L', 'L', 'L', 'L', ' '],
+    ['4', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'E'],
   ],
   [
     [' ', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L'],
@@ -576,6 +590,10 @@ function changeLevel(levelIndex) {
   map = maps[mapIndex];
   blockSize = mapSize / map.length;
 
+  // update level selection display
+  const levelSelector = document.getElementById("level-selector");
+  levelSelector.value = "";
+
   reset();
 }
 
@@ -587,13 +605,6 @@ window.addEventListener("DOMContentLoaded", () => {
   levelSelector.addEventListener("change", (event) => {
     const selectedLevel = event.target.value;
     changeLevel(parseInt(selectedLevel));
-  });
-  // "change" event wont fire if user selects a level already selected
-  // this resets the selector's value to ""
-  levelSelector.addEventListener("click", (event) => {
-    if (event.target.value === mapIndex.toString()) {
-      event.target.value = "";
-    }
   });
 
   // TODO: coco's task
