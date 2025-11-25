@@ -1,7 +1,7 @@
 // returns whether given cell character is an open cell
 // (used to determine whether cannon can shoot through it)
 function isOpenCell(cell) {
-    return cell === " " || cell === "D" 
+    return cell === " " || cell === "D" || cell === "L"
     || cell === "5" || cell === "6" || cell === "7" || cell === "8";
 }
 

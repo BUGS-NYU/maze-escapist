@@ -26,18 +26,18 @@
     - with red shade
 - levels must be unlocked by completion of its previous (store persistent data in localstorage)
 - Arrow Keys: left/right keys causing level change error
-    - replicate by selecting the level selection element first?
+    - replicate by selecting the level selection element first, press left/right
+- fix page freezing / audio cutout error
+    - page is unable to reload (buffering forever) when this happens, audio is silent
+    - replicate by triggering a lot of audios to be played for a long time, the gameplay will start to become laggy and audio will cut out
+    - error is caused by many usages of sound.play()?
+    - try reducing mapSize?
 
-- fix accumulating lag / audio cutout error
 - Sewon: add item (bubble) to increase time when collected
 - Sewon: add item (roundshot) to increase character's ammunition
 - Sewon: move maps data to json file
-- Sewon: add more levels
-    castle w rooms leading to exit, very large map
-    submerged lvl w knight/cannon
-    cannon/knight chain of protection, multi exits
-    cannon only map, multi ends
 - team made world 2 w new graphics
 - Sewon: colored gates & key system
 - Sewon: add mortar obstacle
+- Sewon: add bishop obstacle
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps
