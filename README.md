@@ -32,12 +32,13 @@
     - replicate by triggering a lot of audios to be played for a long time, the gameplay will start to become laggy and audio will cut out
     - error is caused by many usages of sound.play()?
     - try reducing mapSize?
+- Cannon fix multi-dying error
+- add dev credits section in the html page
+- team made world 2 w new graphics
 
 - Sewon: add item (bubble) to increase time when collected
 - Sewon: add item (roundshot) to increase character's ammunition
 - Sewon: move maps data to json file
-- team made world 2 w new graphics
-- Sewon: colored gates & key system
 - Sewon: add mortar obstacle
 - Sewon: add bishop obstacle
-- Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps
+- Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps???
