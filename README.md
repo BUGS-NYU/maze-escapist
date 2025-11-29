@@ -31,7 +31,7 @@
     - page is unable to reload (buffering forever) when this happens, audio is silent
     - replicate by triggering a lot of audios to be played for a long time, the gameplay will start to become laggy and audio will cut out
     - error is caused by many usages of sound.play()?
-    - try reducing mapSize?
+    - Observation: reducing mapSize resolves any lag issues, but audio cutout still happens suddenly
 - Cannon fix multi-dying error
 - add dev credits section in the html page
 - team made world 2 w new graphics

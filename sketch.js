@@ -1,4 +1,4 @@
-const mapSize = 600;
+let mapSize = 600;
 
 let laserImg;
 let charImg;
@@ -629,12 +629,26 @@ function changeLevel(levelIndex) {
 // level selector ui: on change, set new level
 window.addEventListener("DOMContentLoaded", () => {
   const levelSelector = document.getElementById("level-selector");
+  const lowRes = document.getElementById("low-res");
 
   // if user changes level from level selector, change level
   levelSelector.addEventListener("change", (event) => {
     const selectedLevel = event.target.value;
     changeLevel(parseInt(selectedLevel));
   });
+
+  // if user toggles low resolution
+  lowRes.addEventListener("change", () => {
+    if (lowRes.checked) {
+      mapSize = 300;
+      resizeCanvas(mapSize, mapSize);
+      blockSize = mapSize / map.length;
+    } else {
+      mapSize = 600;
+      resizeCanvas(mapSize, mapSize);
+      blockSize = mapSize / map.length;
+    }
+  })
 
   // TODO: coco's task
 });
