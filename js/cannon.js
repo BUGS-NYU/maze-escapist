@@ -14,7 +14,7 @@ function isObstacle(cell) {
 
 // if player is in any cannon's firing range, handle character death and animation
 // returns whether player was hit by cannon
-function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize) {
+function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize, character) {
     // for each cell, check if its cannon
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map.length; x++) {
@@ -127,6 +127,9 @@ function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize
                 });
 
                 cannonSound.play();
+
+                // disable resetting for duration of animation
+                character.canReset = false;
 
                 return true;
             }

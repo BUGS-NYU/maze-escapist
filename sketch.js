@@ -18,6 +18,7 @@ let roundshotImg;
   // y (int): position on map grid
   // canMove (bool): whether character can move
   // visible (bool): whether character is visible
+  // canReset (bool): whether character can reset (R)
 let character;
 
 // width & height of each block on map (in pixels)
@@ -274,6 +275,7 @@ function preload() {
     y: 0,
     canMove: true,
     visible: true,
+    canReset: true
   };
   gameState = "play";
 }
@@ -454,6 +456,10 @@ function render() {
 
 // function to reset game at current level
 function reset() {
+  if (!character.canReset) {
+    return;
+  }
+
   character = {
     x: 0,
     y: 0,
@@ -574,12 +580,15 @@ function moveTo(x, y) {
   }
 
   // if cannon attacked block, lose
-  const hit = handleCannonShoot(map, { x: x, y: y }, cannonSound, roundshots, blockSize);
+  const hit = handleCannonShoot(map, { x: x, y: y }, cannonSound, roundshots, blockSize, character);
   if (hit) {
     character.canMove = false;
     setTimeout(() => {
       deathSound.play();
       gameState = "lose";
+      
+      // enable reset again
+      character.canReset = true;
     }, 2000);
   }
 
