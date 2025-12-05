@@ -701,7 +701,17 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(mapSize, mapSize);
+  const gameContainer = document.getElementById("game-container");
+  const canvas = createCanvas(mapSize, mapSize);
+  canvas.parent(gameContainer);
+
+  // Move mobile-controls to appear after the canvas
+  const mobileControls = document.getElementById("mobile-controls");
+  if (mobileControls && gameContainer) {
+    // Remove from current position and append after canvas
+    mobileControls.remove();
+    gameContainer.appendChild(mobileControls);
+  }
 }
 
 function draw() {
