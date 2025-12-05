@@ -682,6 +682,7 @@ function preload() {
   chompSound = loadSound("sounds/chomp.mp3");
   cannonSound = loadSound("sounds/cannon.mp3");
   deathSound = loadSound("sounds/villager.mp3");
+  laserDeathSound = loadSound("sounds/death.mp3");
 
   // needed to prevent audio-related performance issues
   move.playMode("restart");
@@ -689,6 +690,7 @@ function preload() {
   chompSound.playMode("restart");
   cannonSound.playMode("restart");
   deathSound.playMode("restart");
+  laserDeathSound.playMode("restart");
 
   character = {
     x: 0,
@@ -884,6 +886,7 @@ function render() {
   // if standing in laser, death
   if (map[character.y][character.x] === "L" && lasersOn) {
     gameState = "lose";
+    laserDeathSound.play();
   }
   // if standing in end block, win
   if (map[character.y][character.x] === "E") {
