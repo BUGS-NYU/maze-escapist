@@ -1130,4 +1130,117 @@ window.addEventListener("DOMContentLoaded", () => {
       charDir = 2;
     }
   });
+
+  // Swipe detection for touch and mouse/trackpad
+  let touchStartX = null;
+  let touchStartY = null;
+  let mouseStartX = null;
+  let mouseStartY = null;
+  let isMouseDown = false;
+  const minSwipeDistance = 30; // Minimum distance in pixels to register a swipe
+
+  function handleSwipe(startX, startY, endX, endY) {
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    // Check if swipe is significant enough
+    if (absDeltaX < minSwipeDistance && absDeltaY < minSwipeDistance) {
+      return;
+    }
+
+    // Determine swipe direction (prioritize the larger movement)
+    if (absDeltaX > absDeltaY) {
+      // Horizontal swipe
+      if (deltaX > 0) {
+        // Swipe right
+        if (character && map && map[0] && character.x < map[0].length - 1) {
+          moveTo(character.x + 1, character.y);
+          charDir = 2;
+        }
+      } else {
+        // Swipe left
+        if (character && character.x > 0) {
+          moveTo(character.x - 1, character.y);
+          charDir = 0;
+        }
+      }
+    } else {
+      // Vertical swipe
+      if (deltaY > 0) {
+        // Swipe down
+        if (character && map && character.y < map.length - 1) {
+          moveTo(character.x, character.y + 1);
+          charDir = 3;
+        }
+      } else {
+        // Swipe up
+        if (character && character.y > 0) {
+          moveTo(character.x, character.y - 1);
+          charDir = 1;
+        }
+      }
+    }
+  }
+
+  // Wait for canvas to be created, then add swipe listeners
+  function addSwipeListeners() {
+    const canvas = document.querySelector("canvas");
+    if (!canvas) {
+      // Canvas not ready yet, try again
+      setTimeout(addSwipeListeners, 100);
+      return;
+    }
+
+    // Touch events for mobile
+    canvas.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    });
+
+    canvas.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      if (touchStartX === null || touchStartY === null) return;
+
+      const touch = e.changedTouches[0];
+      handleSwipe(touchStartX, touchStartY, touch.clientX, touch.clientY);
+      touchStartX = null;
+      touchStartY = null;
+    });
+
+    // Mouse/trackpad events for desktop
+    canvas.addEventListener("mousedown", (e) => {
+      isMouseDown = true;
+      mouseStartX = e.clientX;
+      mouseStartY = e.clientY;
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+      if (!isMouseDown) return;
+      // Don't handle during move, wait for mouseup
+    });
+
+    canvas.addEventListener("mouseup", (e) => {
+      if (!isMouseDown) return;
+      if (mouseStartX === null || mouseStartY === null) return;
+
+      handleSwipe(mouseStartX, mouseStartY, e.clientX, e.clientY);
+      isMouseDown = false;
+      mouseStartX = null;
+      mouseStartY = null;
+    });
+
+    // Handle mouse leaving canvas while dragging
+    canvas.addEventListener("mouseleave", () => {
+      isMouseDown = false;
+      mouseStartX = null;
+      mouseStartY = null;
+    });
+  }
+
+  // Start trying to add swipe listeners
+  addSwipeListeners();
 });
