@@ -35,6 +35,7 @@
 - add dev credits section in the html page
 - team made world 2 w new graphics
 
+- Disable resetting during cannon animation
 - Sewon: add item (bubble) to increase time when collected
 - Sewon: add item (roundshot) to increase character's ammunition
 - Sewon: move maps data to json file

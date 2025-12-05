@@ -896,10 +896,6 @@ function render() {
 
 // function to reset game at current level
 function reset() {
-  if (!character.canReset) {
-    return;
-  }
-
   character = {
     x: 0,
     y: 0,
