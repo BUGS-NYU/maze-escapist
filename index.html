@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
+    <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="./images/character.png">
 
     <!-- load in the p5 core library -->
@@ -79,6 +80,48 @@
         width: 100%;
       }
 
+      #game-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      #mobile-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+
+      #mobile-controls button {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        border-radius: 8px;
+        border: 2px solid #663399;
+        background: rgba(255, 255, 255, 0.9);
+        cursor: pointer;
+        transition: all 0.2s;
+        user-select: none;
+      }
+
+      #mobile-controls button:hover {
+        background: rgba(102, 51, 153, 0.2);
+        transform: scale(1.05);
+      }
+
+      #mobile-controls button:active {
+        background: rgba(102, 51, 153, 0.4);
+        transform: scale(0.95);
+      }
+
+      #mobile-controls .button-row {
+        display: flex;
+        gap: 10px;
+      }
+
       @media screen and (max-width: 480px) {
         h1 {
           font-size: 48px;
@@ -133,7 +176,19 @@
         Press 'r' to reset.
       </p>
     </div>
+
+    <div id="game-container">
+      <div id="mobile-controls">
+        <button id="btn-up">&#11014;&#65039;</button>
+        <div class="button-row">
+          <button id="btn-left">&#11013;&#65039;</button>
+          <button id="btn-down">&#11015;&#65039;</button>
+          <button id="btn-right">&#10145;&#65039;</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
+
 
 
