@@ -942,6 +942,16 @@ function keyPressed() {
   if (key === "c" && gameState === "win") {
     changeLevel(mapIndex + 1);
   }
+
+  // Prevent default scrolling for arrow keys (return false after handling)
+  if (
+    keyCode === UP_ARROW ||
+    keyCode === DOWN_ARROW ||
+    keyCode === LEFT_ARROW ||
+    keyCode === RIGHT_ARROW
+  ) {
+    return false; // Prevent default browser behavior (scrolling)
+  }
 }
 
 // move character to given coordinate, handles other behaviors
@@ -1074,6 +1084,19 @@ function changeLevel(levelIndex) {
 
 // level selector ui: on change, set new level
 window.addEventListener("DOMContentLoaded", () => {
+  // Prevent default scrolling for arrow keys
+  document.addEventListener("keydown", function (event) {
+    // Check for arrow keys
+    if (
+      event.key === "ArrowUp" ||
+      event.key === "ArrowDown" ||
+      event.key === "ArrowLeft" ||
+      event.key === "ArrowRight"
+    ) {
+      event.preventDefault(); // Stop the default scroll behavior
+    }
+  });
+
   const levelSelector = document.getElementById("level-selector");
   const lowRes = document.getElementById("low-res");
 
