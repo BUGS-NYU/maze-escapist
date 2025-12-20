@@ -12,6 +12,7 @@ let chompSound;
 let cannonSound;
 let cannonImg;
 let roundshotImg;
+let doorImg;
 
 // character
 // x (int): position on map grid
@@ -687,6 +688,7 @@ function preload() {
   stoneImg = loadImage("images/stone.png");
   cannonImg = loadImage("images/cannon.webp");
   roundshotImg = loadImage("images/roundshot.png");
+  doorImg = loadImage("images/door.jpg");
 
   // load sounds here
   move = loadSound("sounds/move.mp3");
@@ -793,7 +795,8 @@ function render() {
       }
       // if end block
       else if (map[y][x] === "E") {
-        fill("#663399");
+        noFill();
+        image(doorImg, x * blockSize, y * blockSize, blockSize, blockSize);
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if knight block

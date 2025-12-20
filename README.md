@@ -1,44 +1,34 @@
 # Maze Escapists
 
 ### Task List
-- David - Timer: have a timer countdown be displayed on the top-left corner of the game
-    - Use text() function to display text on the p5 canvas
-    - If the timer runs out before the player reaches the end, redirect to losing screen
-- Pope - Sound effect to play every time the character dies from laser
-    - Pick the audio on your own discretion
-    - Load the audio in preload(), use audio.play()
-    - Everytime character hits laser, play this audio
-- Coco - Mobile Accessibility: for mobile players, we could add Up/Down/Left/Right buttons somehow for character control?
-    - we could make these buttons in the HTML UI
-    - create event listeners for buttons click within window.addEventListener("DOMContentLoaded") { ... }
-- Ele - Improve appearance of end block
-    - right now end block is a purple square
-    - rendering a door/gate image onto the end block should make it more intuitive for players
-- Alex: Intro screen for game
-    - Minimally, we could have an simple instruction and a (start) button for this.
+- intro screen for game???
 
 - Level Selection improvement
     - right now, all we have is a select input to go to a new level
     - we can consider grouping levels into "Worlds" and develop a level selection UI in accordance
     - further details can be planned later
-- Knight Movement Indicator
-    - when character dies from knight, indicate the squares in which the knight is able to attack
-    - with red shade
-- levels must be unlocked by completion of its previous (store persistent data in localstorage)
+
+- reorganize lvls
 - Arrow Keys: left/right keys causing level change error
     - replicate by selecting the level selection element first, press left/right
-- fix page freezing / audio cutout error
-    - page is unable to reload (buffering forever) when this happens, audio is silent
-    - replicate by triggering a lot of audios to be played for a long time, the gameplay will start to become laggy and audio will cut out
-    - error is caused by many usages of sound.play()?
-    - Observation: reducing mapSize resolves any lag issues, but audio cutout still happens suddenly
+- Mobile Controls: double-tapping arrow default behavior error
+- Mobile Controls: make buttons bigger
 - add dev credits section in the html page
-- team made world 2 w new graphics
 
+- Timer: have a timer countdown be displayed on the top-left corner of the game
+    - Use text() function to display text on the p5 canvas
+    - If the timer runs out before the player reaches the end, redirect to losing screen
+- UI: add buttons for reset / continue
 - Disable resetting during cannon animation
 - Sewon: add item (bubble) to increase time when collected
 - Sewon: add item (roundshot) to increase character's ammunition
 - Sewon: move maps data to json file
 - Sewon: add mortar obstacle
 - Sewon: add bishop obstacle
+
 - Sewon: create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps???
+- fix page freezing / audio cutout error
+    - page is unable to reload (buffering forever) when this happens, audio is silent
+    - replicate by triggering a lot of audios to be played for a long time, the gameplay will start to become laggy and audio will cut out
+    - error is caused by many usages of sound.play()?
+    - Observation: reducing mapSize resolves any lag issues, but audio cutout still happens suddenly
