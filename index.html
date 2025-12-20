@@ -16,6 +16,10 @@
 
     <!-- custom CSS styles for this page -->
     <style>
+      body, html {
+        touch-action: manipulation;
+      }
+
       body {
         margin: 0;
         padding: 0;
@@ -96,8 +100,8 @@
       }
 
       #mobile-controls button {
-        width: 60px;
-        height: 60px;
+        width: 200px;
+        height: 200px;
         font-size: 24px;
         border-radius: 8px;
         border: 2px solid #663399;
@@ -185,6 +189,10 @@
           <button id="btn-left">&#11013;&#65039;</button>
           <button id="btn-down">&#11015;&#65039;</button>
           <button id="btn-right">&#10145;&#65039;</button>
+        </div>
+        <div class="button-row">
+          <button id="btn-reset"> <h3>Reset</h3> </button>
+          <button id="btn-continue"> <h3>Continue</h3> </button>
         </div>
       </div>
     </div>

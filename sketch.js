@@ -1144,11 +1144,12 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Mobile controls: add event listeners for directional buttons
-  // TODO: coco's task
   const btnUp = document.getElementById("btn-up");
   const btnDown = document.getElementById("btn-down");
   const btnLeft = document.getElementById("btn-left");
   const btnRight = document.getElementById("btn-right");
+  const btnReset = document.getElementById("btn-reset");
+  const btnContinue = document.getElementById("btn-continue");
 
   btnUp.addEventListener("click", () => {
     if (character && character.y > 0) {
@@ -1175,6 +1176,16 @@ window.addEventListener("DOMContentLoaded", () => {
     if (character && map && map[0] && character.x < map[0].length - 1) {
       moveTo(character.x + 1, character.y);
       charDir = 2;
+    }
+  });
+
+  btnReset.addEventListener("click", () => {
+    reset();
+  });
+
+  btnContinue.addEventListener("click", () => {
+    if (gameState === "win") {
+      changeLevel(mapIndex + 1);
     }
   });
 
