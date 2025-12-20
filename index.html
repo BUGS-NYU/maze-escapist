@@ -65,13 +65,8 @@
         box-shadow: 0 4px 15px rgba(138, 43, 226, 0.2);
       }
 
-      main {
-        width: 80%;
-        max-width: 90vh;
-      }
-
       canvas {
-        width: 100% !important;
+        width: min(90vw, 90vh) !important;
         height: auto !important;
       }
 
@@ -100,8 +95,8 @@
       }
 
       #mobile-controls button {
-        width: 200px;
-        height: 200px;
+        width: 20vw;
+        height: 20vw;
         font-size: 24px;
         border-radius: 8px;
         border: 2px solid #663399;
@@ -147,8 +142,8 @@
     <div class="container">
       <h1>Maze Escapist</h1>
       <p class="instructions">
-        Welcome to Maze Escapist! Use <strong>WASD</strong>  to move the little bug through the maze. 
-        Your goal is to guide them to collect coins while navigating safely through the maze. 
+        Welcome to Maze Escapist! Use <strong>WASD</strong> to move the little bug through the maze. 
+        Your goal is to reach the exit of the maze. 
         Be careful - you cannot move into walls, so plan your path carefully. 
         Navigate through the empty spaces and find your way to victory!
       </p>

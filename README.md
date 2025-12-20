@@ -1,12 +1,8 @@
 # Maze Escapists
 
 ### Task List
-- Mobile Controls: add buttons for reset / continue
-- reorganize lvl15
-- Mobile Controls: double-tapping arrow default behavior error
-- Mobile Controls: make buttons bigger
 - add dev credits section in the html page
-- UI: balance canvas size
+- move maps data in json file
 
 - Level Selection improvement
     - right now, all we have is a select input to go to a new level
