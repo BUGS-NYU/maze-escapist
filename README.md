@@ -2,14 +2,12 @@
 
 ### Task List
 - Level Selection improvement
-    - right now, all we have is a select input to go to a new level
-    - we can consider grouping levels into "Worlds" and develop a level selection UI in accordance
-    - further details can be planned later
+    - change level button, group entire controls section + remove reset
+    - on click, html overlay over entire canvas w grid of lvls
 
 - Timer: have a timer countdown be displayed on the top-left corner of the game
     - Use text() function to display text on the p5 canvas
     - If the timer runs out before the player reaches the end, redirect to losing screen
-- Disable resetting during cannon animation
 - Sewon: add item (bubble) to increase time when collected
 - Sewon: add item (roundshot) to increase character's ammunition
 - Sewon: move maps data to json file

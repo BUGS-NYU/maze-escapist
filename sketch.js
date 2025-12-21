@@ -284,11 +284,17 @@ function render() {
 
 // function to reset game at current level
 function reset() {
+  // if cannot reset, return
+  if (!character.canReset) {
+    return;
+  }
+
   character = {
     x: 0,
     y: 0,
     canMove: true,
     visible: true,
+    canReset: true,
   };
   gameState = "play";
 
@@ -393,14 +399,17 @@ function moveTo(x, y) {
         if (map[y][x] === "K") {
           character.canMove = false;
           character.visible = false;
+          character.canReset = false;
           setTimeout(() => {
             gameState = "lose";
+            character.canReset = true;
           }, 500);
         }
         // if player is standing on other
         else {
           character.canMove = false;
           character.visible = false;
+          character.canReset = false;
           const playerCell = map[y][x];
           map[knight[1]][knight[0]] = " ";
           map[y][x] = "K";
@@ -409,6 +418,7 @@ function moveTo(x, y) {
             map[y][x] = playerCell;
             map[knight[1]][knight[0]] = "K";
             gameState = "lose";
+            character.canReset = true;
           }, 500);
         }
         return;
@@ -427,6 +437,8 @@ function moveTo(x, y) {
   );
   if (hit) {
     character.canMove = false;
+    character.canReset = false;
+
     setTimeout(() => {
       deathSound.play();
       gameState = "lose";
