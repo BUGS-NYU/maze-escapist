@@ -1,9 +1,6 @@
 # Maze Escapists
 
 ### Task List
-- add dev credits section in the html page
-- move maps data in json file
-
 - Level Selection improvement
     - right now, all we have is a select input to go to a new level
     - we can consider grouping levels into "Worlds" and develop a level selection UI in accordance
@@ -25,3 +22,7 @@
     - replicate by triggering a lot of audios to be played for a long time, the gameplay will start to become laggy and audio will cut out
     - error is caused by many usages of sound.play()?
     - Observation: reducing mapSize resolves any lag issues, but audio cutout still happens suddenly
+
+- TD idea
+    - use current levels rendering system & logic
+    - add more building / fighting mechanics, space as a control
