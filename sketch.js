@@ -85,17 +85,10 @@ function preload() {
 }
 
 function setup() {
-  const gameContainer = document.getElementById("game-container");
+  // put canvas inside #canvas-container div
+  const canvasContainer = document.getElementById("canvas-container");
   const canvas = createCanvas(mapSize, mapSize);
-  canvas.parent(gameContainer);
-
-  // Move mobile-controls to appear after the canvas
-  const mobileControls = document.getElementById("mobile-controls");
-  if (mobileControls && gameContainer) {
-    // Remove from current position and append after canvas
-    mobileControls.remove();
-    gameContainer.appendChild(mobileControls);
-  }
+  canvas.parent(canvasContainer);
 }
 
 function draw() {
@@ -489,10 +482,6 @@ function changeLevel(levelIndex) {
   map = maps[mapIndex].map;
   blockSize = mapSize / map.length;
 
-  // update level selection display
-  const levelSelector = document.getElementById("level-selector");
-  levelSelector.value = "";
-
   reset();
 }
 
@@ -511,14 +500,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const levelSelector = document.getElementById("level-selector");
   const lowRes = document.getElementById("low-res");
-
-  // if user changes level from level selector, change level
-  levelSelector.addEventListener("change", (event) => {
-    const selectedLevel = event.target.value;
-    changeLevel(parseInt(selectedLevel));
-  });
 
   // if user toggles low resolution
   lowRes.addEventListener("change", () => {
@@ -691,4 +673,28 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Start trying to add swipe listeners
   addSwipeListeners();
+
+  // change level modal
+  const changeButton = document.getElementById("change-level");
+  const changeModal = document.getElementById("change-level-modal");
+
+  // change button click: toggle modal show
+  changeButton.addEventListener("click", () => {
+    if (changeModal.style.display === "none") {
+      changeModal.style.display = "grid";
+    } else if (changeModal.style.display === "grid") {
+      changeModal.style.display = "none";
+    }
+  });
+
+  // level button click: change level & close modal
+  const levelButtons = changeModal.querySelectorAll("button");
+  levelButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const selectedLevel = button.value;
+      console.log(selectedLevel);
+      changeLevel(parseInt(selectedLevel));
+      changeModal.style.display = "none";
+    });
+  });
 });

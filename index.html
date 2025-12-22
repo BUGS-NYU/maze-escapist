@@ -15,129 +15,7 @@
     <script src="sketch.js"></script>
 
     <!-- custom CSS styles for this page -->
-    <style>
-      body, html {
-        touch-action: manipulation;
-      }
-
-      body {
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(135deg, #e6e6fa 0%, #dda0dd 100%);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        padding: 20px;
-        padding-top: 40px;
-      }
-
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        margin-bottom: 50px;
-      }
-
-      h1 {
-        color: #663399;
-        font-size: 64px;
-        font-weight: bold;
-        margin: 0;
-        text-shadow: 2px 2px 4px rgba(138, 43, 226, 0.2);
-        letter-spacing: 3px;
-      }
-
-      .instructions, #credits {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(8px);
-        border-radius: 15px;
-        padding: 25px 35px;
-        color: #5a4a6a;
-        font-size: 18px;
-        line-height: 1.8;
-        text-align: center;
-        max-width: 650px;
-        margin: 0;
-        box-shadow: 0 4px 15px rgba(138, 43, 226, 0.2);
-      }
-
-      canvas {
-        width: min(90vw, 90vh) !important;
-        height: auto !important;
-      }
-
-      .game-ui {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 3rem;
-        width: 100%;
-      }
-
-      #game-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-
-        margin-bottom: 1.5rem;
-      }
-
-      #mobile-controls {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        flex-shrink: 0;
-      }
-
-      #mobile-controls button {
-        width: 20vw;
-        height: 20vw;
-        font-size: 24px;
-        border-radius: 8px;
-        border: 2px solid #663399;
-        background: rgba(255, 255, 255, 0.9);
-        cursor: pointer;
-        transition: all 0.2s;
-        user-select: none;
-      }
-
-      #mobile-controls button:hover {
-        background: rgba(102, 51, 153, 0.2);
-        transform: scale(1.05);
-      }
-
-      #mobile-controls button:active {
-        background: rgba(102, 51, 153, 0.4);
-        transform: scale(0.95);
-      }
-
-      #mobile-controls .button-row {
-        display: flex;
-        gap: 10px;
-      }
-
-      @media screen and (max-width: 480px) {
-        h1 {
-          font-size: 48px;
-        }
-
-        .instructions {
-          font-size: 16px;
-          padding: 20px 25px;
-        }
-
-        main {
-          width: 95%;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="index.css">
 
   </head>
   <body>
@@ -150,49 +28,55 @@
         Navigate through the empty spaces and find your way to victory!
       </p>
     </div>
-    <div class="game-ui">
-      <select id="level-selector">
-        <option value="0">Level 1</option>
-        <option value="1">Level 2</option>
-        <option value="2">Level 3</option>
-        <option value="3">Level 4</option>
-        <option value="4">Level 5</option>
-        <option value="5">Level 6</option>
-        <option value="6">Level 7</option>
-        <option value="7">Level 8</option>
-        <option value="8">Level 9</option>
-        <option value="9">Level 10</option>
-        <option value="10">Level 11</option>
-        <option value="11">Level 12</option>
-        <option value="12">Level 13</option>
-        <option value="13">Level 14</option>
-        <option value="14">Level 15</option>
-      </select>
-
-      <div>
-        <input type="checkbox" id="low-res">
-        <label for="low-res">Low Resolution (performance)</label>
-      </div>
-
-      <p>
-        Press 'r' to reset.
-      </p>
-    </div>
 
     <div id="game-container">
-      <div id="mobile-controls">
-        <h2> Mobile Controls </h2>
+      <!-- Change Level Modal -->
+      <div id="change-level-modal" style="display:none">
+        <button value="0">Level 1</button>
+        <button value="1">Level 2</button>
+        <button value="2">Level 3</button>
+        <button value="3">Level 4</button>
+        <button value="4">Level 5</button>
+        <button value="5">Level 6</button>
+        <button value="6">Level 7</button>
+        <button value="7">Level 8</button>
+        <button value="8">Level 9</button>
+        <button value="9">Level 10</button>
+        <button value="10">Level 11</button>
+        <button value="11">Level 12</button>
+        <button value="12">Level 13</button>
+        <button value="13">Level 14</button>
+        <button value="14">Level 15</button>
+      </div>
 
-        <button id="btn-up">&#11014;&#65039;</button>
-        <div class="button-row">
-          <button id="btn-left">&#11013;&#65039;</button>
-          <button id="btn-down">&#11015;&#65039;</button>
-          <button id="btn-right">&#10145;&#65039;</button>
+      <!-- Game Top UI -->
+      <div id="game-ui">
+        <button id="change-level"> Change Level </button>
+
+        <div id="low-res">
+          <input type="checkbox" id="low-res">
+          <label for="low-res">Low Resolution (performance)</label>
         </div>
-        <div class="button-row">
-          <button id="btn-reset"> Reset</button>
-          <button id="btn-continue"> Continue</button>
-        </div>
+      </div>
+
+      <!-- Canvas -->
+      <div id="canvas-container">
+      </div>
+    </div>
+
+    <!-- Mobile Controls -->
+    <div id="mobile-controls">
+      <h2> Mobile Controls </h2>
+
+      <button id="btn-up">&#11014;&#65039;</button>
+      <div class="button-row">
+        <button id="btn-left">&#11013;&#65039;</button>
+        <button id="btn-down">&#11015;&#65039;</button>
+        <button id="btn-right">&#10145;&#65039;</button>
+      </div>
+      <div class="button-row">
+        <button id="btn-reset"> Reset</button>
+        <button id="btn-continue"> Continue</button>
       </div>
     </div>
 
