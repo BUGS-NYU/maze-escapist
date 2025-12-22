@@ -40,11 +40,27 @@ let maps = null;
 let mapIndex = 0;
 let map = null;
 
+// time remaining
+let time = null;
+let timeLoop = null;
+
+// msg to be displayed on death
+let deathMsg = null;
+
 function preload() {
   // load map by maps.json
   loadJSON("data/maps.json", (data) => {
     maps = data;
     map = maps[mapIndex].map;
+
+    character = {
+      x: 0,
+      y: 0,
+      canMove: true,
+      visible: true,
+      canReset: true,
+    };
+    reset();
   });
 
   // load imgs here
@@ -73,15 +89,6 @@ function preload() {
   cannonSound.playMode("restart");
   deathSound.playMode("restart");
   laserDeathSound.playMode("restart");
-
-  character = {
-    x: 0,
-    y: 0,
-    canMove: true,
-    visible: true,
-    canReset: true,
-  };
-  gameState = "play";
 }
 
 function setup() {
@@ -104,7 +111,7 @@ function draw() {
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(32);
-    text("You Died!", width / 2, height / 2);
+    text(deathMsg === null ? "You Died!" : deathMsg, width / 2, height / 2);
     textSize(20);
     text("Press 'r' to restart", width / 2, height / 2 + 40);
   }
@@ -264,9 +271,16 @@ function render() {
   // draw all roundshots
   roundshots = renderRoundshots(roundshots, roundshotImg, blockSize);
 
+  // draw time remaining
+  if (time !== null) {
+    fill(255);
+    textSize(20);
+    text(`Time: ${time}`, 510, 30);
+  }
+
   // if standing in laser, death
   if (map[character.y][character.x] === "L" && lasersOn) {
-    gameState = "lose";
+    death("You were hit by a laser!");
     laserDeathSound.play();
   }
   // if standing in end block, win
@@ -282,6 +296,9 @@ function reset() {
     return;
   }
 
+  gameState = "play";
+
+  // reset character
   character = {
     x: 0,
     y: 0,
@@ -289,7 +306,25 @@ function reset() {
     visible: true,
     canReset: true,
   };
-  gameState = "play";
+
+  // reset time
+  time = maps[mapIndex].time;
+  if (timeLoop !== null) {
+    clearInterval(timeLoop);
+  }
+  timeLoop = setInterval(() => {
+    if (gameState === "play") {
+      time -= 1;
+
+      if (time <= 0) {
+        death("You ran out of time!");
+        clearInterval(timeLoop);
+      }
+      if (gameState !== "play") {
+        clearInterval(timeLoop);
+      }
+    }
+  }, 1000);
 
   // restore all knights
   for (let y = 0; y < map.length; y++) {
@@ -302,6 +337,11 @@ function reset() {
 
   // restore all cannons
   restoreCannons(map);
+}
+
+function death(msg) {
+  gameState = "lose";
+  deathMsg = msg;
 }
 
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
@@ -394,7 +434,7 @@ function moveTo(x, y) {
           character.visible = false;
           character.canReset = false;
           setTimeout(() => {
-            gameState = "lose";
+            death("You were eaten by a knight!");
             character.canReset = true;
           }, 500);
         }
@@ -410,7 +450,7 @@ function moveTo(x, y) {
           setTimeout(() => {
             map[y][x] = playerCell;
             map[knight[1]][knight[0]] = "K";
-            gameState = "lose";
+            death("You were eaten by a knight!");
             character.canReset = true;
           }, 500);
         }
@@ -434,7 +474,7 @@ function moveTo(x, y) {
 
     setTimeout(() => {
       deathSound.play();
-      gameState = "lose";
+      death("You were shot by a cannon!");
 
       // enable reset again
       character.canReset = true;
@@ -692,7 +732,6 @@ window.addEventListener("DOMContentLoaded", () => {
   levelButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const selectedLevel = button.value;
-      console.log(selectedLevel);
       changeLevel(parseInt(selectedLevel));
       changeModal.style.display = "none";
     });

@@ -118,6 +118,8 @@ canvas {
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
+
+    margin-bottom: 1.5rem;
 }
 
 #mobile-controls button {
