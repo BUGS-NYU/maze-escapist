@@ -1,11 +1,8 @@
 # Maze Escapists
 
 ### Task List
-- Timer: have a timer countdown be displayed on the top-left corner of the game
-    - Use text() function to display text on the p5 canvas
-    - If the timer runs out before the player reaches the end, redirect to losing screen
-
 - Add random block, 1 of 2 must exist
+    - Large Maze Lvl: long rng cannons, cannon blocks intersection
 - Nuke Block: explode on adjacency
 - Levels 10 and later: progressive darkness
 

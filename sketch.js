@@ -274,8 +274,8 @@ function render() {
   // draw time remaining
   if (time !== null) {
     fill(255);
-    textSize(20);
-    text(`Time: ${time}`, 510, 30);
+    textSize(25);
+    text(`Time: ${time}`, 480, 30);
   }
 
   // if standing in laser, death
@@ -283,6 +283,7 @@ function render() {
     death("You were hit by a laser!");
     laserDeathSound.play();
   }
+
   // if standing in end block, win
   if (map[character.y][character.x] === "E") {
     gameState = "win";
