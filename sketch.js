@@ -179,12 +179,6 @@ function render() {
         image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
         image(knightImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
-      // if dead knight
-      else if (map[y][x] === "D") {
-        noFill();
-        rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
-      }
       // if cannon up
       else if (map[y][x] === "1") {
         noFill();
@@ -232,17 +226,6 @@ function render() {
         rotate((3 * PI) / 2 + PI / 4);
         image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
         pop();
-      }
-      // if dead cannon
-      else if (
-        map[y][x] === "5" ||
-        map[y][x] === "6" ||
-        map[y][x] === "7" ||
-        map[y][x] === "8"
-      ) {
-        noFill();
-        rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
       }
     }
   }
@@ -327,17 +310,11 @@ function reset() {
     }
   }, 1000);
 
-  // restore all knights
-  for (let y = 0; y < map.length; y++) {
-    for (let x = 0; x < map[y].length; x++) {
-      if (map[y][x] === "D") {
-        map[y][x] = "K";
-      }
-    }
-  }
+  // restore map (deep copy)
+  map = maps[mapIndex].map.map(row => [...row]);
 
-  // restore all cannons
-  restoreCannons(map);
+  // setup random walls
+  setupRandomWalls(map);
 }
 
 function death(msg) {
@@ -444,13 +421,10 @@ function moveTo(x, y) {
           character.canMove = false;
           character.visible = false;
           character.canReset = false;
-          const playerCell = map[y][x];
           map[knight[1]][knight[0]] = " ";
           map[y][x] = "K";
 
           setTimeout(() => {
-            map[y][x] = playerCell;
-            map[knight[1]][knight[0]] = "K";
             death("You were eaten by a knight!");
             character.canReset = true;
           }, 500);
@@ -490,7 +464,7 @@ function moveTo(x, y) {
     character.x = x;
     character.y = y;
     chompSound.play();
-    map[y][x] = "D";
+    map[y][x] = " ";
     return;
   }
 

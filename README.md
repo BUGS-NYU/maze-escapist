@@ -1,8 +1,8 @@
 # Maze Escapists
 
 ### Task List
-- Add random block, 1 of 2 must exist
-    - Large Maze Lvl: long rng cannons, cannon blocks intersection
+- Test: full test random block functionality
+- Large Maze Lvl: long rng cannons, cannon blocks intersection
 - Nuke Block: explode on adjacency
 - Levels 10 and later: progressive darkness
 

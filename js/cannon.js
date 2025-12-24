@@ -143,22 +143,22 @@ function handleCannonEaten(map, characterPos, chompSound) {
     // cannon up case
     if (map[characterPos.y][characterPos.x] === "1") {
         chompSound.play();
-        map[characterPos.y][characterPos.x] = "5";
+        map[characterPos.y][characterPos.x] = " ";
     }
     // cannon down case
     if (map[characterPos.y][characterPos.x] === "2") {
         chompSound.play();
-        map[characterPos.y][characterPos.x] = "6";
+        map[characterPos.y][characterPos.x] = " ";
     }
     // cannon left case
     if (map[characterPos.y][characterPos.x] === "3") {
         chompSound.play();
-        map[characterPos.y][characterPos.x] = "7";
+        map[characterPos.y][characterPos.x] = " ";
     }
     // cannon right case
     if (map[characterPos.y][characterPos.x] === "4") {
         chompSound.play();
-        map[characterPos.y][characterPos.x] = "8";
+        map[characterPos.y][characterPos.x] = " ";
     }
 }
 
@@ -202,24 +202,4 @@ function renderRoundshots(roundshots, roundshotImg, blockSize) {
         }
         return false;
     });
-}
-
-// restore all dead cannons to living ones (called when map is reset)
-function restoreCannons(map) {
-    for (let y = 0; y < map.length; y++) {
-        for (let x = 0; x < map[y].length; x++) {
-            if (map[y][x] === "5") {
-                map[y][x] = "1";
-            }
-            if (map[y][x] === "6") {
-                map[y][x] = "2";
-            }
-            if (map[y][x] === "7") {
-                map[y][x] = "3";
-            }
-            if (map[y][x] === "8") {
-                map[y][x] = "4";
-            }
-        }
-    }
 }
