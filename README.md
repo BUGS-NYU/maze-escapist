@@ -11,7 +11,6 @@
 
 - add item (bubble) to increase time when collected
 - add item (roundshot) to increase character's ammunition
-- move maps data to json file
 - add bishop obstacle
 
 - add mortar obstacle

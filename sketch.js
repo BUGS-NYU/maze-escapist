@@ -1,18 +1,8 @@
 let mapSize = 600;
 
-let laserImg;
-let charImg;
+let images;
+let sounds;
 let charDir;
-let knightImg;
-let move;
-let knightSound;
-let dirtImg;
-let stoneImg;
-let chompSound;
-let cannonSound;
-let cannonImg;
-let roundshotImg;
-let doorImg;
 
 // character
 // x (int): position on map grid
@@ -62,33 +52,35 @@ function preload() {
     };
     reset();
   });
+  charDir = 0;
 
   // load imgs here
-  laserImg = loadImage("images/laser.png");
-  charImg = loadImage("images/character.png");
-  knightImg = loadImage("images/knight.png");
-  charDir = 0;
-  dirtImg = loadImage("images/dirt.jpg");
-  stoneImg = loadImage("images/stone.png");
-  cannonImg = loadImage("images/cannon.webp");
-  roundshotImg = loadImage("images/roundshot.png");
-  doorImg = loadImage("images/door.jpg");
+  images = {};
+  images.laser = loadImage("images/laser.png");
+  images.char = loadImage("images/character.png");
+  images.knight = loadImage("images/knight.png");
+  images.dirt = loadImage("images/dirt.jpg");
+  images.stone = loadImage("images/stone.png");
+  images.cannon = loadImage("images/cannon.webp");
+  images.roundshot = loadImage("images/roundshot.png");
+  images.door = loadImage("images/door.jpg");
 
   // load sounds here
-  move = loadSound("sounds/move.mp3");
-  knightSound = loadSound("sounds/knight-sound.mp3");
-  chompSound = loadSound("sounds/chomp.mp3");
-  cannonSound = loadSound("sounds/cannon.mp3");
-  deathSound = loadSound("sounds/villager.mp3");
-  laserDeathSound = loadSound("sounds/death.mp3");
+  sounds = {};
+  sounds.move = loadSound("sounds/move.mp3");
+  sounds.knight = loadSound("sounds/knight-sound.mp3");
+  sounds.chomp = loadSound("sounds/chomp.mp3");
+  sounds.cannon = loadSound("sounds/cannon.mp3");
+  sounds.death = loadSound("sounds/villager.mp3");
+  sounds.laserDeath = loadSound("sounds/death.mp3");
 
   // needed to prevent audio-related performance issues
-  move.playMode("restart");
-  knightSound.playMode("restart");
-  chompSound.playMode("restart");
-  cannonSound.playMode("restart");
-  deathSound.playMode("restart");
-  laserDeathSound.playMode("restart");
+  sounds.move.playMode("restart");
+  sounds.knight.playMode("restart");
+  sounds.chomp.playMode("restart");
+  sounds.cannon.playMode("restart");
+  sounds.death.playMode("restart");
+  sounds.laserDeath.playMode("restart");
 }
 
 function setup() {
@@ -145,13 +137,13 @@ function render() {
       if (map[y][x] === " ") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if wall
       else if (map[y][x] === "W") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(stoneImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.stone, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if laser
       else if (map[y][x] === "L") {
@@ -159,72 +151,72 @@ function render() {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         tint(100, 100, 255, 200);
-        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
         if (lasersOn) {
           noTint();
-          image(laserImg, x * blockSize, y * blockSize, blockSize, blockSize);
+          image(images.laser, x * blockSize, y * blockSize, blockSize, blockSize);
         }
         pop();
       }
       // if end block
       else if (map[y][x] === "E") {
         noFill();
-        image(doorImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.door, x * blockSize, y * blockSize, blockSize, blockSize);
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if knight block
       else if (map[y][x] === "K") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
-        image(knightImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.knight, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if cannon up
       else if (map[y][x] === "1") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
         push();
         imageMode(CENTER);
         translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
         rotate(PI + PI / 4);
-        image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
+        image(images.cannon, 0, 0, blockSize * 1.5, blockSize * 1.5);
         pop();
       }
       // if cannon down
       else if (map[y][x] === "2") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
         push();
         imageMode(CENTER);
         translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
         rotate(PI / 4);
-        image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
+        image(images.cannon, 0, 0, blockSize * 1.5, blockSize * 1.5);
         pop();
       }
       // if cannon right
       else if (map[y][x] === "3") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
         push();
         imageMode(CENTER);
         translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
         rotate(PI / 2 + PI / 4);
-        image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
+        image(images.cannon, 0, 0, blockSize * 1.5, blockSize * 1.5);
         pop();
       }
       // if cannon left
       else if (map[y][x] === "4") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(dirtImg, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
         push();
         imageMode(CENTER);
         translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
         rotate((3 * PI) / 2 + PI / 4);
-        image(cannonImg, 0, 0, blockSize * 1.5, blockSize * 1.5);
+        image(images.cannon, 0, 0, blockSize * 1.5, blockSize * 1.5);
         pop();
       }
     }
@@ -246,13 +238,13 @@ function render() {
   else if (charDir === 3) angle = -HALF_PI; // down
   rotate(angle);
   if (character.visible) {
-    image(charImg, 0, 0, blockSize, blockSize);
+    image(images.char, 0, 0, blockSize, blockSize);
   }
   pop();
   imageMode(CORNER); // restore default (optional)
 
   // draw all roundshots
-  roundshots = renderRoundshots(roundshots, roundshotImg, blockSize);
+  roundshots = renderRoundshots(roundshots, images.roundshot, blockSize);
 
   // draw time remaining
   if (time !== null) {
@@ -264,7 +256,7 @@ function render() {
   // if standing in laser, death
   if (map[character.y][character.x] === "L" && lasersOn) {
     death("You were hit by a laser!");
-    laserDeathSound.play();
+    sounds.laserDeath.play();
   }
 
   // if standing in end block, win
@@ -404,7 +396,7 @@ function moveTo(x, y) {
       if (pos[0] === x && pos[1] === y) {
         character.x = x;
         character.y = y;
-        knightSound.play();
+        sounds.knight.play();
 
         // if player is standing on knight
         if (map[y][x] === "K") {
@@ -438,7 +430,7 @@ function moveTo(x, y) {
   const hit = handleCannonShoot(
     map,
     { x: x, y: y },
-    cannonSound,
+    sounds.cannon,
     roundshots,
     blockSize,
     character
@@ -448,7 +440,7 @@ function moveTo(x, y) {
     character.canReset = false;
 
     setTimeout(() => {
-      deathSound.play();
+      sounds.death.play();
       death("You were shot by a cannon!");
 
       // enable reset again
@@ -457,13 +449,13 @@ function moveTo(x, y) {
   }
 
   // if cannon block, eat cannon
-  handleCannonEaten(map, { x: x, y: y }, chompSound);
+  handleCannonEaten(map, { x: x, y: y }, sounds.chomp);
 
   // if knight block, eat knight
   if (map[y][x] === "K") {
     character.x = x;
     character.y = y;
-    chompSound.play();
+    sounds.chomp.play();
     map[y][x] = " ";
     return;
   }
@@ -471,7 +463,7 @@ function moveTo(x, y) {
   // if empty space, move character
   character.x = x;
   character.y = y;
-  move.play();
+  sounds.move.play();
 }
 
 // flicker laser on/off every 1000 ms
