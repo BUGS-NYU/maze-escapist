@@ -64,6 +64,7 @@ function preload() {
   images.cannon = loadImage("images/cannon.webp");
   images.roundshot = loadImage("images/roundshot.png");
   images.door = loadImage("images/door.jpg");
+  images.nuke = loadImage("images/nuke.jpg");
 
   // load sounds here
   sounds = {};
@@ -73,6 +74,7 @@ function preload() {
   sounds.cannon = loadSound("sounds/cannon.mp3");
   sounds.death = loadSound("sounds/villager.mp3");
   sounds.laserDeath = loadSound("sounds/death.mp3");
+  sounds.nuke = loadSound("sounds/nuke.mp3");
 
   // needed to prevent audio-related performance issues
   sounds.move.playMode("restart");
@@ -81,6 +83,7 @@ function preload() {
   sounds.cannon.playMode("restart");
   sounds.death.playMode("restart");
   sounds.laserDeath.playMode("restart");
+  sounds.nuke.playMode("restart");
 }
 
 function setup() {
@@ -217,6 +220,21 @@ function render() {
         translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
         rotate((3 * PI) / 2 + PI / 4);
         image(images.cannon, 0, 0, blockSize * 1.5, blockSize * 1.5);
+        pop();
+      }
+      // if nuke
+      else if (map[y][x] === "N") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.nuke, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
+      // if active nuke
+      else if (map[y][x] === "A") {
+        push();
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        tint(255, 0, 0, 255);
+        image(images.nuke, x * blockSize, y * blockSize, blockSize, blockSize);
         pop();
       }
     }
@@ -367,8 +385,8 @@ function moveTo(x, y) {
     return;
   }
 
-  // if wall, do not move
-  if (map[y][x] === "W") {
+  // if wall / nuke, do not move
+  if (map[y][x] === "W" || map[y][x] === "N") {
     return;
   }
 
@@ -459,6 +477,9 @@ function moveTo(x, y) {
     map[y][x] = " ";
     return;
   }
+
+  // if adjacent to nuke, activate
+  checkNukes(map, { x: x, y: y }, sounds.nuke, death, sounds.cannon);
 
   // if empty space, move character
   character.x = x;

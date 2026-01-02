@@ -1,7 +1,9 @@
 # Maze Escapists
 
 ### Task List
-- Nuke Block: explode on adjacency
+- Nuke Block: explode on adjacency, cannot walk thru
+    - multi nuke activation case: how to handle multi audio
+    - On Explosion: already ended case, ensure no death/sounds triggered maybe use callback?
 - Levels 10 and later: progressive darkness
 
 - Dark Levels: camera item, candle item, night vision item

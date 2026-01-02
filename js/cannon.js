@@ -126,6 +126,7 @@ function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize
                     currY: cannonPos.y * blockSize + (blockSize / 2)
                 });
 
+                cannonSound.rate(1);
                 cannonSound.play();
 
                 // disable resetting for duration of animation
