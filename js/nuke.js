@@ -39,6 +39,12 @@ function checkNukes(explosionCallback, map, characterPos, nukeSound, runID) {
  */
 function activateNuke(explosionCallback, map, nuke, nukeSound, runID) {
     map[nuke.y][nuke.x] = "A";
+
+    // if another nuke already active: stop
+    if (nukeSound.isPlaying()) {
+        return;
+    }
+
     nukeSound.play();
     nukeSound.jump(2.4);
 

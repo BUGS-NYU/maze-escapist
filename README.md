@@ -1,8 +1,6 @@
 # Maze Escapists
 
 ### Task List
-- Nuke Block
-    - multi nuke activation case: how to handle?
 - Levels 10 and later: progressive darkness 
 
 - Dark Levels: camera item, candle item, night vision item
