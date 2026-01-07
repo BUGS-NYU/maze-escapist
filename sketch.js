@@ -37,6 +37,12 @@ let timeLoop = null;
 // msg to be displayed on death
 let deathMsg = null;
 
+// whether a nuke is active on map, set to false on death/win/reset
+let nukeActive = false;
+
+// ID of current level attempt, increment each reset
+let runID = 0;
+
 function preload() {
   // load map by maps.json
   loadJSON("data/maps.json", (data) => {
@@ -75,6 +81,8 @@ function preload() {
   sounds.death = loadSound("sounds/villager.mp3");
   sounds.laserDeath = loadSound("sounds/death.mp3");
   sounds.nuke = loadSound("sounds/nuke.mp3");
+  sounds.nukeExplosion = loadSound("sounds/cannon.mp3");
+  sounds.nukeExplosion.rate(0.3);
 
   // needed to prevent audio-related performance issues
   sounds.move.playMode("restart");
@@ -279,7 +287,9 @@ function render() {
 
   // if standing in end block, win
   if (map[character.y][character.x] === "E") {
+    sounds.nuke.stop();
     gameState = "win";
+    nukeActive = false;
   }
 }
 
@@ -325,11 +335,20 @@ function reset() {
 
   // setup random walls
   setupRandomWalls(map);
+
+  // reset nukeActive
+  nukeActive = false;
+  sounds.nuke.stop();
+
+  // increment runID
+  runID += 1;
 }
 
 function death(msg) {
   gameState = "lose";
   deathMsg = msg;
+
+  nukeActive = false;
 }
 
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
@@ -386,7 +405,7 @@ function moveTo(x, y) {
   }
 
   // if wall / nuke, do not move
-  if (map[y][x] === "W" || map[y][x] === "N") {
+  if (map[y][x] === "W" || map[y][x] === "N" || map[y][x] === "A") {
     return;
   }
 
@@ -479,7 +498,27 @@ function moveTo(x, y) {
   }
 
   // if adjacent to nuke, activate
-  checkNukes(map, { x: x, y: y }, sounds.nuke, death, sounds.cannon);
+  // set nukeActive true if a nuke was activated
+  nukeActive = checkNukes(
+    (nukeRunID) => {      
+      // if nuke is not active
+      if (nukeActive === false) {
+        sounds.nuke.stop();
+        return;
+      }
+      // if runID does not match
+      else if (nukeRunID !== runID) {
+        return;
+      }
+      // if nuke is active
+      else {
+        sounds.nuke.stop();
+        death("You were obliterated by a nuke!");
+        sounds.nukeExplosion.play();
+      }
+    },
+    map, { x: x, y: y }, sounds.nuke, runID)
+    || nukeActive;
 
   // if empty space, move character
   character.x = x;

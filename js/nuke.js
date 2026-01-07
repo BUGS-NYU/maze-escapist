@@ -1,7 +1,8 @@
 /**
  * Check whether character is adjacent to nuke, if so then activate
+ * Return whether nukeID if activated, -1 otherwise
  */
-function checkNukes(map, characterPos, nukeSound, deathFunc, cannonSound) {
+function checkNukes(explosionCallback, map, characterPos, nukeSound, runID) {
     // get nukes
     const nukes = [];
     for (let y = 0; y < map.length; y++) {
@@ -21,28 +22,28 @@ function checkNukes(map, characterPos, nukeSound, deathFunc, cannonSound) {
     ];
 
     // activate any adjacent nukes
+    let nukeActivated = false;
     for (const nuke of nukes) {
         for (const cell of adjacentCells) {
             if (nuke.x === cell.x && nuke.y === cell.y) {
-                activateNuke(map, nuke, nukeSound, deathFunc, cannonSound);
+                activateNuke(explosionCallback, map, nuke, nukeSound, runID);
+                nukeActivated = true;
             }
         }
     }
+    return nukeActivated;
 }
 
 /**
  * Activate nuke
  */
-function activateNuke(map, nuke, nukeSound, deathFunc, cannonSound) {
+function activateNuke(explosionCallback, map, nuke, nukeSound, runID) {
     map[nuke.y][nuke.x] = "A";
     nukeSound.play();
     nukeSound.jump(2.4);
 
     // on explosion
     setTimeout(() => {
-        nukeSound.stop();
-        deathFunc("You were obliterated by a nuke!");
-        cannonSound.rate(0.3);
-        cannonSound.play();
+        explosionCallback(runID);
     }, 3100);
 }
