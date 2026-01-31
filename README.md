@@ -1,7 +1,7 @@
 # Maze Escapists
 
 ### Task List
-- Nuke + laser path lvl, nuke as obstacle
+- Nuke + cannon only level
 - Levels 18 and later: progressive darkness 
 
 - Dark Levels: camera item, candle item, night vision item
