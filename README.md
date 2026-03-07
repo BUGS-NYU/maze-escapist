@@ -1,10 +1,9 @@
 # Maze Escapists
 
 ### Task List
-- add random death msgs
 - display curr level
 - queryvar to levels
-- Levels 18 and later: progressive darkness 
+- Levels 18 and later: progressive darkness
 
 - Dark Levels: camera item, candle item, night vision item
 - Fire block

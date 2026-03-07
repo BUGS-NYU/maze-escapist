@@ -44,6 +44,11 @@ let nukeActive = false;
 let runID = 0;
 
 function preload() {
+  // load death msgs by death-msgs.json
+  loadJSON("data/death-msgs.json", (data) => {
+    deathMsgs = data;
+  });
+
   // load map by maps.json
   loadJSON("data/maps.json", (data) => {
     maps = data;
@@ -113,10 +118,16 @@ function draw() {
     background(255);
     fill(0);
     textAlign(CENTER, CENTER);
-    textSize(32);
-    text(deathMsg === null ? "You Died!" : deathMsg, width / 2, height / 2);
+    textSize(18);
+
+    let displayMsg = deathMsg === null ? "You Died!" : deathMsg;
+    const wrappedText = wrapText(displayMsg, 30);
+    wrappedText.forEach((line, index) => {
+      text(line, width / 2, height / 2 - 20 + index * 20);
+    });
     textSize(20);
-    text("Press 'r' to restart", width / 2, height / 2 + 40);
+    text("Press 'r' to restart", 
+      width / 2, height / 2 + 50);
   }
   // if reached end: show ending screen
   else if (gameState === "win") {
@@ -281,7 +292,7 @@ function render() {
 
   // if standing in laser, death
   if (map[character.y][character.x] === "L" && lasersOn) {
-    death("You were hit by a laser!");
+    death(getRandom(deathMsgs.laser));
     sounds.laserDeath.play();
   }
 
@@ -441,7 +452,7 @@ function moveTo(x, y) {
           character.visible = false;
           character.canReset = false;
           setTimeout(() => {
-            death("You were eaten by a knight!");
+            death(getRandom(deathMsgs.knight));
             character.canReset = true;
           }, 500);
         }
@@ -454,7 +465,7 @@ function moveTo(x, y) {
           map[y][x] = "K";
 
           setTimeout(() => {
-            death("You were eaten by a knight!");
+            death(getRandom(deathMsgs.knight));
             character.canReset = true;
           }, 500);
         }
@@ -478,7 +489,7 @@ function moveTo(x, y) {
 
     setTimeout(() => {
       sounds.death.play();
-      death("You were shot by a cannon!");
+      death(getRandom(deathMsgs.cannon));
 
       // enable reset again
       character.canReset = true;
@@ -513,7 +524,7 @@ function moveTo(x, y) {
       // if nuke is active
       else {
         sounds.nuke.stop();
-        death("You were obliterated by a nuke!");
+        death(getRandom(deathMsgs.nuke));
         sounds.nukeExplosion.play();
       }
     },

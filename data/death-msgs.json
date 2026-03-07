@@ -1,0 +1,26 @@
+{
+    "laser": [
+        "You can work on your timing.",
+        "Pro tip: You can avoid laser beams by avoiding them.",
+        "You will die if you touch the laser beam while it is active.",
+        "You died because you touched the laser beam while it was active. Don't do that again."
+    ],
+    "cannon": [
+        "Do not walk in front of a cannon, doing so is a bad idea.",
+        "Pro tip: You can avoid cannonballs by avoiding them.",
+        "You will die if you collide with a cannonball.",
+        "You died because you collided with a cannonball. Don't do that again."
+    ],
+    "knight": [
+        "Walking to a square 2x1 away from a knight leads to getting eaten.",
+        "If you play chess, you should know where knights attack.",
+        "Try to use your brain to figure out where the knight can attack.",
+        "You can play some chess to get better at this game."
+    ],
+    "nuke": [
+        "Try to dodge the nuke when it is active.",
+        "Press Ctrl + W at the moment of impact to avoid the blast.",
+        "You will die if you get caught up in the explosion of a nuke. Try to avoid dying.",
+        "Nukes are the ultimate destructive force, wiping out everything in their path without discrimination. In the maze, they symbolize the end—an unstoppable power that leaves no room for escape or survival. When a nuke is triggered, it signifies total annihilation, erasing all progress and leaving behind only silence and emptiness. It’s a reminder of the fragility of existence within the maze, where even the most careful planning can be undone in an instant by overwhelming devastation."
+    ]
+}
