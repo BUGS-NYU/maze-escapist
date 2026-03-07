@@ -1,7 +1,6 @@
 # Maze Escapists
 
 ### Task List
-- display curr level
 - queryvar to levels
 - Levels 18 and later: progressive darkness
 

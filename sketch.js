@@ -283,11 +283,12 @@ function render() {
   // draw all roundshots
   roundshots = renderRoundshots(roundshots, images.roundshot, blockSize);
 
-  // draw time remaining
+  // draw time remaining + level number
   if (time !== null) {
     fill(255);
     textSize(25);
-    text(`Time: ${time}`, 480, 30);
+    text(`Level: ${mapIndex + 1}`, 480, 30);
+    text(`Time: ${time}`, 480, 60);
   }
 
   // if standing in laser, death
