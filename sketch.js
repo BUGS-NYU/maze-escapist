@@ -44,6 +44,16 @@ let nukeActive = false;
 let runID = 0;
 
 function preload() {
+  // set mapIndex by query param, default to 0
+  const urlParams = new URLSearchParams(window.location.search);
+  const levelParam = urlParams.get("level");
+  if (levelParam !== null) {
+    const parsedLevel = parseInt(levelParam);
+    if (!isNaN(parsedLevel)) {
+      mapIndex = parsedLevel - 1;
+    }
+  }
+
   // load death msgs by death-msgs.json
   loadJSON("data/death-msgs.json", (data) => {
     deathMsgs = data;
@@ -53,6 +63,7 @@ function preload() {
   loadJSON("data/maps.json", (data) => {
     maps = data;
     map = maps[mapIndex].map;
+    blockSize = mapSize / map.length;
 
     character = {
       x: 0,
