@@ -1,15 +1,18 @@
 # Maze Escapists
 
 ### Task List
+- add item (bubble) to increase time when collected
+- hammer item, breakable walls
+- Nuke spawnkilling level
+- Difficulty modes (normal, rigged, speedrunner)
+- Bg music
+- New maze stylings (themes unlocked)
 - Levels 18 and later: progressive darkness
 
 - Dark Levels: camera item, candle item, night vision item
 - Fire block
 - No light lvl deduce by sound
 
-
-- add item (bubble) to increase time when collected
-- add item (roundshot) to increase character's ammunition
 - add bishop obstacle
 
 - add mortar obstacle
