@@ -1,11 +1,9 @@
 # Maze Escapists
 
 ### Task List
-- add level that relies on bubble
 - dynamically generated level btns
 - hammer item, breakable walls
 - Nuke spawnkilling level
-- Difficulty modes (normal, rigged, speedrunner)
 - Bg music
 - New maze stylings (themes unlocked)
 - Levels 18 and later: progressive darkness
