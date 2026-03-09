@@ -1,7 +1,8 @@
 # Maze Escapists
 
 ### Task List
-- add item (bubble) to increase time when collected
+- add level that relies on bubble
+- dynamically generated level btns
 - hammer item, breakable walls
 - Nuke spawnkilling level
 - Difficulty modes (normal, rigged, speedrunner)

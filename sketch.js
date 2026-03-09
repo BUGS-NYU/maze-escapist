@@ -87,6 +87,7 @@ function preload() {
   images.roundshot = loadImage("images/roundshot.png");
   images.door = loadImage("images/door.jpg");
   images.nuke = loadImage("images/nuke.jpg");
+  images.bubble = loadImage("images/bubble.png");
 
   // load sounds here
   sounds = {};
@@ -267,6 +268,13 @@ function render() {
         image(images.nuke, x * blockSize, y * blockSize, blockSize, blockSize);
         pop();
       }
+      // if bubble
+      else if (map[y][x] === "B") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.bubble, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
     }
   }
 
@@ -430,6 +438,13 @@ function moveTo(x, y) {
   // if wall / nuke, do not move
   if (map[y][x] === "W" || map[y][x] === "N" || map[y][x] === "A") {
     return;
+  }
+
+  // if bubble, replace with empty space and add 10 seconds to timer
+  if (map[y][x] === "B") {
+    map[y][x] = " ";
+    time += 10;
+    sounds.chomp.play();
   }
 
   // if knight attacked block, lose
