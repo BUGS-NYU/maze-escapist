@@ -783,6 +783,30 @@ window.addEventListener("DOMContentLoaded", () => {
   const changeButton = document.getElementById("change-level");
   const changeModal = document.getElementById("change-level-modal");
 
+  // dynamically generate level buttons once maps are available
+  const generateLevelButtons = () => {
+    if (!maps) {
+      setTimeout(generateLevelButtons, 100); // Wait for loadJSON to finish
+      return;
+    }
+
+    // Clear any existing hardcoded buttons
+    changeModal.innerHTML = "";
+
+    // Create a button for every entry in the maps array
+    maps.forEach((mapData, index) => {
+      const btn = document.createElement("button");
+      btn.value = index;
+      btn.innerText = `Level ${index + 1}`;
+      btn.addEventListener("click", () => {
+        changeLevel(index);
+        changeModal.style.display = "none";
+      });
+      changeModal.appendChild(btn);
+    });
+  };
+  generateLevelButtons();
+
   // change button click: toggle modal show
   changeButton.addEventListener("click", () => {
     if (changeModal.style.display === "none") {

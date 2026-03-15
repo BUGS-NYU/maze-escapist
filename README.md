@@ -1,7 +1,6 @@
 # Maze Escapists
 
 ### Task List
-- dynamically generated level btns
 - hammer item, breakable walls
 - Nuke spawnkilling level
 - Bg music
