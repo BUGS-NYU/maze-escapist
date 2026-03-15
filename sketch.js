@@ -65,13 +65,6 @@ function preload() {
     map = maps[mapIndex].map;
     blockSize = mapSize / map.length;
 
-    character = {
-      x: 0,
-      y: 0,
-      canMove: true,
-      visible: true,
-      canReset: true,
-    };
     reset();
   });
   charDir = 0;
@@ -88,6 +81,7 @@ function preload() {
   images.door = loadImage("images/door.jpg");
   images.nuke = loadImage("images/nuke.jpg");
   images.bubble = loadImage("images/bubble.png");
+  images.hammer = loadImage("images/hammer.png")
 
   // load sounds here
   sounds = {};
@@ -275,6 +269,13 @@ function render() {
         image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
         image(images.bubble, x * blockSize, y * blockSize, blockSize, blockSize);
       }
+      // if hammer
+      else if (map[y][x] === "H") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.hammer, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
     }
   }
 
@@ -306,8 +307,12 @@ function render() {
   if (time !== null) {
     fill(255);
     textSize(25);
-    text(`Level: ${mapIndex + 1}`, 480, 30);
-    text(`Time: ${time}`, 480, 60);
+    text(`Level: ${mapIndex + 1}`, 460, 30);
+    text(`Time: ${time}`, 460, 60);
+
+    if (character.hammerCount > 0) {
+      text(`Hammers: ${character.hammerCount}`, 460, 90);
+    }
   }
 
   // if standing in laser, death
@@ -327,7 +332,7 @@ function render() {
 // function to reset game at current level
 function reset() {
   // if cannot reset, return
-  if (!character.canReset) {
+  if (character && !character.canReset) {
     return;
   }
 
@@ -340,6 +345,7 @@ function reset() {
     canMove: true,
     visible: true,
     canReset: true,
+    hammerCount: 0,
   };
 
   // reset time
@@ -444,6 +450,13 @@ function moveTo(x, y) {
   if (map[y][x] === "B") {
     map[y][x] = " ";
     time += 10;
+    sounds.chomp.play();
+  }
+
+  // if hammer, replace with empty space and increment hammerCount
+  if (map[y][x] === "H") {
+    map[y][x] = " ";
+    character.hammerCount += 1;
     sounds.chomp.play();
   }
 

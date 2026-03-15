@@ -1,9 +1,14 @@
 # Maze Escapists
 
 ### Task List
-- hammer item, breakable walls
+- add breakable blocks
+    - breakable block path, new "R" for breakable block render
+    - moveTo(): edit to check the hammerCount, if hammerCount>0 then use a hammer to replace block w " ", otherwise cannot move into that block
+    - when block is broken use sound path
+- shorten sketch.js
+- remove low res functionality
+- add all current data to top header bar
 - Nuke spawnkilling level
-- Bg music
 - New maze stylings (themes unlocked)
 - Levels 18 and later: progressive darkness
 
@@ -26,3 +31,6 @@
 - TD idea (world 3)
     - use current levels rendering system & logic
     - add more building / fighting mechanics, space as a control
+
+### Errors
+- Image doesnt have transparent bg error: use a .png that seems to have no checkers (during google search view)
