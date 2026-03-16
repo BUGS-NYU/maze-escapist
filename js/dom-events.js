@@ -13,21 +13,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const lowRes = document.getElementById("low-res");
-
-  // if user toggles low resolution
-  lowRes.addEventListener("change", () => {
-    if (lowRes.checked) {
-      mapSize = 300;
-      resizeCanvas(mapSize, mapSize);
-      blockSize = mapSize / map.length;
-    } else {
-      mapSize = 600;
-      resizeCanvas(mapSize, mapSize);
-      blockSize = mapSize / map.length;
-    }
-  });
-
   // Mobile controls: add event listeners for directional buttons
   const btnUp = document.getElementById("btn-up");
   const btnDown = document.getElementById("btn-down");

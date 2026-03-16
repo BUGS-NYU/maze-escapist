@@ -1,8 +1,6 @@
 # Maze Escapists
 
 ### Task List
-- shorten sketch.js
-- remove low res functionality
 - add all current data to top header bar
 - Nuke spawnkilling level
 - breakable rock intro level
