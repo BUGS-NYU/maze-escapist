@@ -1,12 +1,16 @@
 # Maze Escapists
 
 ### Task List
-- add breakable blocks
-    - when block is broken use sound path
 - shorten sketch.js
 - remove low res functionality
 - add all current data to top header bar
 - Nuke spawnkilling level
+- breakable rock intro level
+- breakable rock wise usage maze
+- breakable rock protecting exit cannon
+- breakable rock cave: shortest path algorithm
+- breakable rock cluster + lasers, only 1 hammer must use at end
+- breakable rock + knight + cannon complex
 - New maze stylings (themes unlocked)
 - worlds: groupings of lvls
 - level unlocking by session
