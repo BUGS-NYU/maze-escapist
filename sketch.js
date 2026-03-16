@@ -81,7 +81,8 @@ function preload() {
   images.door = loadImage("images/door.jpg");
   images.nuke = loadImage("images/nuke.jpg");
   images.bubble = loadImage("images/bubble.png");
-  images.hammer = loadImage("images/hammer.png")
+  images.hammer = loadImage("images/hammer.png");
+  images.rock = loadImage("images/rock.webp");
 
   // load sounds here
   sounds = {};
@@ -94,6 +95,8 @@ function preload() {
   sounds.nuke = loadSound("sounds/nuke.mp3");
   sounds.nukeExplosion = loadSound("sounds/cannon.mp3");
   sounds.nukeExplosion.rate(0.3);
+  sounds.rockBreak = loadSound("sounds/rock-break.mp3");
+  sounds.rockBreak.rate(1.25);
 
   // needed to prevent audio-related performance issues
   sounds.move.playMode("restart");
@@ -103,6 +106,7 @@ function preload() {
   sounds.death.playMode("restart");
   sounds.laserDeath.playMode("restart");
   sounds.nuke.playMode("restart");
+  sounds.rockBreak.playMode("restart");
 }
 
 function setup() {
@@ -276,6 +280,13 @@ function render() {
         image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
         image(images.hammer, x * blockSize, y * blockSize, blockSize, blockSize);
       }
+      // if rock
+      else if (map[y][x] === "R") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.rock, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
     }
   }
 
@@ -444,6 +455,18 @@ function moveTo(x, y) {
   // if wall / nuke, do not move
   if (map[y][x] === "W" || map[y][x] === "N" || map[y][x] === "A") {
     return;
+  }
+
+  // if boulder, check for hammers
+  if (map[y][x] === "R") {
+    if (character.hammerCount > 0) {
+      // consume one hammer and clear the path
+      character.hammerCount -= 1;
+      map[y][x] = " ";
+      sounds.rockBreak.play();
+    } else {
+      return;
+    }
   }
 
   // if bubble, replace with empty space and add 10 seconds to timer

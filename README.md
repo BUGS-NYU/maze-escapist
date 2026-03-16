@@ -2,14 +2,16 @@
 
 ### Task List
 - add breakable blocks
-    - breakable block path, new "R" for breakable block render
-    - moveTo(): edit to check the hammerCount, if hammerCount>0 then use a hammer to replace block w " ", otherwise cannot move into that block
     - when block is broken use sound path
 - shorten sketch.js
 - remove low res functionality
 - add all current data to top header bar
 - Nuke spawnkilling level
 - New maze stylings (themes unlocked)
+- worlds: groupings of lvls
+- level unlocking by session
+- add to bugs website
+- ai generated lvls
 - Levels 18 and later: progressive darkness
 
 - Dark Levels: camera item, candle item, night vision item
