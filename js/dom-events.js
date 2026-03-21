@@ -219,3 +219,43 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// Global references for UI elements
+let timeDisplay = null;
+let levelDisplay = null;
+let hammerDisplay = null;
+
+/**
+ * Updates the level shown in the HTML UI
+ */
+function updateLevelUI(newLevel) {
+  if (levelDisplay) {
+    levelDisplay.innerText = newLevel;
+  }
+}
+
+/**
+ * Updates the hammer count shown in the HTML UI
+ */
+function updateHammerUI(count) {
+  if (hammerDisplay) {
+    hammerDisplay.innerText = count;
+  }
+}
+
+/**
+ * Updates the time shown in the HTML UI
+ * @param {number|string} newTime 
+ */
+function updateTimeUI(newTime) {
+  if (timeDisplay) {
+    timeDisplay.innerText = newTime;
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  // Initialize global references
+  timeDisplay = document.getElementById("ui-time");
+  levelDisplay = document.getElementById("ui-level");
+  hammerDisplay = document.getElementById("ui-hammers");
+});

@@ -73,13 +73,26 @@ canvas {
 }
 
 #change-level {
-    background-color: transparent;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #5a4a6a;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 8px 16px;
     border-radius: 0.3rem;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(138, 43, 226, 0.1);
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
 }
 #change-level:hover {
-    background-color: rgba(102, 51, 153, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
+    transform: translateY(-1px);
+}
+#change-level:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(138, 43, 226, 0.1);
 }
 
 #change-level-modal {
@@ -147,6 +160,23 @@ canvas {
 #mobile-controls .button-row {
     display: flex;
     gap: 10px;
+}
+
+#game-stats {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.stat-item {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #5a4a6a;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 8px 16px;
+    border-radius: 0.3rem;
+    box-shadow: 0 2px 8px rgba(138, 43, 226, 0.1);
 }
 
 @media screen and (max-width: 480px) {

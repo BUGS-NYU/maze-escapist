@@ -9,10 +9,16 @@
 - breakable rock cave: shortest path algorithm
 - breakable rock cluster + lasers, only 1 hammer must use at end
 - breakable rock + knight + cannon complex
+- moving train (random start & direction)
+- armed train
+- buyable items (session)
+- reset progress
+- rotating cannon (random start orientation)
 - New maze stylings (themes unlocked)
 - worlds: groupings of lvls
 - level unlocking by session
 - add to bugs website
+- marketing 1
 - ai generated lvls
 - Levels 18 and later: progressive darkness
 

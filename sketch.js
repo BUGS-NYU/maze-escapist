@@ -248,18 +248,6 @@ function render() {
   // draw all roundshots
   roundshots = renderRoundshots(roundshots, images.roundshot, blockSize);
 
-  // draw time remaining + level number
-  if (time !== null) {
-    fill(255);
-    textSize(25);
-    text(`Level: ${mapIndex + 1}`, 460, 30);
-    text(`Time: ${time}`, 460, 60);
-
-    if (character.hammerCount > 0) {
-      text(`Hammers: ${character.hammerCount}`, 460, 90);
-    }
-  }
-
   // if standing in laser, death
   if (map[character.y][character.x] === "L" && lasersOn) {
     death(getRandom(deathMsgs.laser));
@@ -293,14 +281,20 @@ function reset() {
     hammerCount: 0,
   };
 
+  updateLevelUI(mapIndex + 1);
+  updateHammerUI(character.hammerCount);
+
   // reset time
   time = maps[mapIndex].time;
+  updateTimeUI(time);
+
   if (timeLoop !== null) {
     clearInterval(timeLoop);
   }
   timeLoop = setInterval(() => {
     if (gameState === "play") {
       time -= 1;
+      updateTimeUI(time);
 
       if (time <= 0) {
         death("You ran out of time!");
@@ -391,11 +385,12 @@ function moveTo(x, y) {
     return;
   }
 
-  // if boulder, check for hammers
+  // if rock, check for hammers
   if (map[y][x] === "R") {
     if (character.hammerCount > 0) {
       // consume one hammer and clear the path
       character.hammerCount -= 1;
+      updateHammerUI(character.hammerCount);
       map[y][x] = " ";
       sounds.rockBreak.play();
     } else {
@@ -414,6 +409,7 @@ function moveTo(x, y) {
   if (map[y][x] === "H") {
     map[y][x] = " ";
     character.hammerCount += 1;
+    updateHammerUI(character.hammerCount);
     sounds.chomp.play();
   }
 
