@@ -191,7 +191,7 @@ window.addEventListener("DOMContentLoaded", () => {
       // Create a header for the World name
       const worldHeader = document.createElement("div");
       worldHeader.innerText = world.name;
-      worldHeader.style.cssText = "grid-column: 1 / -1; color: #fff; padding: 10px; font-weight: bold; background: rgba(255,255,255,0.1);";
+      worldHeader.className = "world-header";
       changeModal.appendChild(worldHeader);
 
       // Create buttons for every level within this world

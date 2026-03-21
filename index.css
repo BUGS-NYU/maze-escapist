@@ -111,6 +111,7 @@ canvas {
     color: white;
     font-size: 1.1rem;
     border: none;
+    cursor: pointer;
 }
 #change-level-modal > button:hover {
     background-color: rgba(255, 255, 255, 0.4);
@@ -177,6 +178,17 @@ canvas {
     padding: 8px 16px;
     border-radius: 0.3rem;
     box-shadow: 0 2px 8px rgba(138, 43, 226, 0.1);
+}
+
+.world-header {
+    grid-column: 1 / -1;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 7px 15px;
+    display: flex;
+    align-items: center;
 }
 
 @media screen and (max-width: 480px) {

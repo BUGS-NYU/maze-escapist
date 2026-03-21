@@ -1,7 +1,6 @@
 # Maze Escapists
 
 ### Task List
-- worlds: groupings of lvls
 - worlds: add difficulty indicator
 - worlds: add condition on final level beaten
 - queryVar: 2 vars for world & level

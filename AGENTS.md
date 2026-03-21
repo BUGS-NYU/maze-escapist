@@ -1,0 +1,9 @@
+### Project Intro
+This is a maze-escaping game implemented in p5.js.
+
+- index.html: the html file for the project ui
+- index.css: css file for index.html
+- sketch.js: main javascript file that holds majority of business logic
+- js/preload.js: contains only the preload() function. Loads json data, sounds, and imgs
+- js/dom-events.js: contains code to interact with the html ui
+- data/map-making.md: documentation on how to create levels and every cell type (indicated by a character)
