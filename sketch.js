@@ -76,13 +76,23 @@ function draw() {
   }
   // if reached end: show ending screen
   else if (gameState === "win") {
+    const currentWorld = worlds[worldIndex];
+    const isLastLevel = mapIndex === currentWorld.levels.length - 1;
+
     background(255);
     fill(0);
     textAlign(CENTER, CENTER);
-    textSize(32);
-    text("You Won!", width / 2, height / 2);
-    textSize(20);
-    text("Press 'c' to continue", width / 2, height / 2 + 40);
+    if (!isLastLevel) {
+      textSize(32);
+      text("You Won!", width / 2, height / 2);
+      textSize(20);
+      text("Press 'c' to continue", width / 2, height / 2 + 40);
+    } else {
+      textSize(24);
+      text("Congratulations, you completed this world!", width / 2, height / 2);
+      textSize(18);
+      text("Feel free to replay or try another world!", width / 2, height / 2 + 40);
+    }
   }
 }
 
@@ -364,7 +374,14 @@ function keyPressed() {
   }
   // continue to next level
   if (key === "c" && gameState === "win") {
-    changeLevel(mapIndex + 1);
+    const currentWorld = worlds[worldIndex];
+    const isLastLevel = mapIndex === currentWorld.levels.length - 1;
+
+    if (!isLastLevel) {
+      changeLevel(mapIndex + 1);
+    } else {
+      console.log("World complete. Progression via 'C' disabled.");
+    }
   }
 
   // Prevent default scrolling for arrow keys (return false after handling)
