@@ -176,26 +176,37 @@ window.addEventListener("DOMContentLoaded", () => {
   const changeButton = document.getElementById("change-level");
   const changeModal = document.getElementById("change-level-modal");
 
-  // dynamically generate level buttons once maps are available
+  // dynamically generate level buttons once worlds are available
   const generateLevelButtons = () => {
-    if (!maps) {
-      setTimeout(generateLevelButtons, 100); // Wait for loadJSON to finish
+    // Check for the new global variable name
+    if (!worlds) {
+      setTimeout(generateLevelButtons, 100); 
       return;
     }
 
-    // Clear any existing hardcoded buttons
     changeModal.innerHTML = "";
 
-    // Create a button for every entry in the maps array
-    maps.forEach((mapData, index) => {
-      const btn = document.createElement("button");
-      btn.value = index;
-      btn.innerText = `Level ${index + 1}`;
-      btn.addEventListener("click", () => {
-        changeLevel(index);
-        changeModal.style.display = "none";
+    // Loop through each world in the new maps.json structure
+    worlds.forEach((world, wIndex) => {
+      // Create a header for the World name
+      const worldHeader = document.createElement("div");
+      worldHeader.innerText = world.name;
+      worldHeader.style.cssText = "grid-column: 1 / -1; color: #fff; padding: 10px; font-weight: bold; background: rgba(255,255,255,0.1);";
+      changeModal.appendChild(worldHeader);
+
+      // Create buttons for every level within this world
+      world.levels.forEach((level, lIndex) => {
+        const btn = document.createElement("button");
+        btn.innerText = `Level ${lIndex + 1}`;
+        
+        btn.addEventListener("click", () => {
+          worldIndex = wIndex; 
+          changeLevel(lIndex);
+          changeModal.style.display = "none";
+        });
+        
+        changeModal.appendChild(btn);
       });
-      changeModal.appendChild(btn);
     });
   };
   generateLevelButtons();
@@ -228,9 +239,9 @@ let hammerDisplay = null;
 /**
  * Updates the level shown in the HTML UI
  */
-function updateLevelUI(newLevel) {
+function updateLevelUI(statusText) {
   if (levelDisplay) {
-    levelDisplay.innerText = newLevel;
+    levelDisplay.innerText = statusText;
   }
 }
 

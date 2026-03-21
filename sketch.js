@@ -25,8 +25,9 @@ let lasersOn = true;
 // roundshot object: { startX, startY, endX, endY, currX, currY }
 let roundshots = [];
 
-// list of level objects
-let maps = null;
+// list of worlds / levels
+let worlds = null; 
+let worldIndex = 0;
 let mapIndex = 0;
 let map = null;
 
@@ -269,6 +270,9 @@ function reset() {
     return;
   }
 
+  map = worlds[worldIndex].levels[mapIndex].map;
+  blockSize = mapSize / map.length;
+
   gameState = "play";
 
   // reset character
@@ -281,11 +285,12 @@ function reset() {
     hammerCount: 0,
   };
 
-  updateLevelUI(mapIndex + 1);
+  // Inside render() or wherever you update your UI:
+  updateLevelUI(`World ${worldIndex + 1} - Level ${mapIndex + 1}`);
   updateHammerUI(character.hammerCount);
 
   // reset time
-  time = maps[mapIndex].time;
+  time = worlds[worldIndex].levels[mapIndex].time;
   updateTimeUI(time);
 
   if (timeLoop !== null) {
@@ -307,7 +312,7 @@ function reset() {
   }, 1000);
 
   // restore map (deep copy)
-  map = maps[mapIndex].map.map(row => [...row]);
+  map = worlds[worldIndex].levels[mapIndex].map.map(row => [...row]);
 
   // setup random walls
   setupRandomWalls(map);
@@ -535,24 +540,25 @@ setInterval(() => {
   lasersOn = !lasersOn;
 }, 1000);
 
-// change level to given index
+// change level to given index within the current world
 function changeLevel(levelIndex) {
-  // maps null case
-  if (maps === null) {
+  // worlds null case
+  if (worlds === null) {
     return;
   }
 
-  // if map does not exist, return
-  if (levelIndex < 0 || levelIndex >= maps.length) {
-    console.log("Error: level does not exist at index " + levelIndex);
+  const currentWorld = worlds[worldIndex];
+
+  // if level does not exist in current world, return
+  if (levelIndex < 0 || levelIndex >= currentWorld.levels.length) {
+    console.log("Error: level does not exist at index " + levelIndex + " in world " + worldIndex);
     return;
   }
 
-  // update mapIndex, map, blockSize
+  // update mapIndex and extract the map from the nested levels array
   mapIndex = levelIndex;
-  map = maps[mapIndex].map;
+  map = currentWorld.levels[mapIndex].map;
   blockSize = mapSize / map.length;
 
   reset();
 }
-

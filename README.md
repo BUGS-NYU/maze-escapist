@@ -1,7 +1,14 @@
 # Maze Escapists
 
 ### Task List
-- add all current data to top header bar
+- worlds: groupings of lvls
+- worlds: add difficulty indicator
+- worlds: add condition on final level beaten
+- queryVar: 2 vars for world & level
+- New maze stylings (themes unlocked)
+- level unlocking by session
+- html top bar: mobile responsive design
+
 - Nuke spawnkilling level
 - breakable rock intro level
 - breakable rock wise usage maze
@@ -9,26 +16,24 @@
 - breakable rock cave: shortest path algorithm
 - breakable rock cluster + lasers, only 1 hammer must use at end
 - breakable rock + knight + cannon complex
+
+- add bishop obstacle
+- add mortar obstacle
+
 - moving train (random start & direction)
 - armed train
 - buyable items (session)
 - reset progress
 - rotating cannon (random start orientation)
-- New maze stylings (themes unlocked)
-- worlds: groupings of lvls
-- level unlocking by session
+
 - add to bugs website
 - marketing 1
 - ai generated lvls
-- Levels 18 and later: progressive darkness
 
+- Dark world of levels
 - Dark Levels: camera item, candle item, night vision item
 - Fire block
 - No light lvl deduce by sound
-
-- add bishop obstacle
-
-- add mortar obstacle
 
 
 - create larger maps by displaying only 9x9 (or less) around the character + support for nonsquare maps???

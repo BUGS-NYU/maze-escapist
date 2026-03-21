@@ -18,15 +18,11 @@ function preload() {
         deathMsgs = data;
     });
 
-    // load map by maps.json
+    // load worlds by maps.json
     loadJSON("data/maps.json", (data) => {
-        maps = data;
-        map = maps[mapIndex].map;
-        blockSize = mapSize / map.length;
-
+        worlds = data;
         reset();
     });
-    charDir = 0;
 
     // load imgs here
     images = {};
