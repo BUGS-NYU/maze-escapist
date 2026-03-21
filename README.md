@@ -1,7 +1,8 @@
 # Maze Escapists
 
 ### Task List
-- New maze stylings (themes unlocked)
+- query var: if invalid indices, console log the error
+- knight: look for transparent bg
 - level unlocking by session
 - html top bar: mobile responsive design
 

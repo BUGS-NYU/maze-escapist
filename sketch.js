@@ -31,6 +31,9 @@ let worldIndex = 0;
 let mapIndex = 0;
 let map = null;
 
+// themes obj: edited in preload()
+let themes = null;
+
 // time remaining
 let time = null;
 let timeLoop = null;
@@ -107,6 +110,9 @@ function render() {
   stroke(0);
   strokeWeight(1);
 
+  const themeName = worlds[worldIndex].theme || "normal";
+  const currentTheme = themes[themeName];
+
   // draw map using our 2-dimensional grid. each item in the grid represents one block on map
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
@@ -114,13 +120,13 @@ function render() {
       if (map[y][x] === " ") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if wall
       else if (map[y][x] === "W") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.stone, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.wall, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if laser
       else if (map[y][x] === "L") {
@@ -128,7 +134,7 @@ function render() {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         tint(100, 100, 255, 200);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         if (lasersOn) {
           noTint();
           image(images.laser, x * blockSize, y * blockSize, blockSize, blockSize);
@@ -145,14 +151,14 @@ function render() {
       else if (map[y][x] === "K") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         image(images.knight, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if cannon up
       else if (map[y][x] === "1") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         push();
         imageMode(CENTER);
         translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
@@ -164,7 +170,7 @@ function render() {
       else if (map[y][x] === "2") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         push();
         imageMode(CENTER);
         translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
@@ -176,7 +182,7 @@ function render() {
       else if (map[y][x] === "3") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         push();
         imageMode(CENTER);
         translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
@@ -188,7 +194,7 @@ function render() {
       else if (map[y][x] === "4") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         push();
         imageMode(CENTER);
         translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
@@ -215,21 +221,21 @@ function render() {
       else if (map[y][x] === "B") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         image(images.bubble, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if hammer
       else if (map[y][x] === "H") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         image(images.hammer, x * blockSize, y * blockSize, blockSize, blockSize);
       }
       // if rock
       else if (map[y][x] === "R") {
         noFill();
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
-        image(images.dirt, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         image(images.rock, x * blockSize, y * blockSize, blockSize, blockSize);
       }
     }

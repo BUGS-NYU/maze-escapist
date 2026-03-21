@@ -72,4 +72,18 @@ function preload() {
     sounds.laserDeath.playMode("restart");
     sounds.nuke.playMode("restart");
     sounds.rockBreak.playMode("restart");
+
+    // themes
+    themes = {};
+    loadJSON("data/themes.json", (data) => {
+        const themeData = data;
+        for (let themeName in themeData) {
+            let theme = themeData[themeName];
+
+            theme.empty = loadImage(theme.empty);
+            theme.wall = loadImage(theme.wall);
+
+            themes[themeName] = theme;
+        }
+    });
 }

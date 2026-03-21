@@ -1,0 +1,10 @@
+{
+    "normal": {
+        "empty": "images/dirt.jpg",
+        "wall": "images/stone.png"
+    },
+    "desert": {
+        "empty": "images/sand.jpg",
+        "wall": "images/sandstone.png"
+    }
+}
