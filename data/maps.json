@@ -1,6 +1,7 @@
 [
     {
         "name": "Standard",
+        "difficulty": 2,
         "levels": [
             {
                 "map": [
@@ -368,6 +369,7 @@
     },
     {
         "name": "Advanced",
+        "difficulty": 4,
         "levels": [
             {
                 "map": [

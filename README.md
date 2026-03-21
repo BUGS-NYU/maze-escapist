@@ -1,7 +1,6 @@
 # Maze Escapists
 
 ### Task List
-- worlds: add difficulty indicator
 - worlds: add condition on final level beaten
 - queryVar: 2 vars for world & level
 - New maze stylings (themes unlocked)

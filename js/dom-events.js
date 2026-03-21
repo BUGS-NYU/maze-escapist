@@ -190,7 +190,7 @@ window.addEventListener("DOMContentLoaded", () => {
     worlds.forEach((world, wIndex) => {
       // Create a header for the World name
       const worldHeader = document.createElement("div");
-      worldHeader.innerText = world.name;
+      worldHeader.innerText = `${world.name} (Difficulty: ${world.difficulty}/5)`;
       worldHeader.className = "world-header";
       changeModal.appendChild(worldHeader);
 
