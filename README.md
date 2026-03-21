@@ -1,18 +1,18 @@
 # Maze Escapists
 
 ### Task List
-- queryVar: 2 vars for world & level
 - New maze stylings (themes unlocked)
 - level unlocking by session
 - html top bar: mobile responsive design
 
 - Nuke spawnkilling level
-- breakable rock intro level
+- breakable rock 2 rocks vs 1 hammer situation
 - breakable rock wise usage maze
 - breakable rock protecting exit cannon
 - breakable rock cave: shortest path algorithm
 - breakable rock cluster + lasers, only 1 hammer must use at end
 - breakable rock + knight + cannon complex
+- more usages of bubble & random block
 
 - add bishop obstacle
 - add mortar obstacle

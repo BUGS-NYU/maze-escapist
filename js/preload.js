@@ -2,14 +2,24 @@ function preload() {
     /**
     Handles the preloading of all game assets and initial configuration for the Maze Escapist game.
     */
-
-    // set mapIndex by query param, default to 0
     const urlParams = new URLSearchParams(window.location.search);
+    
+    // 1. Handle World index (worldIndex)
+    const worldParam = urlParams.get("world");
+    if (worldParam !== null) {
+        const parsedWorld = parseInt(worldParam);
+        if (!isNaN(parsedWorld)) {
+            // Subtract 1 if your URL uses 1-based indexing (e.g., ?world=1 for index 0)
+            worldIndex = parsedWorld - 1; 
+        }
+    }
+
+    // 2. Handle Level index (mapIndex)
     const levelParam = urlParams.get("level");
     if (levelParam !== null) {
         const parsedLevel = parseInt(levelParam);
         if (!isNaN(parsedLevel)) {
-        mapIndex = parsedLevel - 1;
+            mapIndex = parsedLevel - 1;
         }
     }
 
