@@ -2,6 +2,7 @@
     {
         "name": "Standard",
         "difficulty": 2,
+        "theme": "normal",
         "levels": [
             {
                 "map": [
@@ -370,6 +371,7 @@
     {
         "name": "Advanced",
         "difficulty": 4,
+        "theme": "desert",
         "levels": [
             {
                 "map": [

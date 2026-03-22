@@ -32,7 +32,8 @@ let mapIndex = 0;
 let map = null;
 
 // themes obj: edited in preload()
-let themes = null;
+let themes = {};
+let themesData = null;
 
 // time remaining
 let time = null;
@@ -48,10 +49,25 @@ let nukeActive = false;
 let runID = 0;
 
 function setup() {
+  // setup themes
+  for (let themeName in themesData) {
+    let theme = themesData[themeName];
+
+    theme.empty = loadImage(theme.empty);
+    theme.wall = loadImage(theme.wall);
+
+    themes[themeName] = theme;
+  }
+  console.log(themes)
+
   // put canvas inside #canvas-container div
   const canvasContainer = document.getElementById("canvas-container");
   const canvas = createCanvas(mapSize, mapSize);
   canvas.parent(canvasContainer);
+
+  // no smooth (performance)
+  canvas.elt.style.imageRendering = 'pixelated'; 
+  noSmooth();
 }
 
 function draw() {
