@@ -2,27 +2,6 @@ function preload() {
     /**
     Handles the preloading of all game assets and initial configuration for the Maze Escapist game.
     */
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    // 1. Handle World index (worldIndex)
-    const worldParam = urlParams.get("world");
-    if (worldParam !== null) {
-        const parsedWorld = parseInt(worldParam);
-        if (!isNaN(parsedWorld)) {
-            // Subtract 1 if your URL uses 1-based indexing (e.g., ?world=1 for index 0)
-            worldIndex = parsedWorld - 1; 
-        }
-    }
-
-    // 2. Handle Level index (mapIndex)
-    const levelParam = urlParams.get("level");
-    if (levelParam !== null) {
-        const parsedLevel = parseInt(levelParam);
-        if (!isNaN(parsedLevel)) {
-            mapIndex = parsedLevel - 1;
-        }
-    }
-
     // load death msgs by death-msgs.json
     loadJSON("data/death-msgs.json", (data) => {
         deathMsgs = data;
@@ -31,6 +10,7 @@ function preload() {
     // load worlds by maps.json
     loadJSON("data/maps.json", (data) => {
         worlds = data;
+        loadUrlParams(); // Load URL parameters after worlds are loaded
         reset();
     });
 
@@ -75,4 +55,34 @@ function preload() {
 
     // themes
     themesData = loadJSON("data/themes.json");
+}
+
+function loadUrlParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Validate World Index
+    const worldParam = urlParams.get("world");
+    if (worldParam !== null) {
+        const parsedWorld = parseInt(worldParam) - 1; // Adjust for 1-based UI
+        if (isNaN(parsedWorld) || parsedWorld < 0 || parsedWorld >= worlds.length) {
+            console.error(`Invalid World Index: ${worldParam}. Defaulting to World 1.`);
+            worldIndex = 0;
+        } else {
+            worldIndex = parsedWorld;
+        }
+    }
+
+    // Validate Level Index
+    const levelParam = urlParams.get("level");
+    if (levelParam !== null) {
+        const parsedLevel = parseInt(levelParam) - 1;
+        const currentWorldMaps = worlds[worldIndex].levels;
+        
+        if (isNaN(parsedLevel) || parsedLevel < 0 || parsedLevel >= currentWorldMaps.length) {
+            console.error(`Invalid Level Index: ${levelParam} for World ${worldIndex + 1}. Defaulting to Level 1.`);
+            mapIndex = 0;
+        } else {
+            mapIndex = parsedLevel;
+        }
+    }
 }

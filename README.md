@@ -1,7 +1,6 @@
 # Maze Escapists
 
 ### Task List
-- query var: if invalid indices, console log the error
 - knight: look for transparent bg
 - level unlocking by session
 - html top bar: mobile responsive design
