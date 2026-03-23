@@ -1,7 +1,7 @@
 # Maze Escapists
+# [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- add game link to readme
 - html top bar: fix oversize bug
 - html top bar: mobile responsive design
 
