@@ -1,11 +1,14 @@
 # Maze Escapists
 
 ### Task List
-- knight: look for transparent bg
 - level unlocking by session
+- html top bar: fix oversize bug
 - html top bar: mobile responsive design
 
+- create nuclear factory world
 - Nuke spawnkilling level
+
+- create new rocky mountain world
 - breakable rock 2 rocks vs 1 hammer situation
 - breakable rock wise usage maze
 - breakable rock protecting exit cannon
