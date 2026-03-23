@@ -176,41 +176,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const changeButton = document.getElementById("change-level");
   const changeModal = document.getElementById("change-level-modal");
 
-  // dynamically generate level buttons once worlds are available
-  const generateLevelButtons = () => {
-    // Check for the new global variable name
-    if (!worlds) {
-      setTimeout(generateLevelButtons, 100); 
-      return;
-    }
-
-    changeModal.innerHTML = "";
-
-    // Loop through each world in the new maps.json structure
-    worlds.forEach((world, wIndex) => {
-      // Create a header for the World name
-      const worldHeader = document.createElement("div");
-      worldHeader.innerText = `${world.name} (Difficulty: ${world.difficulty}/5)`;
-      worldHeader.className = "world-header";
-      changeModal.appendChild(worldHeader);
-
-      // Create buttons for every level within this world
-      world.levels.forEach((level, lIndex) => {
-        const btn = document.createElement("button");
-        btn.innerText = `Level ${lIndex + 1}`;
-        
-        btn.addEventListener("click", () => {
-          worldIndex = wIndex; 
-          changeLevel(lIndex);
-          changeModal.style.display = "none";
-        });
-        
-        changeModal.appendChild(btn);
-      });
-    });
-  };
-  generateLevelButtons();
-
   // change button click: toggle modal show
   changeButton.addEventListener("click", () => {
     if (changeModal.style.display === "none") {
@@ -270,3 +235,42 @@ window.addEventListener("DOMContentLoaded", () => {
   levelDisplay = document.getElementById("ui-level");
   hammerDisplay = document.getElementById("ui-hammers");
 });
+
+/**
+ * Generates and injects level buttons into the modal based on current progress.
+ */
+function renderLevelButtons() {
+  const changeModal = document.getElementById("change-level-modal");
+  if (!changeModal || !worlds || !progress) return;
+
+  changeModal.innerHTML = "";
+
+  worlds.forEach((world, wIndex) => {
+    // Add World Header
+    const worldHeader = document.createElement("div");
+    worldHeader.className = "world-header";
+    worldHeader.innerText = `${world.name} (Difficulty: ${world.difficulty}/5)`;
+    changeModal.appendChild(worldHeader);
+
+    // Create buttons for each level in this world
+    world.levels.forEach((level, lIndex) => {
+      const btn = document.createElement("button");
+      btn.innerText = `Level ${lIndex + 1}`;
+      
+      const maxUnlocked = progress[world.name] || 0;
+      const isLocked = lIndex > maxUnlocked;
+
+      if (isLocked) {
+        btn.disabled = true;
+        btn.innerText += " 🔒";
+      } else {
+        btn.addEventListener("click", () => {
+          worldIndex = wIndex;
+          changeLevel(lIndex);
+          changeModal.style.display = "none";
+        });
+      }
+      changeModal.appendChild(btn);
+    });
+  });
+}

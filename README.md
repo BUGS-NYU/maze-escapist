@@ -1,7 +1,7 @@
 # Maze Escapists
 
 ### Task List
-- level unlocking by session
+- add game link to readme
 - html top bar: fix oversize bug
 - html top bar: mobile responsive design
 

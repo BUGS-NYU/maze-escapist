@@ -10,7 +10,11 @@ function preload() {
     // load worlds by maps.json
     loadJSON("data/maps.json", (data) => {
         worlds = data;
-        loadUrlParams(); // Load URL parameters after worlds are loaded
+
+        progress = getProgress();
+
+        loadUrlParams();
+        renderLevelButtons();
         reset();
     });
 
@@ -76,13 +80,17 @@ function loadUrlParams() {
     const levelParam = urlParams.get("level");
     if (levelParam !== null) {
         const parsedLevel = parseInt(levelParam) - 1;
-        const currentWorldMaps = worlds[worldIndex].levels;
-        
-        if (isNaN(parsedLevel) || parsedLevel < 0 || parsedLevel >= currentWorldMaps.length) {
-            console.error(`Invalid Level Index: ${levelParam} for World ${worldIndex + 1}. Defaulting to Level 1.`);
-            mapIndex = 0;
-        } else {
-            mapIndex = parsedLevel;
+        const currentWorldName = worlds[worldIndex].name;
+        const maxUnlocked = progress[currentWorldName] || 0;
+
+        // Check if requested level is within bounds AND unlocked
+        if (parsedLevel >= 0 && parsedLevel < worlds[worldIndex].levels.length) {
+            if (parsedLevel <= maxUnlocked) {
+                mapIndex = parsedLevel;
+            } else {
+                console.log("Level is locked. Redirecting to highest unlocked level.");
+                mapIndex = maxUnlocked;
+            }
         }
     }
 }

@@ -35,6 +35,9 @@ let map = null;
 let themes = {};
 let themesData = null;
 
+// progress of unlocked lvls (stored in localstorage)
+let progress = null;
+
 // time remaining
 let time = null;
 let timeLoop = null;
@@ -58,7 +61,6 @@ function setup() {
 
     themes[themeName] = theme;
   }
-  console.log(themes)
 
   // put canvas inside #canvas-container div
   const canvasContainer = document.getElementById("canvas-container");
@@ -398,6 +400,9 @@ function keyPressed() {
   if (key === "c" && gameState === "win") {
     const currentWorld = worlds[worldIndex];
     const isLastLevel = mapIndex === currentWorld.levels.length - 1;
+
+    // save progress
+    saveProgress(currentWorld.name, mapIndex + 1);
 
     if (!isLastLevel) {
       changeLevel(mapIndex + 1);

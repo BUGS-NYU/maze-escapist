@@ -116,6 +116,15 @@ canvas {
 #change-level-modal > button:hover {
     background-color: rgba(255, 255, 255, 0.4);
 }
+#change-level-modal button:disabled {
+    color: white;                            
+    cursor: not-allowed; 
+    transform: none !important;  
+    opacity: 0.6;
+}
+#change-level-modal button:disabled:hover {
+    transform: none;               
+}
 
 #game-container {
     display: flex;
