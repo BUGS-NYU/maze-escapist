@@ -4,6 +4,7 @@
 ### Task List
 - html top bar: fix oversize bug
 - html top bar: mobile responsive design
+- look into new issue
 
 - create nuclear factory world
 - Nuke spawnkilling level
@@ -49,3 +50,6 @@
 
 ### Errors
 - Image doesnt have transparent bg error: use a .png that seems to have no checkers (during google search view)
+- old version of sketch.js fetched: therefore sketch.js edits dont register
+    - hard reload doesn't work
+    - Solution: changing sketch.js filename will force new fetch
