@@ -2,7 +2,7 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- html top bar: mobile responsive design
+- html mobile buttons: responsive design + polish up
 - look into new issue
 
 - create nuclear factory world

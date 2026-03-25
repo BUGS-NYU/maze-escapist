@@ -200,6 +200,31 @@ canvas {
     align-items: center;
 }
 
+@media screen and (max-width: 800px) {
+    #change-level {
+        font-size: 1rem;
+        padding: 8px 10px;
+    }
+    #game-stats {
+        gap: 8px;
+    }
+    .stat-item {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    #game-stats {
+        gap: 8px;
+        align-items: end;
+        flex-direction: column;
+    }
+    #game-ui {
+        height: fit-content;
+        padding: 0.8rem;
+    }
+}
+
 @media screen and (max-width: 480px) {
     h1 {
     font-size: 48px;

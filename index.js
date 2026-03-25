@@ -320,7 +320,7 @@ function reset() {
   };
 
   // Inside render() or wherever you update your UI:
-  updateLevelUI(`World ${worldIndex + 1} - Level ${mapIndex + 1}`);
+  updateLevelUI(`Level ${mapIndex + 1}`);
   updateHammerUI(character.hammerCount);
 
   // reset time
