@@ -2,7 +2,6 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- html top bar: fix oversize bug
 - html top bar: mobile responsive design
 - look into new issue
 

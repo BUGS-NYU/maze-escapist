@@ -68,7 +68,7 @@ canvas {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: min(85vw, 85vh) !important;
     height: 100px;
 }
 
