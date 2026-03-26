@@ -75,6 +75,8 @@ function setup() {
 function draw() {
   background(255);
 
+  handleGamepadInput();
+
   // if playing: render map & character
   if (gameState === "play") {
     render();

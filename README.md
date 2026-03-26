@@ -2,8 +2,6 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- look into new issue
-
 - create nuclear factory world
 - Nuke spawnkilling level
 
