@@ -155,22 +155,29 @@ canvas {
 }
 
 #mobile-controls button {
-    width: 20vw;
-    height: 20vw;
-    font-size: 24px;
     border-radius: 8px;
     border: 2px solid #663399;
     background: rgba(255, 255, 255, 0.9);
     cursor: pointer;
     transition: all 0.2s;
     user-select: none;
-}
 
+    width: auto;
+    min-width: 20vw;
+    height: 20vw;
+    padding: 0 10px;
+    font-size: 18px;
+    overflow: hidden;
+    white-space: normal;
+    word-wrap: break-word;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 #mobile-controls button:hover {
     background: rgba(102, 51, 153, 0.2);
     transform: scale(1.05);
 }
-
 #mobile-controls button:active {
     background: rgba(102, 51, 153, 0.4);
     transform: scale(0.95);
