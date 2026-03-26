@@ -54,6 +54,10 @@ h1 {
 canvas {
     width: min(85vw, 85vh) !important;
     height: auto !important;
+
+    border-radius: 0.3rem;
+    overflow: hidden;
+    display: block;
 }
 
 #game-ui {
@@ -61,15 +65,17 @@ canvas {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 15px rgba(138, 43, 226, 0.2);
-    border-top-left-radius: 0.3rem;
-    border-top-right-radius: 0.3rem;
 
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: min(85vw, 85vh) !important;
-    height: 100px;
+
+    width: min(95vw,950px) !important;
+    height: auto; 
+    min-height: 80px; 
+    margin-bottom: 20px; 
+    border-radius: 0.3rem;
 }
 
 #change-level {
@@ -133,6 +139,9 @@ canvas {
     position: relative;
 
     margin-bottom: 1.5rem;
+
+    width: 100%; 
+    max-width: 1000px;
 }
 
 #mobile-controls {
@@ -198,6 +207,11 @@ canvas {
     padding: 7px 15px;
     display: flex;
     align-items: center;
+}
+
+.instructions, #credits {
+    width: min(95vw, 950px); 
+    margin: 0 auto; 
 }
 
 @media screen and (max-width: 800px) {
