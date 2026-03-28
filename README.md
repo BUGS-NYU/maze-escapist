@@ -4,16 +4,26 @@
 ### Task List
 - add bishop obstacle
     - bishop protected cases
-    - bishop protects other case
     - animation
     - audio
+- run all knight tests
+    - knight protecting eatable
+    - knight protects knight
+    - 2 knights attack same spot
+    - knight eaten
+    - knight protected by other
+- run all nuke tests
+    - simplify nuke code if possible
+    - simulataneous 2 nukes case
+    - multi nukes case
 - add mortar obstacle
 
 - moving train (random start & direction)
-- armed train
+- armed train (must be animated?)
 - buyable items (session)
 - reset progress
 - rotating cannon (random start orientation)
+- moving guard: shortest path route to player
 
 - create nuclear factory world
 - Nuke spawnkilling level
@@ -29,7 +39,6 @@
 
 - add to bugs website
 - marketing 1
-- ai generated lvls
 
 - Dark world of levels
 - Dark Levels: camera item, candle item, night vision item

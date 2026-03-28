@@ -2,7 +2,22 @@
  * Check whether character is adjacent to nuke, if so then activate
  * Return whether nukeID if activated, -1 otherwise
  */
-function checkNukes(explosionCallback, map, characterPos, nukeSound, runID) {
+function checkNukes(map, characterPos, nukeSound, runID) {
+    function explosionCallback(nukeRunID) {    
+        if (nukeActive === false) {
+            sounds.nuke.stop();
+            return;
+        }
+        else if (nukeRunID !== runID) {
+            return;
+        }
+        else {
+            sounds.nuke.stop();
+            death(getRandom(deathMsgs.nuke));
+            sounds.nukeExplosion.play();
+        }
+    }
+
     // get nukes
     const nukes = [];
     for (let y = 0; y < map.length; y++) {

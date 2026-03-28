@@ -107,22 +107,26 @@ function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize
                 }
             }
 
-            // return whether player was attacked
-            if (attackPos !== null) {
-                // update roundshots to animate cannon's shot
-                roundshots.push({
-                    startX: cannonPos.x * blockSize + (blockSize / 2),
-                    startY: cannonPos.y * blockSize + (blockSize / 2),
-                    endX: attackPos.x * blockSize + (blockSize / 2),
-                    endY: attackPos.y * blockSize + (blockSize / 2),
-                    currX: cannonPos.x * blockSize + (blockSize / 2),
-                    currY: cannonPos.y * blockSize + (blockSize / 2)
+            // if hit
+            if (attackPos) {
+                cannonSound.play();
+                roundShots.push({
+                    startX: cannonPos.x * blockSize + blockSize / 2,
+                    startY: cannonPos.y * blockSize + blockSize / 2,
+                    endX: attackPos.x * blockSize + blockSize / 2,
+                    endY: attackPos.y * blockSize + blockSize / 2,
+                    currX: cannonPos.x * blockSize + blockSize / 2,
+                    currY: cannonPos.y * blockSize + blockSize / 2,
                 });
 
-                cannonSound.play();
-
-                // disable resetting for duration of animation
+                character.canMove = false;
                 character.canReset = false;
+
+                setTimeout(() => {
+                    sounds.death.play();
+                    death(getRandom(deathMsgs.cannon));
+                    character.canReset = true;
+                }, 2000);
 
                 return true;
             }

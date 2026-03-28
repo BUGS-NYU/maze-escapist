@@ -295,11 +295,6 @@ function render() {
   // draw all roundshots
   roundshots = renderRoundshots(roundshots, images.roundshot, blockSize);
 
-  // if standing in bishop attack, death
-  if (checkBishopAttack(map, character)) {
-    death("The Bishop captured you!");
-  }
-
   // if standing in laser, death
   if (map[character.y][character.x] === "L" && lasersOn) {
     death(getRandom(deathMsgs.laser));
@@ -439,169 +434,226 @@ function keyPressed() {
   }
 }
 
-// move character to given coordinate, handles other behaviors
 function moveTo(x, y) {
-  // if cannot move
-  if (!character.canMove) {
-    return;
-  }
+  if (gameState !== "play" || !character.canMove) return;
 
-  // if wall / nuke, do not move
-  if (map[y][x] === "W" || map[y][x] === "N" || map[y][x] === "A") {
-    return;
-  }
+  const cell = map[y][x];
 
-  // if rock, check for hammers
-  if (map[y][x] === "R") {
+  // wall / nuke: do not move
+  if (cell === "W" || cell === "N" || cell === "A") return;
+
+  // rock
+  if (cell === "R") {
     if (character.hammerCount > 0) {
-      // consume one hammer and clear the path
       character.hammerCount -= 1;
       updateHammerUI(character.hammerCount);
-      map[y][x] = " ";
       sounds.rockBreak.play();
+      map[y][x] = " ";
     } else {
       return;
     }
   }
 
-  // if bubble, replace with empty space and add 10 seconds to timer
+  // bubble
   if (map[y][x] === "B") {
     map[y][x] = " ";
     time += 10;
     sounds.chomp.play();
   }
 
-  // if hammer, replace with empty space and increment hammerCount
+  // hammer
   if (map[y][x] === "H") {
     map[y][x] = " ";
     character.hammerCount += 1;
     updateHammerUI(character.hammerCount);
     sounds.chomp.play();
   }
+  console.log("Moved to: " + x + ", " + y);
 
-  // if bishop, eat bishop
-  if (eatBishop(map, x, y)) {
-    character.x = x;
-    character.y = y;
-    return;
-  }
+  // bishop
+  eatBishop(map, x, y);
+  checkBishopAttack(map, { x, y }, death);
 
-  // if knight attacked block, lose
-  const knights = [];
-  for (let y = 0; y < map.length; y++) {
-    for (let x = 0; x < map[y].length; x++) {
-      if (map[y][x] === "K") {
-        knights.push([x, y]);
-      }
-    }
-  }
-  for (const knight of knights) {
-    const attackPositions = [
-      [knight[0] + 2, knight[1] + 1],
-      [knight[0] + 2, knight[1] - 1],
-      [knight[0] - 2, knight[1] + 1],
-      [knight[0] - 2, knight[1] - 1],
-      [knight[0] + 1, knight[1] + 2],
-      [knight[0] + 1, knight[1] - 2],
-      [knight[0] - 1, knight[1] + 2],
-      [knight[0] - 1, knight[1] - 2],
-    ];
-    for (const pos of attackPositions) {
-      if (pos[0] === x && pos[1] === y) {
-        character.x = x;
-        character.y = y;
-        sounds.knight.play();
-
-        // if player is standing on knight
-        if (map[y][x] === "K") {
-          character.canMove = false;
-          character.visible = false;
-          character.canReset = false;
-          setTimeout(() => {
-            death(getRandom(deathMsgs.knight));
-            character.canReset = true;
-          }, 500);
-        }
-        // if player is standing on other
-        else {
-          character.canMove = false;
-          character.visible = false;
-          character.canReset = false;
-          map[knight[1]][knight[0]] = " ";
-          map[y][x] = "K";
-
-          setTimeout(() => {
-            death(getRandom(deathMsgs.knight));
-            character.canReset = true;
-          }, 500);
-        }
-        return;
-      }
-    }
-  }
-
-  // if cannon attacked block, lose
-  const hit = handleCannonShoot(
-    map,
-    { x: x, y: y },
-    sounds.cannon,
-    roundshots,
-    blockSize,
-    character
-  );
-  if (hit) {
-    character.canMove = false;
-    character.canReset = false;
-
-    setTimeout(() => {
-      sounds.death.play();
-      death(getRandom(deathMsgs.cannon));
-
-      // enable reset again
-      character.canReset = true;
-    }, 2000);
-  }
-
-  // if cannon block, eat cannon
+  // knight (eaten must come before checkKnightAttack)
+  handleKnightEaten(map, x, y);
+  checkKnightAttack(map, x, y);
+  
+  // cannon
+  handleCannonShoot(map, { x, y }, sounds.cannon, roundshots, blockSize, character);
   handleCannonEaten(map, { x: x, y: y }, sounds.chomp);
 
-  // if knight block, eat knight
-  if (map[y][x] === "K") {
-    character.x = x;
-    character.y = y;
-    sounds.chomp.play();
-    map[y][x] = " ";
-    return;
-  }
+  // nuke
+  nukeActive = checkNukes(map, { x, y }, sounds.nuke, runID) || nukeActive;
 
-  // if adjacent to nuke, activate
-  // set nukeActive true if a nuke was activated
-  nukeActive = checkNukes(
-    (nukeRunID) => {      
-      // if nuke is not active
-      if (nukeActive === false) {
-        sounds.nuke.stop();
-        return;
-      }
-      // if runID does not match
-      else if (nukeRunID !== runID) {
-        return;
-      }
-      // if nuke is active
-      else {
-        sounds.nuke.stop();
-        death(getRandom(deathMsgs.nuke));
-        sounds.nukeExplosion.play();
-      }
-    },
-    map, { x: x, y: y }, sounds.nuke, runID)
-    || nukeActive;
-
-  // if empty space, move character
+  // normal case
   character.x = x;
   character.y = y;
   sounds.move.play();
 }
+
+// // move character to given coordinate, handles other behaviors
+// function moveTo1(x, y) {
+//   // if cannot move
+//   if (!character.canMove) {
+//     return;
+//   }
+
+//   // if wall / nuke, do not move
+//   if (map[y][x] === "W" || map[y][x] === "N" || map[y][x] === "A") {
+//     return;
+//   }
+
+//   // if rock, check for hammers
+//   if (map[y][x] === "R") {
+//     if (character.hammerCount > 0) {
+//       // consume one hammer and clear the path
+//       character.hammerCount -= 1;
+//       updateHammerUI(character.hammerCount);
+//       map[y][x] = " ";
+//       sounds.rockBreak.play();
+//     } else {
+//       return;
+//     }
+//   }
+
+//   // if bubble, replace with empty space and add 10 seconds to timer
+//   if (map[y][x] === "B") {
+//     map[y][x] = " ";
+//     time += 10;
+//     sounds.chomp.play();
+//   }
+
+//   // if hammer, replace with empty space and increment hammerCount
+//   if (map[y][x] === "H") {
+//     map[y][x] = " ";
+//     character.hammerCount += 1;
+//     updateHammerUI(character.hammerCount);
+//     sounds.chomp.play();
+//   }
+
+//   // if bishop, eat bishop
+//   if (eatBishop(map, x, y)) {
+//     character.x = x;
+//     character.y = y;
+//     return;
+//   }
+
+//   // if knight attacked block, lose
+//   const knights = [];
+//   for (let y = 0; y < map.length; y++) {
+//     for (let x = 0; x < map[y].length; x++) {
+//       if (map[y][x] === "K") {
+//         knights.push([x, y]);
+//       }
+//     }
+//   }
+//   for (const knight of knights) {
+//     const attackPositions = [
+//       [knight[0] + 2, knight[1] + 1],
+//       [knight[0] + 2, knight[1] - 1],
+//       [knight[0] - 2, knight[1] + 1],
+//       [knight[0] - 2, knight[1] - 1],
+//       [knight[0] + 1, knight[1] + 2],
+//       [knight[0] + 1, knight[1] - 2],
+//       [knight[0] - 1, knight[1] + 2],
+//       [knight[0] - 1, knight[1] - 2],
+//     ];
+//     for (const pos of attackPositions) {
+//       if (pos[0] === x && pos[1] === y) {
+//         character.x = x;
+//         character.y = y;
+//         sounds.knight.play();
+
+//         // if player is standing on knight
+//         if (map[y][x] === "K") {
+//           character.canMove = false;
+//           character.visible = false;
+//           character.canReset = false;
+//           setTimeout(() => {
+//             death(getRandom(deathMsgs.knight));
+//             character.canReset = true;
+//           }, 500);
+//         }
+//         // if player is standing on other
+//         else {
+//           character.canMove = false;
+//           character.visible = false;
+//           character.canReset = false;
+//           map[knight[1]][knight[0]] = " ";
+//           map[y][x] = "K";
+
+//           setTimeout(() => {
+//             death(getRandom(deathMsgs.knight));
+//             character.canReset = true;
+//           }, 500);
+//         }
+//         return;
+//       }
+//     }
+//   }
+
+//   // if cannon attacked block, lose
+//   const hit = handleCannonShoot(
+//     map,
+//     { x: x, y: y },
+//     sounds.cannon,
+//     roundshots,
+//     blockSize,
+//     character
+//   );
+//   if (hit) {
+//     character.canMove = false;
+//     character.canReset = false;
+
+//     setTimeout(() => {
+//       sounds.death.play();
+//       death(getRandom(deathMsgs.cannon));
+
+//       // enable reset again
+//       character.canReset = true;
+//     }, 2000);
+//   }
+
+//   // if cannon block, eat cannon
+//   handleCannonEaten(map, { x: x, y: y }, sounds.chomp);
+
+//   // if knight block, eat knight
+//   if (map[y][x] === "K") {
+//     character.x = x;
+//     character.y = y;
+//     sounds.chomp.play();
+//     map[y][x] = " ";
+//     return;
+//   }
+
+//   // if adjacent to nuke, activate
+//   // set nukeActive true if a nuke was activated
+//   nukeActive = checkNukes(
+//     (nukeRunID) => {      
+//       // if nuke is not active
+//       if (nukeActive === false) {
+//         sounds.nuke.stop();
+//         return;
+//       }
+//       // if runID does not match
+//       else if (nukeRunID !== runID) {
+//         return;
+//       }
+//       // if nuke is active
+//       else {
+//         sounds.nuke.stop();
+//         death(getRandom(deathMsgs.nuke));
+//         sounds.nukeExplosion.play();
+//       }
+//     },
+//     map, { x: x, y: y }, sounds.nuke, runID)
+//     || nukeActive;
+
+//   // if empty space, move character
+//   character.x = x;
+//   character.y = y;
+//   sounds.move.play();
+// }
 
 // flicker laser on/off every 1000 ms
 setInterval(() => {

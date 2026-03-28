@@ -4,13 +4,12 @@ function checkBishopAttack(map, character) {
       if (map[y][x] === "X") {
         if (Math.abs(character.x - x) === Math.abs(character.y - y)) {
           if (isDiagonalPathClear(map, x, y, character.x, character.y)) {
-            return true;
+            death("The Bishop captured you!");
           }
         }
       }
     }
   }
-  return false;
 }
 
 function isDiagonalPathClear(map, x1, y1, x2, y2) {
@@ -33,7 +32,5 @@ function eatBishop(map, x, y) {
   if (map[y][x] === "X") {
     map[y][x] = " ";
     sounds.chomp.play();
-    return true;
   }
-  return false;
 }
