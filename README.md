@@ -2,8 +2,6 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- add bishop obstacle
-    - audio
 - run all knight tests
     - knight protecting eatable
     - knight protects knight

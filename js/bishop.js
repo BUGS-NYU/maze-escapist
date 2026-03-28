@@ -11,10 +11,12 @@ function checkBishopAttack(map, target) {
             map[ky][kx] = " ";
             map[y][x] = "X";
 
+            sounds.bishop.play(0, 1, 1, 0, 2);
+
             setTimeout(() => {
               death("The Bishop captured you!");
               character.canReset = true;
-            }, 500);
+            }, 2000);
 
             return;
           }
