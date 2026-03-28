@@ -51,6 +51,9 @@ let nukeActive = false;
 // ID of current level attempt, increment each reset
 let runID = 0;
 
+// for devs, to unlock all levels
+let TEST_MODE = true;
+
 function setup() {
   // setup themes
   for (let themeName in themesData) {
@@ -257,6 +260,13 @@ function render() {
         rect(x * blockSize, y * blockSize, blockSize, blockSize);
         image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         image(images.rock, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
+      // if bishop
+      else if (map[y][x] === "X") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.bishop, x * blockSize, y * blockSize, blockSize, blockSize);
       }
     }
   }

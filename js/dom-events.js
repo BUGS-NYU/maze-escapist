@@ -257,7 +257,7 @@ function renderLevelButtons() {
       const btn = document.createElement("button");
       btn.innerText = `Level ${lIndex + 1}`;
       
-      const maxUnlocked = progress[world.name] || 0;
+      const maxUnlocked = TEST_MODE ? 999 : (progress[world.name] || 0);
       const isLocked = lIndex > maxUnlocked;
 
       if (isLocked) {

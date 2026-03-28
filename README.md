@@ -2,6 +2,15 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
+- add bishop obstacle
+- add mortar obstacle
+
+- moving train (random start & direction)
+- armed train
+- buyable items (session)
+- reset progress
+- rotating cannon (random start orientation)
+
 - create nuclear factory world
 - Nuke spawnkilling level
 
@@ -13,15 +22,6 @@
 - breakable rock cluster + lasers, only 1 hammer must use at end
 - breakable rock + knight + cannon complex
 - more usages of bubble & random block
-
-- add bishop obstacle
-- add mortar obstacle
-
-- moving train (random start & direction)
-- armed train
-- buyable items (session)
-- reset progress
-- rotating cannon (random start orientation)
 
 - add to bugs website
 - marketing 1

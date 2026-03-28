@@ -32,6 +32,7 @@ function preload() {
     images.bubble = loadImage("images/bubble.png");
     images.hammer = loadImage("images/hammer.png");
     images.rock = loadImage("images/rock.webp");
+    images.bishop = loadImage("images/bishop.webp");
 
     // load sounds here
     sounds = {};
@@ -85,11 +86,11 @@ function loadUrlParams() {
 
         // Check if requested level is within bounds AND unlocked
         if (parsedLevel >= 0 && parsedLevel < worlds[worldIndex].levels.length) {
-            if (parsedLevel <= maxUnlocked) {
+            if (parsedLevel <= maxUnlocked || TEST_MODE) {
                 mapIndex = parsedLevel;
             } else {
                 console.log("Level is locked. Redirecting to highest unlocked level.");
-                mapIndex = maxUnlocked;
+                mapIndex = parsedLevel;
             }
         }
     }

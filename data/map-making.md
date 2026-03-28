@@ -14,6 +14,7 @@
 - "A" = activated nuke
 - "B" = bubble
 - "H" = hammer
+- "X" = bishop
 
 To create a new level, add a new object as an element to maps.json, this object must have a property "map" with the 2-dimensional grid for the level. There must be the same number of rows as columns. Next, edit index.html to have another level to available to be selected.
 
@@ -42,3 +43,6 @@ The cannon can be facing one of four dimensions (1=up, 2=down, 3=left, 4=right).
 
 ### Nuke (N)
 The nuke activates when character is adjacent to it. It will then detonate within 3-5 seconds meaning the character must reach the exit before its detonation.
+
+### Bishop (X)
+Bishop attacks all squares diagonal to it. It's range is infinite.
