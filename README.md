@@ -3,7 +3,8 @@
 
 ### Task List
 - add bishop obstacle
-    - bishop eaten case
+    - bishop protected cases
+    - bishop protects other case
     - animation
     - audio
 - add mortar obstacle

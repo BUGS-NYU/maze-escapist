@@ -479,6 +479,13 @@ function moveTo(x, y) {
     sounds.chomp.play();
   }
 
+  // if bishop, eat bishop
+  if (eatBishop(map, x, y)) {
+    character.x = x;
+    character.y = y;
+    return;
+  }
+
   // if knight attacked block, lose
   const knights = [];
   for (let y = 0; y < map.length; y++) {

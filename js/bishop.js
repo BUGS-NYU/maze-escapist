@@ -28,3 +28,12 @@ function isDiagonalPathClear(map, x1, y1, x2, y2) {
   }
   return true;
 }
+
+function eatBishop(map, x, y) {
+  if (map[y][x] === "X") {
+    map[y][x] = " ";
+    sounds.chomp.play();
+    return true;
+  }
+  return false;
+}
