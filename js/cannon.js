@@ -1,10 +1,3 @@
-// returns whether given cell character is an open cell
-// (used to determine whether cannon can shoot through it)
-function isOpenCell(cell) {
-    return cell === " " || cell === "D" || cell === "L"
-    || cell === "5" || cell === "6" || cell === "7" || cell === "8";
-}
-
 // returns whether given cell character is knight/cannon
 // (used when character tries to eat an obstacle protected by cannon)
 function isObstacle(cell) {

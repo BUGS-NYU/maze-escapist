@@ -295,6 +295,11 @@ function render() {
   // draw all roundshots
   roundshots = renderRoundshots(roundshots, images.roundshot, blockSize);
 
+  // if standing in bishop attack, death
+  if (checkBishopAttack(map, character)) {
+    death("The Bishop captured you!");
+  }
+
   // if standing in laser, death
   if (map[character.y][character.x] === "L" && lasersOn) {
     death(getRandom(deathMsgs.laser));

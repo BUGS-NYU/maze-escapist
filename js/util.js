@@ -18,3 +18,9 @@ function wrapText(text, maxWidth) {
 function getRandom(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
+
+// returns whether given cell character is an open cell
+// (used to determine whether cannon can shoot through it)
+function isOpenCell(cell) {
+    return cell === " " || cell === "L";
+}

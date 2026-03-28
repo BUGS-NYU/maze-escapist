@@ -3,6 +3,9 @@
 
 ### Task List
 - add bishop obstacle
+    - bishop eaten case
+    - animation
+    - audio
 - add mortar obstacle
 
 - moving train (random start & direction)
