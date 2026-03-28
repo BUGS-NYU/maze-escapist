@@ -1,10 +1,22 @@
-function checkBishopAttack(map, character) {
-  for (let y = 0; y < map.length; y++) {
-    for (let x = 0; x < map[y].length; x++) {
-      if (map[y][x] === "X") {
-        if (Math.abs(character.x - x) === Math.abs(character.y - y)) {
-          if (isDiagonalPathClear(map, x, y, character.x, character.y)) {
-            death("The Bishop captured you!");
+function checkBishopAttack(map, target) {
+  const { x, y } = target;
+  for (let ky = 0; ky < map.length; ky++) {
+    for (let kx = 0; kx < map[ky].length; kx++) {
+      if (map[ky][kx] === "X") {
+        if (Math.abs(x - kx) === Math.abs(y - ky)) {
+          if (isDiagonalPathClear(map, kx, ky, x, y)) {
+            character.canMove = false;
+            character.canReset = false;
+
+            map[ky][kx] = " ";
+            map[y][x] = "X";
+
+            setTimeout(() => {
+              death("The Bishop captured you!");
+              character.canReset = true;
+            }, 500);
+
+            return;
           }
         }
       }

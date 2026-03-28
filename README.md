@@ -3,8 +3,6 @@
 
 ### Task List
 - add bishop obstacle
-    - bishop protected cases
-    - animation
     - audio
 - run all knight tests
     - knight protecting eatable
