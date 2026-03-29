@@ -2,15 +2,12 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- breakable rock wise usage maze
-- breakable rock complex alg
-- breakable rock protecting exit cannon
+- breakable rock protected by others (complex)
+- breakable rock as a giant circle (speed level)
 - filled cave: shortest path alg
 - breakable rock cluster + lasers, only 1 hammer must use at end
-- breakable rock + knight + cannon complex
+- laser flooded cave, breakable blocks as breaks (1 less hammer)
 - filled cave: unoptimal hammers, optimal hammers
-
-
 
 - more usages of bubble & random block
 
@@ -26,12 +23,14 @@
     - multi nukes case
 - add mortar obstacle
 
+- add nyc world:
 - moving train (random start & direction)
 - armed train (must be animated?)
-- buyable items (session)
-- reset progress
 - rotating cannon (random start orientation)
-- moving guard: shortest path route to player
+- moving mouse: shortest path route to player
+
+- buyable items (session)
+- reset progress button
 
 - add to bugs website
 - marketing 1
