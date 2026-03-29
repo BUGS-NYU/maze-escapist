@@ -2,10 +2,10 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- create theme for advanced
+- create ocean world w new theme
 - Nuke spawnkilling level
 
-- create new rocky mountain world
+- create new cave world
 - breakable rock 2 rocks vs 1 hammer situation
 - breakable rock wise usage maze
 - breakable rock protecting exit cannon

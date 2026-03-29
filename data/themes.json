@@ -6,5 +6,9 @@
     "desert": {
         "empty": "images/sand.jpg",
         "wall": "images/sandstone.png"
+    },
+    "advanced": {
+        "empty": "images/netherite.jpg",
+        "wall": "images/blackstone.jpg"
     }
 }

@@ -402,7 +402,7 @@
     {
         "name": "Advanced",
         "difficulty": 4,
-        "theme": "desert",
+        "theme": "advanced",
         "levels": [
             {
                 "map": [
