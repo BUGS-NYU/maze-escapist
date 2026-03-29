@@ -2,8 +2,6 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- ui revamp: How to make top info bar always visible?
-
 - create new cave world
 - breakable rock 2 rocks vs 1 hammer situation
 - breakable rock wise usage maze

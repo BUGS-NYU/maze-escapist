@@ -52,7 +52,7 @@ h1 {
 }
 
 canvas {
-    width: min(85vw, 85vh) !important;
+    width: min(85vw, 80vh) !important;
     height: auto !important;
 
     border-radius: 0.3rem;
@@ -71,11 +71,14 @@ canvas {
     align-items: center;
     justify-content: space-between;
 
-    width: min(95vw,950px) !important;
+    width: min(95vw, 950px) !important;
     height: auto; 
     min-height: 80px; 
     margin-bottom: 20px; 
     border-radius: 0.3rem;
+
+    position: sticky;
+    top: 0;
 }
 
 #change-level {
