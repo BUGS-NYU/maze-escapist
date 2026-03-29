@@ -1,7 +1,11 @@
 {
     "normal": {
         "empty": "images/dirt.jpg",
-        "wall": "images/stone.png"
+        "wall": "images/wood.jpg"
+    },
+    "cave": {
+        "empty": "images/stone.jpg",
+        "wall": "images/cobblestone.png"
     },
     "desert": {
         "empty": "images/sand.jpg",

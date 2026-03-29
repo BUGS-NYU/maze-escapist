@@ -468,7 +468,6 @@ function moveTo(x, y) {
     updateHammerUI(character.hammerCount);
     sounds.chomp.play();
   }
-  console.log("Moved to: " + x + ", " + y);
 
   // bishop
   eatBishop(map, x, y);

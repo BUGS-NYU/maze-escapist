@@ -23,8 +23,6 @@ function preload() {
     images.laser = loadImage("images/laser.png");
     images.char = loadImage("images/character.png");
     images.knight = loadImage("images/knight.png");
-    images.dirt = loadImage("images/dirt.jpg");
-    images.stone = loadImage("images/stone.png");
     images.cannon = loadImage("images/cannon.webp");
     images.roundshot = loadImage("images/roundshot.png");
     images.door = loadImage("images/door.jpg");

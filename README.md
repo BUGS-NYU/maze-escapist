@@ -3,6 +3,8 @@
 
 ### Task List
 - create new cave world
+- new cave theme
+- move all breakable rock lvls
 - breakable rock 2 rocks vs 1 hammer situation
 - breakable rock wise usage maze
 - breakable rock protecting exit cannon
