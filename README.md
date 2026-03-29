@@ -2,12 +2,16 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- breakable rock 2 rocks vs 1 hammer situation
 - breakable rock wise usage maze
+- breakable rock complex alg
 - breakable rock protecting exit cannon
-- breakable rock cave: shortest path algorithm
+- filled cave: shortest path alg
 - breakable rock cluster + lasers, only 1 hammer must use at end
 - breakable rock + knight + cannon complex
+- filled cave: unoptimal hammers, optimal hammers
+
+
+
 - more usages of bubble & random block
 
 - run all knight tests
