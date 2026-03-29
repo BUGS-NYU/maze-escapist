@@ -2,7 +2,6 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- breakable rock as a giant complex gate
 - filled cave: shortest path alg
 - breakable rock protected by others
 - laser flooded cave, breakable blocks as breaks (1 less hammer)
