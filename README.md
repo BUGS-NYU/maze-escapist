@@ -5,20 +5,11 @@
 - breakable rock protected by others
 - laser flooded cave, breakable blocks as breaks (1 less hammer)
 - filled cave: unoptimal hammers, optimal hammers
+- cave: nuke + 1 hammer + rock maze
+
+- ocean: knight army + bubble + rocks
 
 - more usages of bubble & random block
-
-- run all knight tests
-    - knight protecting eatable
-    - knight protects knight
-    - 2 knights attack same spot
-    - knight eaten
-    - knight protected by other
-- run all nuke tests
-    - simplify nuke code if possible
-    - simulataneous 2 nukes case
-    - multi nukes case
-- add mortar obstacle
 
 - fast world
 - teleporter
@@ -28,6 +19,9 @@
 - armed train (must be animated?)
 - rotating cannon (random start orientation)
 - moving mouse: shortest path route to player
+
+- add winter world + theme
+- add mortar obstacle
 
 - buyable items (session)
 - reset progress button

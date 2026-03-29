@@ -3,21 +3,6 @@
  * Return whether nukeID if activated, -1 otherwise
  */
 function checkNukes(map, characterPos, nukeSound, runID) {
-    function explosionCallback(nukeRunID) {    
-        if (nukeActive === false) {
-            sounds.nuke.stop();
-            return;
-        }
-        else if (nukeRunID !== runID) {
-            return;
-        }
-        else {
-            sounds.nuke.stop();
-            death(getRandom(deathMsgs.nuke));
-            sounds.nukeExplosion.play();
-        }
-    }
-
     // get nukes
     const nukes = [];
     for (let y = 0; y < map.length; y++) {
@@ -41,7 +26,7 @@ function checkNukes(map, characterPos, nukeSound, runID) {
     for (const nuke of nukes) {
         for (const cell of adjacentCells) {
             if (nuke.x === cell.x && nuke.y === cell.y) {
-                activateNuke(explosionCallback, map, nuke, nukeSound, runID);
+                activateNuke(map, nuke, nukeSound, runID);
                 nukeActivated = true;
             }
         }
@@ -52,7 +37,7 @@ function checkNukes(map, characterPos, nukeSound, runID) {
 /**
  * Activate nuke
  */
-function activateNuke(explosionCallback, map, nuke, nukeSound, runID) {
+function activateNuke(map, nuke, nukeSound, thisID) {
     map[nuke.y][nuke.x] = "A";
 
     // if another nuke already active: stop
@@ -65,6 +50,17 @@ function activateNuke(explosionCallback, map, nuke, nukeSound, runID) {
 
     // on explosion
     setTimeout(() => {
-        explosionCallback(runID);
+        if (nukeActive === false) {
+            sounds.nuke.stop();
+            return;
+        }
+        else if (runID !== thisID) {
+            return;
+        }
+        else {
+            sounds.nuke.stop();
+            death(getRandom(deathMsgs.nuke));
+            sounds.nukeExplosion.play();
+        }
     }, 3100);
 }
