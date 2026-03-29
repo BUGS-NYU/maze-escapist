@@ -2,8 +2,8 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- create ocean world w new theme
 - Nuke spawnkilling level
+- ui revamp: How to make top info bar always visible?
 
 - create new cave world
 - breakable rock 2 rocks vs 1 hammer situation
@@ -35,6 +35,8 @@
 
 - add to bugs website
 - marketing 1
+
+- overall difficulty tweaks
 
 - Dark world of levels
 - Dark Levels: camera item, candle item, night vision item

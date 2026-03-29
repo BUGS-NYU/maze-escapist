@@ -7,6 +7,10 @@
         "empty": "images/sand.jpg",
         "wall": "images/sandstone.png"
     },
+    "ocean": {
+        "empty": "images/water.jpg",
+        "wall": "images/lapis.jpg"
+    },
     "advanced": {
         "empty": "images/netherite.jpg",
         "wall": "images/blackstone.jpg"
