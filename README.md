@@ -2,7 +2,6 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- Nuke spawnkilling level
 - ui revamp: How to make top info bar always visible?
 
 - create new cave world
