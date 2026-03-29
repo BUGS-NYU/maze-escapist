@@ -2,6 +2,18 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
+- create theme for advanced
+- Nuke spawnkilling level
+
+- create new rocky mountain world
+- breakable rock 2 rocks vs 1 hammer situation
+- breakable rock wise usage maze
+- breakable rock protecting exit cannon
+- breakable rock cave: shortest path algorithm
+- breakable rock cluster + lasers, only 1 hammer must use at end
+- breakable rock + knight + cannon complex
+- more usages of bubble & random block
+
 - run all knight tests
     - knight protecting eatable
     - knight protects knight
@@ -20,18 +32,6 @@
 - reset progress
 - rotating cannon (random start orientation)
 - moving guard: shortest path route to player
-
-- create nuclear factory world
-- Nuke spawnkilling level
-
-- create new rocky mountain world
-- breakable rock 2 rocks vs 1 hammer situation
-- breakable rock wise usage maze
-- breakable rock protecting exit cannon
-- breakable rock cave: shortest path algorithm
-- breakable rock cluster + lasers, only 1 hammer must use at end
-- breakable rock + knight + cannon complex
-- more usages of bubble & random block
 
 - add to bugs website
 - marketing 1
