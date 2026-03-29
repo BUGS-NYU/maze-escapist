@@ -2,7 +2,6 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- filled cave: shortest path alg
 - breakable rock protected by others
 - laser flooded cave, breakable blocks as breaks (1 less hammer)
 - filled cave: unoptimal hammers, optimal hammers
