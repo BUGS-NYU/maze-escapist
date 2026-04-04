@@ -2,7 +2,6 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- breakable rock protected by others
 - laser flooded cave, breakable blocks as breaks (1 less hammer)
 - filled cave: unoptimal hammers, optimal hammers
 - cave: nuke + 1 hammer + rock maze
@@ -11,8 +10,15 @@
 
 - more usages of bubble & random block
 
-- fast world
-- teleporter
+- bullet world
+- teleporter: 4 directions, 2 block jump + audio, can be stacked
+- super-fast pill: hold WASD determines how far char goes, char will have a black/white trail
+- teleporter demo
+- teleporter stacking paths, very fast timer
+- teleporter in maze: teleport into lock
+- teleporter paths with obstacles between
+- teleporter + cannon-only maze: teleport into cannon cycle, teleport across cannon
+- teleporter based maze w knights: very fast timer
 
 - add nyc world:
 - moving train (random start & direction)
@@ -20,8 +26,9 @@
 - rotating cannon (random start orientation)
 - moving mouse: shortest path route to player
 
-- add winter world + theme
+- add winter world + theme (very large levels)
 - add mortar obstacle
+- add freezing: limits character speed
 
 - buyable items (session)
 - reset progress button
