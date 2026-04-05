@@ -9,14 +9,16 @@
 - imgs: optimize all to 128?
 
 - bullet world: create new theme
-- teleporter functionality
+- create util function for isWall
 - teleporter audio
 - teleporter stacking logic
 - teleporter stacking tests
 - super-fast pill: hold WASD determines how far char goes, char will have a black/white trail
+- spider enemy: goes to character via path finding
 - teleporter demo
 - teleporter stacking paths, very fast timer
 - teleporter in maze: teleport into lock
+- teleporter path teleports into laser
 - teleporter paths with obstacles between
 - teleporter + cannon-only maze: teleport into cannon cycle, teleport across cannon
 - teleporter based maze w knights: very fast timer

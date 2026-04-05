@@ -527,10 +527,15 @@ function moveTo(x, y) {
   // nuke
   nukeActive = checkNukes(map, { x, y }, sounds.nuke, runID) || nukeActive;
 
+  // teleporter
+  const teleported = teleport(map, { x, y }, character, cell);
+
   // normal case
-  character.x = x;
-  character.y = y;
-  sounds.move.play();
+  if (!teleported) {
+    character.x = x;
+    character.y = y;
+    sounds.move.play();
+  }
 }
 
 // flicker laser on/off every 1000 ms
