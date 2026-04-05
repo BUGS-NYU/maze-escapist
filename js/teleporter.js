@@ -8,16 +8,20 @@ function teleport(map, { x, y }, character, cell) {
     else if (cell === "8") targetX += 2;
 
     if (targetX !== x || targetY !== y) {
-        targetX = constrain(targetX, 0, map[0].length - 1);
-        targetY = constrain(targetY, 0, map.length - 1);
+        // undefined safety
+        const targetCell = map[targetY] ? map[targetY][targetX] : undefined;
 
-        const targetCell = map[targetY][targetX];
-        if (targetCell !== "W" && targetCell !== "N" && targetCell !== "A" && targetCell !== "R") {
-        character.x = targetX;
-        character.y = targetY;
-        } else {
-        character.x = x;
-        character.y = y;
+        // out of bounds
+        if (targetCell === undefined) {
+            return false;
+        }
+        // if wall
+        else if (isWall(targetCell)) {
+            return false;
+        }
+        // if can teleport
+        else {
+            moveTo(targetX, targetY);
         }
     } else {
         character.x = x;

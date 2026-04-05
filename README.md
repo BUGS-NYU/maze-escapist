@@ -9,9 +9,7 @@
 - imgs: optimize all to 128?
 
 - bullet world: create new theme
-- create util function for isWall
 - teleporter audio
-- teleporter stacking logic
 - teleporter stacking tests
 - super-fast pill: hold WASD determines how far char goes, char will have a black/white trail
 - spider enemy: goes to character via path finding

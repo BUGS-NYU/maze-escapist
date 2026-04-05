@@ -24,3 +24,7 @@ function getRandom(list) {
 function isOpenCell(cell) {
     return cell === " " || cell === "L";
 }
+
+function isWall(cell) {
+    return cell === "W" || cell === "N" || cell === "A" || cell === "R";
+}
