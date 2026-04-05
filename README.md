@@ -9,8 +9,8 @@
 - imgs: optimize all to 128?
 
 - bullet world: create new theme
+- teleporter stacking tests: midway/into, knight/nuke/bishop/laser, 2 teleporters into wall
 - teleporter audio
-- teleporter stacking tests
 - super-fast pill: hold WASD determines how far char goes, char will have a black/white trail
 - spider enemy: goes to character via path finding
 - teleporter demo

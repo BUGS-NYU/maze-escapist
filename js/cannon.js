@@ -119,6 +119,8 @@ function handleCannonShoot(map, characterPos, cannonSound, roundShots, blockSize
                     currY: cannonPos.y * blockSize + blockSize / 2,
                 });
 
+                character.x = characterPos.x;
+                character.y = characterPos.y;
                 character.canMove = false;
                 character.canReset = false;
 
