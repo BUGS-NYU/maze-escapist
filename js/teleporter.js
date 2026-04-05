@@ -22,6 +22,7 @@ function teleport(map, { x, y }, character, cell) {
         // if can teleport
         else {
             moveTo(targetX, targetY);
+            sounds.teleport.play();
         }
     } else {
         character.x = x;

@@ -6,10 +6,7 @@
 
 - more usages of bubble & random block
 
-- imgs: optimize all to 128?
-
-- bullet world: create new theme
-- teleporter audio
+- bullet world: create new theme, dynamic & rainbow bg?
 - super-fast pill: hold WASD determines how far char goes, char will have a black/white trail
 - spider enemy: goes to character via path finding
 - teleporter demo
@@ -57,6 +54,7 @@
     - hard reload doesn't work
     - Solution: changing sketch.js filename will force new fetch
 
+- fix audio cutout error only?
 - fix page freezing / audio cutout error
     - page is unable to reload (buffering forever) when this happens, audio is silent
     - replicate by triggering a lot of audios to be played for a long time, the gameplay will start to become laggy and audio will cut out

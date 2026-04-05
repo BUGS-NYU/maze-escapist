@@ -47,6 +47,7 @@ function preload() {
     sounds.rockBreak = loadSound("sounds/rock-break.mp3");
     sounds.rockBreak.rate(1.25);
     sounds.bishop = loadSound("sounds/bishop.mp3");
+    sounds.teleport = loadSound("sounds/teleport.mp3");
 
     // needed to prevent audio-related performance issues
     sounds.move.playMode("restart");
@@ -58,6 +59,7 @@ function preload() {
     sounds.nuke.playMode("restart");
     sounds.rockBreak.playMode("restart");
     sounds.bishop.playMode("restart");
+    sounds.teleport.playMode("restart");
 
     // themes
     themesData = loadJSON("data/themes.json");
