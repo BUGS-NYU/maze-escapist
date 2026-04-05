@@ -2,8 +2,6 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- laser flooded cave, breakable blocks as breaks (1 less hammer)
-- filled cave: unoptimal hammers, optimal hammers
 - cave: nuke + 1 hammer + rock maze
 
 - ocean: knight army + bubble + rocks
@@ -25,6 +23,8 @@
 - armed train (must be animated?)
 - rotating cannon (random start orientation)
 - moving mouse: shortest path route to player
+
+- look into mobile lag issue
 
 - add winter world + theme (very large levels)
 - add mortar obstacle
