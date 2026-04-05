@@ -15,6 +15,10 @@
 - "B" = bubble
 - "H" = hammer
 - "X" = bishop
+- "5" = teleporter up
+- "6" = teleporter down
+- "7" = teleporter left
+- "8" = teleporter right
 
 To create a new level, add a new object as an element to maps.json, this object must have a property "map" with the 2-dimensional grid for the level. There must be the same number of rows as columns. Next, edit index.html to have another level to available to be selected.
 
