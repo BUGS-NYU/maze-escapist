@@ -51,6 +51,8 @@ let nukeActive = false;
 // ID of current level attempt, increment each reset
 let runID = 0;
 
+let moveInterval = null;
+
 // for devs, to unlock all levels
 let TEST_MODE = true;
 
@@ -336,6 +338,9 @@ function render() {
   else if (charDir === 2) angle = scale(-1, 1); // right
   else if (charDir === 3) angle = -HALF_PI; // down
   rotate(angle);
+  if (character.starMode) {
+    tint(50, 50, 50);
+  }
   if (character.visible) {
     image(images.char, 0, 0, blockSize, blockSize);
   }
@@ -379,7 +384,14 @@ function reset() {
     visible: true,
     canReset: true,
     hammerCount: 0,
+    starMode: false,
   };
+
+  // star mode stop
+  if (moveInterval) {
+    clearInterval(moveInterval);
+    moveInterval = null;
+  }
 
   // Inside render() or wherever you update your UI:
   updateLevelUI(`${mapIndex + 1}`);
@@ -430,28 +442,43 @@ function death(msg) {
 
 // respond to WASD and arrow key input, adjusting the character's x & y coordinates
 function keyPressed() {
-  // Up movement (W or UP_ARROW)
-  if ((key === "w" || keyCode === UP_ARROW) && character.y > 0) {
-    moveTo(character.x, character.y - 1);
-    charDir = 1;
+  // star mode
+  if (character.starMode) {
+    if (moveInterval) clearInterval(moveInterval);
+    
+    const handleMove = () => {
+      if (keyIsDown(UP_ARROW) || keyIsDown(87)) moveTo(character.x, character.y - 1);
+      else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) moveTo(character.x, character.y + 1);
+      else if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) moveTo(character.x - 1, character.y);
+      else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) moveTo(character.x + 1, character.y);
+    };
+
+    handleMove();
+    moveInterval = setInterval(handleMove, 100);
   }
-  // Left movement (A or LEFT_ARROW)
-  if ((key === "a" || keyCode === LEFT_ARROW) && character.x > 0) {
-    moveTo(character.x - 1, character.y);
-    charDir = 0;
-  }
-  // Down movement (S or DOWN_ARROW)
-  if ((key === "s" || keyCode === DOWN_ARROW) && character.y < map.length - 1) {
-    moveTo(character.x, character.y + 1);
-    charDir = 3;
-  }
-  // Right movement (D or RIGHT_ARROW)
-  if (
-    (key === "d" || keyCode === RIGHT_ARROW) &&
-    character.x < map[0].length - 1
-  ) {
-    moveTo(character.x + 1, character.y);
-    charDir = 2;
+
+  // non star mode
+  if (!character.starMode) {
+    // Up movement (W or UP_ARROW)
+    if (key === "w" || keyCode === UP_ARROW) {
+      moveTo(character.x, character.y - 1);
+      charDir = 1;
+    }
+    // Left movement (A or LEFT_ARROW)
+    if (key === "a" || keyCode === LEFT_ARROW) {
+      moveTo(character.x - 1, character.y);
+      charDir = 0;
+    }
+    // Down movement (S or DOWN_ARROW)
+    if (key === "s" || keyCode === DOWN_ARROW) {
+      moveTo(character.x, character.y + 1);
+      charDir = 3;
+    }
+    // Right movement (D or RIGHT_ARROW)
+    if (key === "d" || keyCode === RIGHT_ARROW) {
+      moveTo(character.x + 1, character.y);
+      charDir = 2;
+    }
   }
 
   // reset game
@@ -484,8 +511,26 @@ function keyPressed() {
   }
 }
 
+function keyReleased() {
+  if (character.starMode) {
+    const directionsDown = 
+      keyIsDown(UP_ARROW) || keyIsDown(87) || 
+      keyIsDown(DOWN_ARROW) || keyIsDown(83) || 
+      keyIsDown(LEFT_ARROW) || keyIsDown(65) || 
+      keyIsDown(RIGHT_ARROW) || keyIsDown(68);
+
+    if (!directionsDown && moveInterval) {
+      clearInterval(moveInterval);
+      moveInterval = null;
+    }
+  }
+}
+
 function moveTo(x, y) {
   if (gameState !== "play" || !character.canMove) return;
+
+  // out of bounds check
+  if (y < 0 || y >= map.length || x < 0 || x >= map[0].length) return;
 
   const cell = map[y][x];
 
@@ -516,6 +561,13 @@ function moveTo(x, y) {
     map[y][x] = " ";
     character.hammerCount += 1;
     updateHammerUI(character.hammerCount);
+    sounds.chomp.play();
+  }
+
+  // star
+  if (map[y][x] === "S") {
+    map[y][x] = " ";
+    character.starMode = true;
     sounds.chomp.play();
   }
 

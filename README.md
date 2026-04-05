@@ -6,9 +6,10 @@
 
 - more usages of bubble & random block
 
+- index.js: move all key input to diff file
+
 - bullet world: create new theme, dynamic & rainbow bg?
 - super-fast star: hold WASD determines how far char goes, char will have a black/white trail
-    - star functionality as mode
     - star graphics whenever moving
     - star audio whenever initiating a move 
 - spider enemy: goes to character via path finding
