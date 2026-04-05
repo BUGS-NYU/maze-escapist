@@ -311,6 +311,13 @@ function render() {
         image(images.teleporter, 0, 0, blockSize, blockSize);
         pop();
       }
+      // if star
+      else if (map[y][x] === "S") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.star, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
     }
   }
 

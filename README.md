@@ -7,7 +7,10 @@
 - more usages of bubble & random block
 
 - bullet world: create new theme, dynamic & rainbow bg?
-- super-fast pill: hold WASD determines how far char goes, char will have a black/white trail
+- super-fast star: hold WASD determines how far char goes, char will have a black/white trail
+    - star functionality as mode
+    - star graphics whenever moving
+    - star audio whenever initiating a move 
 - spider enemy: goes to character via path finding
 - teleporter demo
 - teleporter stacking paths, very fast timer

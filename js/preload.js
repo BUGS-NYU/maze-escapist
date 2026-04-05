@@ -32,6 +32,7 @@ function preload() {
     images.rock = loadImage("images/rock.webp");
     images.bishop = loadImage("images/bishop.webp");
     images.teleporter = loadImage("images/teleporter.webp");
+    images.star = loadImage("images/star.png");
 
     // load sounds here
     sounds = {};
