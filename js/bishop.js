@@ -5,6 +5,8 @@ function checkBishopAttack(map, target) {
       if (map[ky][kx] === "X") {
         if (Math.abs(x - kx) === Math.abs(y - ky)) {
           if (isDiagonalPathClear(map, kx, ky, x, y)) {
+            character.x = x;
+            character.y = y;
             character.canMove = false;
             character.canReset = false;
 
