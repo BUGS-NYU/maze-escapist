@@ -268,6 +268,49 @@ function render() {
         image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
         image(images.bishop, x * blockSize, y * blockSize, blockSize, blockSize);
       }
+      // if arrow up
+      else if (map[y][x] === "5") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
+        push();
+        imageMode(CENTER);
+        translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
+        rotate(HALF_PI);
+        image(images.teleporter, 0, 0, blockSize, blockSize);
+        pop();
+      }
+      // if arrow down
+      else if (map[y][x] === "6") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
+        push();
+        imageMode(CENTER);
+        translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
+        rotate(-HALF_PI);
+        image(images.teleporter, 0, 0, blockSize, blockSize);
+        pop();
+      }
+      // if arrow left
+      else if (map[y][x] === "7") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
+        image(images.teleporter, x * blockSize, y * blockSize, blockSize, blockSize);
+      }
+      // if arrow right
+      else if (map[y][x] === "8") {
+        noFill();
+        rect(x * blockSize, y * blockSize, blockSize, blockSize);
+        image(currentTheme.empty, x * blockSize, y * blockSize, blockSize, blockSize);
+        push();
+        imageMode(CENTER);
+        translate(x * blockSize + blockSize / 2, y * blockSize + blockSize / 2);
+        scale(-1, 1);
+        image(images.teleporter, 0, 0, blockSize, blockSize);
+        pop();
+      }
     }
   }
 

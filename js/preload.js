@@ -31,6 +31,7 @@ function preload() {
     images.hammer = loadImage("images/hammer.png");
     images.rock = loadImage("images/rock.webp");
     images.bishop = loadImage("images/bishop.webp");
+    images.teleporter = loadImage("images/teleporter.webp");
 
     // load sounds here
     sounds = {};

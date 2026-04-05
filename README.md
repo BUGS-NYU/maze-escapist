@@ -2,14 +2,17 @@
 # [Play Here!](https://bugsnyu.com/maze-escapist/)
 
 ### Task List
-- cave: nuke + 1 hammer + rock maze
-
 - ocean: knight army + bubble + rocks
 
 - more usages of bubble & random block
 
-- bullet world
-- teleporter: 4 directions, 2 block jump + audio, can be stacked
+- imgs: optimize all to 128?
+
+- bullet world: create new theme
+- teleporter functionality
+- teleporter audio
+- teleporter stacking logic
+- teleporter stacking tests
 - super-fast pill: hold WASD determines how far char goes, char will have a black/white trail
 - teleporter demo
 - teleporter stacking paths, very fast timer
